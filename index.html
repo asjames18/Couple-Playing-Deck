@@ -10,7 +10,7 @@
     <div class="container">
         <h1>Heart & Hustle</h1>
         <p>Dive deep, laugh hard, and connect like never before!</p>
-        <div id="turn">Player 1's Turn</div>
+        <div id="turn">Wife  Turn</div>
         <div class="deck-buttons">
             <button onclick="drawCard('warmMeUp')">🌟 Warm Me Up</button>
             <button onclick="drawCard('beneathTheSkin')">🪞 Beneath the Skin</button>
@@ -578,8 +578,8 @@
 
         // Switch turns
         function endTurn() {
-            currentPlayer = currentPlayer === 1 ? 2 : 1;
-            document.getElementById('turn').textContent = `Player ${currentPlayer}'s Turn`;
+            currentPlayer = currentPlayer === "Husband" ? "Wife" : "Husband";
+            document.getElementById('turn').textContent = `${currentPlayer} Turn`;
             document.getElementById('card-display').innerHTML = "Pick a deck to spark the magic!";
         }
 
