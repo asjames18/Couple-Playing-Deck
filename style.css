@@ -4,8 +4,7 @@ body {
     text-align: center;
     padding: 20px;
     margin: 0;
-    min-height: 100vh;
-    overflow: hidden;
+    height: auto; /* Allow height to expand with content */
 }
 .container {
     max-width: 900px;
@@ -83,4 +82,32 @@ button:hover {
 @keyframes float {
     0% { transform: translateY(0); opacity: 1; }
     100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 2em;
+    }
+    p {
+        font-size: 1em;
+    }
+    .deck-buttons {
+        gap: 10px;
+    }
+    button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+    #card-display {
+        padding: 20px;
+        font-size: 1.1em;
+        max-width: 90%; /* Fit smaller screens */
+    }
+    #turn {
+        font-size: 1.2em;
+    }
+    .hearts {
+        font-size: 1.5em;
+    }
 }
