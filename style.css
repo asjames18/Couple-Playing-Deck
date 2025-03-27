@@ -4,7 +4,7 @@ body {
     text-align: center;
     padding: 20px;
     margin: 0;
-    height: auto; /* Allow height to expand with content */
+    height: auto;
 }
 .container {
     max-width: 900px;
@@ -21,6 +21,43 @@ p {
     color: #fff;
     font-size: 1.2em;
     margin-bottom: 20px;
+}
+/* Menu Styles */
+nav {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.menu li {
+    margin: 0;
+}
+.menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    background-color: #ff6f61;
+    border-radius: 20px;
+    transition: background-color 0.2s, transform 0.2s;
+    display: block;
+}
+.menu a:hover {
+    background-color: #ff4d3f;
+    transform: scale(1.1);
+}
+.menu a.active {
+    background-color: #ff4d3f;
+    font-weight: bold;
 }
 .deck-buttons {
     display: flex;
@@ -92,6 +129,13 @@ button:hover {
     p {
         font-size: 1em;
     }
+    .menu {
+        gap: 10px;
+    }
+    .menu a {
+        font-size: 1em;
+        padding: 8px 15px;
+    }
     .deck-buttons {
         gap: 10px;
     }
@@ -102,7 +146,7 @@ button:hover {
     #card-display {
         padding: 20px;
         font-size: 1.1em;
-        max-width: 90%; /* Fit smaller screens */
+        max-width: 90%;
     }
     #turn {
         font-size: 1.2em;
