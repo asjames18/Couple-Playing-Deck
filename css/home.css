@@ -90,7 +90,7 @@ nav {
     padding-top: 40%;
     position: absolute;
     font-size: 2em;
-    color: #ff4d6d;
+    color: #000000;
     animation: float 4s infinite;
     opacity: 0.8;
 }

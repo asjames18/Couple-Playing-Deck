@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
+    <title>Friend Connections</title>
     <link rel="stylesheet" href="css/friends.css">
 </head>
 <body>
@@ -12,36 +12,509 @@
             <li><a href="home.html">Home</a></li>
             <li><a href="couples.html">Couples</a></li>
             <li><a href="family.html">Family</a></li>
-            <li><a href="friends.html">Friends</a></li>
+            <li><a href="friends.html" class="active">Friends</a></li>
             <li><a href="kids.html">Kids</a></li>
             <li><a href="christian.html">Christian</a></li>
         </ul>
     </nav>
     <div class="container">
-        <h1>Coming Soon!</h1>
-        <p>Something special is brewing for this page—stay tuned!</p>
-        <div class="coming-soon">We’re working hard to bring you more fun, connection, and love. Check back soon!</div>
+        <h1>Friend Connections</h1>
+        <p>Grab your crew and dive into laughs, truths, and epic vibes!</p>
+        <div id="turn"></div>
+        <div class="deck-buttons">
+            <button onclick="drawCard('mindMeld')">🧠 Mind Meld</button>
+            <button onclick="drawCard('realOnesOnly')">🎭 Real Ones Only</button>
+            <button onclick="drawCard('vibesAndChaos')">🥳 Vibes & Chaos</button>
+            <button onclick="drawCard('circleTight')">🔐 Circle Tight</button>
+        </div>
+        <div id="card-display">Pick a deck to vibe with your squad!</div>
     </div>
 
     <script>
-        // Add floating stars for consistency
-        function addStars() {
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.innerHTML = '✨';
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 4000);
+        console.log("Friend Connections script loaded successfully!");
+
+        // Exact questions from your input
+        const baseQuestions = {
+            mindMeld: [
+                "What’s your most irrational fear?",
+                "What’s a talent you wish you had?",
+                "What’s your go-to comfort food?",
+                "What’s one thing you’ll always be passionate about?",
+                "What’s your favorite time of day and why?",
+                "What’s a memory that instantly makes you smile?",
+                "Who’s been your biggest role model?",
+                "What’s your 'fun fact' most people don’t know?",
+                "What’s your love language?",
+                "Are you more of a planner or go-with-the-flow type?",
+                "What’s your ideal day look like from morning to night?",
+                "What’s something you’ve always wanted to learn but haven’t yet?",
+                "What does your perfect weekend look like?",
+                "What kind of friend are you in the group?",
+                "What’s your MBTI or zodiac sign—and do you relate to it?",
+                "What was your favorite subject in school and why?",
+                "What’s a weird habit you have?",
+                "If you could only eat one meal forever, what would it be?",
+                "Do you believe in fate or free will?",
+                "What helps you feel most at peace?",
+                "How do you usually handle stress?",
+                "Are you more introverted or extroverted?",
+                "What’s something you’ve recently discovered about yourself?",
+                "What’s your idea of success?",
+                "If you could master one skill instantly, what would it be?",
+                "What’s a belief you hold strongly that others might not agree with?",
+                "How do you handle being wrong?",
+                "What’s something you're really proud of?",
+                "What’s your biggest dream right now?",
+                "What’s a song lyric that feels like it was written for you?",
+                "What kind of legacy do you want to leave?",
+                "What’s your favorite way to relax?",
+                "What’s your go-to guilty pleasure show or movie?",
+                "What motivates you when you're feeling stuck?",
+                "Who in your life truly understands you?",
+                "What’s your favorite thing about yourself?",
+                "How do you react when you're under pressure?",
+                "What’s your favorite season and why?",
+                "What’s something you value more now than you did five years ago?",
+                "What’s one dream you haven’t given up on?",
+                "How do you define happiness?",
+                "What’s your favorite memory from childhood?",
+                "What would you do with $1 million right now?",
+                "What’s your biggest pet peeve?",
+                "What kind of people do you naturally vibe with?",
+                "How do you typically recharge your energy?",
+                "What’s your favorite place in the world?",
+                "What does your ideal morning routine include?",
+                "What’s one thing you’ve changed your mind about recently?",
+                "How do you respond to change?",
+                "What kind of advice do people usually come to you for?",
+                "What’s something you’re curious about but haven’t explored?",
+                "How do you define authenticity?",
+                "What’s your favorite creative outlet?",
+                "What’s a smell that takes you back to a memory?",
+                "What’s one thing you always carry with you?",
+                "How do you deal with disappointment?",
+                "What’s something that always calms you down?",
+                "What’s one thing about adulthood that surprised you?",
+                "What’s your most-used emoji and why?",
+                "What’s a goal you’re working toward this year?",
+                "What do you think your younger self would be proud of?",
+                "What’s your go-to method for making tough decisions?",
+                "What’s something you’ve taught yourself recently?",
+                "Do you prefer deep convos or playful banter?",
+                "What’s one item on your bucket list?",
+                "What’s the most spontaneous thing you’ve ever done?",
+                "What’s a tradition you’d like to start someday?",
+                "What’s something you miss about being a kid?",
+                "What’s a lie you used to believe?",
+                "How do you usually show affection to people?",
+                "What’s one rule you live by?",
+                "What’s something that makes you feel alive?",
+                "What’s your favorite quote or motto?",
+                "What’s one thing you’ve never done—but want to?",
+                "What helps you feel grounded?",
+                "What’s a 'simple pleasure' that you love?",
+                "What makes you feel appreciated?",
+                "What’s something you’ve done that you thought you couldn’t?",
+                "What’s something you’d tell your future self?",
+                "What’s your ideal creative project?",
+                "How do you want to grow this year?",
+                "What’s your favorite type of weather?",
+                "What’s something that always inspires you?",
+                "What’s your comfort movie or show?",
+                "What does 'home' mean to you?",
+                "Who or what do you turn to when you need clarity?",
+                "What’s your favorite form of self-expression?",
+                "What’s something you’ve never told anyone?",
+                "What makes a moment unforgettable?",
+                "What’s something you wish more people knew about you?",
+                "What’s a topic you could talk about for hours?",
+                "What’s your dream job or passion project?",
+                "What’s something you’ve always wanted to change in the world?",
+                "What’s one thing you’ve never outgrown?",
+                "What makes a day feel successful for you?",
+                "What’s a ritual you’ve created for yourself?",
+                "How do you handle feeling misunderstood?",
+                "What makes you feel powerful?",
+                "What’s your 'why' in life right now?"
+            ],
+            realOnesOnly: [
+                "What’s something you’re scared to admit about yourself?",
+                "When was the last time you cried—and why?",
+                "What’s something you need to heal from?",
+                "How do you act when you feel emotionally unsafe?",
+                "What’s your greatest insecurity?",
+                "When do you feel most vulnerable?",
+                "What’s a wound from the past you’re still carrying?",
+                "How do you process emotional pain?",
+                "What’s your love language—and how often do you receive it?",
+                "Have you ever felt abandoned by a friend?",
+                "What’s something you wish your past self knew about emotions?",
+                "What’s the hardest conversation you’ve ever had?",
+                "What’s your biggest fear in relationships?",
+                "How do you show love to others?",
+                "What makes you feel emotionally safe?",
+                "When do you tend to shut down emotionally?",
+                "What’s something you’ve never said out loud, but needed to?",
+                "How do you handle being misunderstood?",
+                "What kind of friend do you need when you're hurting?",
+                "What triggers your anxiety or stress?",
+                "What helps you feel truly seen?",
+                "How do you self-soothe in tough moments?",
+                "When have you felt truly supported by a friend?",
+                "What makes you feel unworthy, even though you know you’re enough?",
+                "What’s one thing you need to forgive yourself for?",
+                "Who do you trust the most and why?",
+                "What does loyalty mean to you?",
+                "When did you last feel emotionally overwhelmed?",
+                "What’s something you’ve healed from that you're proud of?",
+                "What kind of affection means the most to you?",
+                "When do you feel the loneliest?",
+                "What’s one emotional wall you’ve built up?",
+                "What do you fear people will discover about you?",
+                "How do you cope with rejection?",
+                "What’s something you're afraid to lose?",
+                "What relationship taught you the most about pain?",
+                "What’s something you’re working on emotionally?",
+                "What does emotional intelligence mean to you?",
+                "What’s the difference between loneliness and solitude for you?",
+                "What’s one thing that brings you back to yourself when you're lost?",
+                "When do you feel most like your true self?",
+                "What’s something that instantly makes you feel unsafe?",
+                "What emotional needs often go unmet?",
+                "What’s something you wish people asked you more often?",
+                "How do you express grief?",
+                "What’s your biggest emotional breakthrough?",
+                "When did you last feel emotionally close to someone?",
+                "What’s one emotion you struggle to express?",
+                "What does being 'enough' mean to you?",
+                "What’s something you’re still grieving?",
+                "Who or what helped you heal from heartbreak?",
+                "What does unconditional love feel like to you?",
+                "When do you feel the most misunderstood?",
+                "What’s one toxic belief you had to unlearn?",
+                "What’s your definition of emotional maturity?",
+                "What relationship in your life feels the safest?",
+                "What’s something you’ve been holding in?",
+                "How do you ask for help when you're struggling?",
+                "When do you feel most disconnected from others?",
+                "What’s something that triggers your emotional defense mechanisms?",
+                "What’s a memory that shaped how you trust people?",
+                "What’s a fear that no one knows you carry?",
+                "How do you want to be comforted when you’re down?",
+                "What do you need when you’re emotionally drained?",
+                "When did someone’s kindness bring you to tears?",
+                "What’s one thing you’re scared to be honest about?",
+                "How do you process sadness?",
+                "What role does vulnerability play in friendship for you?",
+                "Who taught you how to love?",
+                "What’s your greatest emotional strength?",
+                "When have you felt the most alone in a crowd?",
+                "What’s something you don’t talk about because it hurts too much?",
+                "When do you feel like you matter?",
+                "How do you know someone truly cares about you?",
+                "What’s a feeling you avoid at all costs?",
+                "What does emotional safety look like in friendship?",
+                "What’s a fear you’ve overcome?",
+                "When did you first realize it was okay to cry?",
+                "What’s a question you wish someone would ask you?",
+                "What helps you feel less alone?",
+                "What’s your emotional 'tell' when something’s off?",
+                "What would your younger self be proud of?",
+                "What’s one thing you’ve never told a soul?",
+                "When do you feel like your voice matters?",
+                "What does emotional betrayal feel like to you?",
+                "What’s something you’re trying to unlearn from childhood?",
+                "When was the last time you felt genuinely happy?",
+                "What’s a compliment that really stayed with you?",
+                "What’s your emotional survival kit?",
+                "What’s something that has always felt difficult to talk about?",
+                "How do you respond when someone breaks your trust?",
+                "What’s a moment you’ll never forget because of how loved you felt?",
+                "What’s your internal dialogue like when you’re upset?",
+                "What helps you stay emotionally balanced?",
+                "What’s one feeling you want to experience more of?",
+                "How do you navigate emotional burnout?",
+                "When was the last time you truly opened up to someone?",
+                "What’s something that emotionally changed you forever?",
+                "What kind of emotional space do you hold for others?",
+                "What’s one truth about yourself you’re learning to accept?"
+            ],
+            vibesAndChaos: [
+                "If we had a reality show, what would it be called?",
+                "Would you rather fight 100 duck-sized horses or 1 horse-sized duck?",
+                "If you had to wear one outfit for the rest of your life, what would it be?",
+                "What’s your go-to karaoke song?",
+                "If we were a crime duo, what would our hustle be?",
+                "What’s the weirdest food combo you actually like?",
+                "Would you survive a zombie apocalypse? Why or why not?",
+                "If you could live in any fictional world, where would you go?",
+                "What’s the most embarrassing thing you’ve done in public?",
+                "What’s your walk-up theme song?",
+                "What conspiracy theory do you kinda believe?",
+                "If animals could talk, which one would be the rudest?",
+                "What’s a ridiculous fear you had as a kid?",
+                "What’s your guilty pleasure snack at 2AM?",
+                "If you were famous, what would it be for?",
+                "Who would play you in a movie about your life?",
+                "What’s the most random skill you have?",
+                "What’s your weirdest nickname and where did it come from?",
+                "If you had to switch lives with someone for a week, who would it be?",
+                "Would you rather have unlimited tacos or unlimited pizza?",
+                "What’s the worst haircut you ever had?",
+                "If aliens landed, what would you show them first?",
+                "Who’s the most chaotic person in our friend group?",
+                "If we had a secret handshake, what would it look like?",
+                "What would you name a pet dinosaur?",
+                "If you could be a villain for a day, what would you do?",
+                "What’s your go-to dance move?",
+                "If your life had a narrator, who would it be?",
+                "What’s the strangest dream you’ve ever had?",
+                "What’s your weirdest irrational fear?",
+                "If you were a flavor of ice cream, what would you be?",
+                "Would you rather time travel forward or backward?",
+                "What’s something that always makes you laugh no matter what?",
+                "What’s your silliest talent?",
+                "If you could be invisible for 24 hours, what would you do?",
+                "What’s the most outrageous dare you’ve ever done?",
+                "What’s your signature catchphrase?",
+                "If we got matching tattoos, what would they be?",
+                "Would you rather live in a treehouse or a houseboat?",
+                "What fictional character do you most relate to?",
+                "What’s the worst movie you secretly love?",
+                "If your pet could talk, what would it say about you?",
+                "What’s the funniest typo you’ve ever sent?",
+                "Would you rather always speak in rhymes or sing everything?",
+                "If you were a meme, what meme would you be?",
+                "What’s your favorite viral video of all time?",
+                "What’s something dumb that made you laugh way too hard?",
+                "If we had a best friend ritual, what would it involve?",
+                "What’s your dream weird business idea?",
+                "Who’s most likely to win a game show?",
+                "If you could swap lives with a celebrity for 24 hours, who would it be?",
+                "What cartoon character do you secretly love?",
+                "What’s your go-to excuse for avoiding something?",
+                "What’s the pettiest thing you’ve ever done?",
+                "What’s your favorite board or party game?",
+                "What’s a made-up holiday we should celebrate?",
+                "If your phone could talk, what secrets would it spill?",
+                "What’s the most ridiculous outfit you’ve ever worn?",
+                "Who’s most likely to accidentally go viral?",
+                "What would your drag name or alter ego be?",
+                "What’s your go-to hype song before a night out?",
+                "What’s the dumbest way you’ve hurt yourself?",
+                "If you could live in any decade, which one would you pick?",
+                "Would you rather be the funniest or the smartest person in the room?",
+                "What’s your most iconic text message ever?",
+                "What fictional world would you totally get lost in?",
+                "What’s a fake job title you’d put on your resume for fun?",
+                "What’s your most hilarious family story?",
+                "If your life was a video game, what would be your power-up?",
+                "What’s your dream group Halloween costume?",
+                "Who’s most likely to laugh at the wrong moment?",
+                "What would you do if you woke up famous tomorrow?",
+                "What’s something people always get wrong about you?",
+                "What’s a useless superpower you’d still love to have?",
+                "If we ran a cult, what would be our weird rule?",
+                "Who’s the most dramatic person you know?",
+                "What’s a joke you never get tired of?",
+                "If your laugh had a sound effect, what would it be?",
+                "Would you rather have a rewind or pause button in life?",
+                "What’s your favorite ridiculous conspiracy theory?",
+                "What’s the silliest goal you’ve ever set?",
+                "If you could prank one celebrity, who would it be?",
+                "What’s your 'would never admit this in public' hobby?",
+                "Who’s the person you’d call to help hide a body? (Jokingly!)",
+                "What’s your 'I can’t believe that happened' story?",
+                "What’s your go-to weird fact?",
+                "Would you rather be stuck in a rom-com or a horror movie?",
+                "What’s your strangest talent that no one knows about?",
+                "What’s something that instantly gives you the giggles?",
+                "If your life was a sitcom, what would the theme song be?",
+                "What would your superhero alter ego be called?",
+                "Who’s the best person to bring to a party?",
+                "What’s your weirdest fan obsession growing up?",
+                "If you had a time machine, what moment would you relive just for laughs?",
+                "What’s a prank you’ve always wanted to pull?",
+                "What’s your weirdest playlist or music genre you secretly love?",
+                "If we made a friend bucket list, what’s #1 on it?",
+                "What’s your 'guilty but not sorry' pleasure?",
+                "If your dream job had no rules, what would it be?",
+                "What’s one thing you’d do tomorrow if you had zero consequences?"
+            ],
+            circleTight: [
+                "What does loyalty in a friendship look like to you?",
+                "What’s one thing that instantly builds trust with someone?",
+                "How do you usually handle conflict with friends?",
+                "What makes you feel emotionally safe in a friendship?",
+                "What’s one boundary you need in close friendships?",
+                "Have you ever had to end a friendship that hurt to lose?",
+                "What do you need to feel supported by your friends?",
+                "How do you show up for your people during hard times?",
+                "What’s something a real friend should never do?",
+                "What’s your friendship 'green flag'?",
+                "What makes you feel appreciated by your friends?",
+                "How do you repair a friendship after tension?",
+                "When do you feel most connected to your closest friends?",
+                "What’s something you’ve learned about yourself through friendship?",
+                "How do you handle jealousy in friendships?",
+                "What’s a moment a friend had your back when it really mattered?",
+                "Do you believe all friendships are meant to last?",
+                "What’s one thing you admire in your closest friends?",
+                "What does emotional labor in friendship mean to you?",
+                "Have you ever felt taken for granted in a friendship?",
+                "What role do your friends play in your self-esteem?",
+                "What’s something you’ve never said, but wish your friend knew?",
+                "What’s a tough conversation you’ve been avoiding?",
+                "How do you feel about friends taking space from each other?",
+                "What’s your 'friendship love language'?",
+                "What’s the biggest fight you’ve had with a friend—and did you resolve it?",
+                "How do you know when a friendship is toxic?",
+                "Have you ever ghosted someone? Why?",
+                "What’s one friendship that taught you a hard lesson?",
+                "What are your friendship deal-breakers?",
+                "Do you believe friends should tell hard truths—even if it hurts?",
+                "How do you respond to feeling left out?",
+                "What’s something you’ve forgiven in a friend?",
+                "How often do you check in on your people?",
+                "When do you feel like the best version of yourself around friends?",
+                "Do you believe in 'best friends' or just close circles?",
+                "What’s a habit in friendship you’re trying to improve?",
+                "How do you respond to criticism from friends?",
+                "What’s something you wish friends understood about you?",
+                "What kind of friend are you in a crisis?",
+                "Have you ever drifted apart from someone you loved?",
+                "How do you navigate group dynamics or cliques?",
+                "Do you believe friends can fall back in sync after time apart?",
+                "What’s a friendship mistake you’ve learned from?",
+                "Do you trust easily, or does it take time?",
+                "What’s the best apology a friend ever gave you?",
+                "What does respect in friendship mean to you?",
+                "Have you ever felt betrayed by a friend?",
+                "What’s a friendship you regret losing?",
+                "Do you think forgiveness is always possible?",
+                "What’s a personal boundary you’re proud of upholding?",
+                "When do you feel pressure to perform in a friendship?",
+                "What’s your favorite way to reconnect after drifting?",
+                "What role does honesty play in your circle?",
+                "Who’s the most loyal friend you’ve ever had?",
+                "What’s something your friends bring out in you?",
+                "What are you most grateful for in your friendships?",
+                "What’s one way you could show up more for others?",
+                "What does a healthy disagreement look like?",
+                "Have you ever apologized even when you didn’t think you were wrong?",
+                "What’s a non-negotiable in your friendships?",
+                "What kind of legacy do you want to leave as a friend?",
+                "How do you navigate friends growing in different directions?",
+                "What’s a friendship you fought hard to keep?",
+                "Do you believe in 'friend soulmates'?",
+                "How do you express love to your inner circle?",
+                "Have you ever stayed friends with someone out of guilt?",
+                "What does mutual effort mean in friendship?",
+                "What’s your favorite way to celebrate your friends?",
+                "Do you think all friendships need closure?",
+                "What’s one question you’ve been too scared to ask a friend?",
+                "When did a friend change your life?",
+                "What’s something you only trust your best friend with?",
+                "How do you handle envy or comparison?",
+                "What’s your friendship red flag?",
+                "How do you deal with passive-aggressive behavior?",
+                "What’s your favorite friend tradition?",
+                "What’s a friendship that surprised you?",
+                "When do you feel safest opening up?",
+                "What makes a friendship unshakable?",
+                "How do you handle being the 'go-to' friend for everyone?",
+                "What’s something that tests your patience in friendship?",
+                "How do you navigate differing opinions or values?",
+                "What’s a time a friend protected your reputation?",
+                "What do your friends teach you about yourself?",
+                "How do you show gratitude to your people?",
+                "What’s something your friends should never joke about?",
+                "Have you ever outgrown a friendship and felt guilty?",
+                "What’s your favorite memory from your longest friendship?",
+                "What’s something that instantly brings you closer to someone?",
+                "When do you feel the most distant from others?",
+                "How do you initiate difficult conversations?",
+                "What’s one way your friends hold you accountable?",
+                "Who in your life makes you feel like family?",
+                "How do you nurture long-distance friendships?",
+                "What’s your go-to way of repairing emotional distance?",
+                "What’s something small that means a lot in friendship?",
+                "What’s your friendship 'mission' or core value?",
+                "What’s one thing you’ll never take for granted again?",
+                "How do you know when a friendship is forever?"
+            ]
+        };
+
+        // Generate decks with 5000 cards by repeating base questions
+        const generateDeck = (type) => {
+            const base = baseQuestions[type];
+            const deck = [];
+            const targetSize = 5000;
+            for (let i = 0; i < Math.ceil(targetSize / base.length); i++) {
+                deck.push(...base);
             }
+            // Trim to exactly 5000 if over
+            if (deck.length > targetSize) deck.length = targetSize;
+            console.log(`${type} deck generated with ${deck.length} cards`);
+            return deck;
+        };
+
+        // Initialize decks
+        const decks = {
+            mindMeld: generateDeck('mindMeld'),
+            realOnesOnly: generateDeck('realOnesOnly'),
+            vibesAndChaos: generateDeck('vibesAndChaos'),
+            circleTight: generateDeck('circleTight')
+        };
+
+        const usedCards = {
+            mindMeld: new Set(),
+            realOnesOnly: new Set(),
+            vibesAndChaos: new Set(),
+            circleTight: new Set()
+        };
+
+        // Game state
+        let currentPlayer = 1;
+
+        // Draw a card
+        function drawCard(deckName) {
+            const deck = decks[deckName];
+            const used = usedCards[deckName];
+            let card;
+
+            if (!deck) {
+                document.getElementById('card-display').innerHTML = "Error: Deck not found!";
+                console.error(`Deck ${deckName} not initialized`);
+                return;
+            }
+
+            do {
+                card = deck[Math.floor(Math.random() * deck.length)];
+            } while (used.has(card) && used.size < deck.length);
+
+            if (used.size >= deck.length) {
+                document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> All out of cards—squad goals achieved!`;
+                return;
+            }
+
+            used.add(card);
+            document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> ${card}`;
+            addBubbles();
         }
 
-        // Run on page load and repeat every 5 seconds
-        window.onload = () => {
-            addStars();
-            setInterval(addStars, 5000);
-        };
+        // Add floating bubbles for a friend vibe
+        function addBubbles() {
+            for (let i = 0; i < 5; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubbles';
+                bubble.innerHTML = '💬';
+                bubble.style.left = `${Math.random() * 100}vw`;
+                bubble.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(bubble);
+                setTimeout(() => bubble.remove(), 4000);
+            }
+        }
     </script>
 </body>
 </html>

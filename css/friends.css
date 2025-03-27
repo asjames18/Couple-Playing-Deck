@@ -1,6 +1,6 @@
 body {
-    font-family: 'Georgia', 'Arial', sans-serif;
-    background: linear-gradient(135deg, #f8d7a5, #f4a261); /* Matches family.html */
+    font-family: 'Verdana', 'Arial', sans-serif; /* Bold, friendly font */
+    background: linear-gradient(135deg, #a8e063, #56ab2f); /* Vibrant green tones */
     text-align: center;
     padding: 20px;
     margin: 0;
@@ -12,15 +12,15 @@ body {
     position: relative;
 }
 h1 {
-    font-size: 3.5em;
+    font-size: 3em;
     color: #fff;
-    text-shadow: 2px 2px 4px #e07b39;
-    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px #56ab2f;
+    margin-bottom: 10px;
 }
 p {
     color: #fff;
-    font-size: 1.5em;
-    margin-bottom: 30px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }
 nav {
     background: rgba(255, 255, 255, 0.3);
@@ -45,39 +45,74 @@ nav {
     color: #fff;
     font-size: 1.2em;
     padding: 10px 20px;
-    background-color: #e07b39;
+    background-color: #56ab2f; /* Bright green */
     border-radius: 20px;
     transition: background-color 0.2s, transform 0.2s;
     display: block;
 }
 .menu a:hover {
-    background-color: #d06828;
+    background-color: #448a22;
     transform: scale(1.1);
 }
 .menu a.active {
-    background-color: #d06828;
+    background-color: #448a22;
     font-weight: bold;
 }
-.coming-soon {
-    background: rgba(255, 255, 255, 0.9);
+.deck-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px 0;
+}
+button {
+    padding: 15px 25px;
+    font-size: 1.1em;
+    background-color: #56ab2f;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+button:hover {
+    transform: scale(1.1);
+    background-color: #448a22;
+}
+#card-display {
+    background: #fff;
     padding: 30px;
     border-radius: 15px;
+    min-height: 150px;
     max-width: 600px;
     margin: 30px auto;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    font-size: 1.8em;
-    color: #e07b39;
-    animation: pulse 2s infinite;
+    font-size: 1.3em;
+    color: #333;
+    position: relative;
+    animation: cardFlip 0.5s ease-in-out;
 }
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+@keyframes cardFlip {
+    0% { transform: rotateY(90deg); opacity: 0; }
+    100% { transform: rotateY(0); opacity: 1; }
 }
-.stars {
+#turn {
+    font-size: 1.5em;
+    color: #fff;
+    text-shadow: 1px 1px 3px #56ab2f;
+    margin: 10px 0;
+}
+.next-turn-btn {
+    background-color: #f1c40f; /* Bright yellow for contrast */
+}
+.next-turn-btn:hover {
+    background-color: #d4ac0d;
+}
+.bubbles {
     position: absolute;
     font-size: 2em;
-    color: #f4a261;
+    color: #a8e063;
     animation: float 4s infinite;
 }
 @keyframes float {
@@ -88,10 +123,10 @@ nav {
 /* Mobile adjustments */
 @media (max-width: 600px) {
     h1 {
-        font-size: 2.5em;
+        font-size: 2em;
     }
     p {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     .menu {
         gap: 10px;
@@ -100,12 +135,22 @@ nav {
         font-size: 1em;
         padding: 8px 15px;
     }
-    .coming-soon {
+    .deck-buttons {
+        gap: 10px;
+    }
+    button {
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+    #card-display {
         padding: 20px;
-        font-size: 1.4em;
+        font-size: 1.1em;
         max-width: 90%;
     }
-    .stars {
+    #turn {
+        font-size: 1.2em;
+    }
+    .bubbles {
         font-size: 1.5em;
     }
 }
