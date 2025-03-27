@@ -4,235 +4,547 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart & Hustle</title>
-    <style>
-        body {
-            font-family: 'Comic Sans MS', 'Arial', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-            min-height: 100vh;
-            overflow: hidden;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-        h1 {
-            font-size: 3em;
-            color: #fff;
-            text-shadow: 2px 2px 4px #ff6f61;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #fff;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-        .deck-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 20px 0;
-        }
-        button {
-            padding: 15px 25px;
-            font-size: 1.1em;
-            background-color: #ff6f61;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        button:hover {
-            transform: scale(1.1);
-            background-color: #ff4d3f;
-        }
-        #card-display {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            min-height: 150px;
-            max-width: 600px;
-            margin: 30px auto;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            font-size: 1.3em;
-            color: #333;
-            position: relative;
-            animation: cardFlip 0.5s ease-in-out;
-        }
-        @keyframes cardFlip {
-            0% { transform: rotateY(90deg); opacity: 0; }
-            100% { transform: rotateY(0); opacity: 1; }
-        }
-        #turn {
-            font-size: 1.5em;
-            color: #fff;
-            text-shadow: 1px 1px 3px #ff6f61;
-            margin: 10px 0;
-        }
-        .next-turn-btn {
-            background-color: #6b7280;
-        }
-        .next-turn-btn:hover {
-            background-color: #4b5563;
-        }
-        .hearts {
-            position: absolute;
-            font-size: 2em;
-            color: #ff6f61;
-            animation: float 3s infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100vh); opacity: 0; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <h1>Heart & Hustle</h1>
-        <p>Get ready to laugh, love, and connect!</p>
+        <p>Dive deep, laugh hard, and connect like never before!</p>
         <div id="turn">Player 1's Turn</div>
         <div class="deck-buttons">
-            <button onclick="drawCard('spark')">✨ Spark</button>
-            <button onclick="drawCard('soul')">💡 Soul</button>
-            <button onclick="drawCard('fire')">🔥 Fire</button>
-            <button onclick="drawCard('action')">🎉 Action</button>
-            <button onclick="drawCard('teamwork')">🤝 Teamwork</button>
+            <button onclick="drawCard('warmMeUp')">🌟 Warm Me Up</button>
+            <button onclick="drawCard('beneathTheSkin')">🪞 Beneath the Skin</button>
+            <button onclick="drawCard('nakedHours')">🌙 Naked Hours</button>
+            <button onclick="drawCard('theLoveLab')">🔬 The Love Lab</button>
+            <button onclick="drawCard('unfilteredLove')">💣 Unfiltered Love</button>
         </div>
-        <div id="card-display">Pick a deck to start the fun!</div>
+        <div id="card-display">Pick a deck to spark the magic!</div>
         <button class="next-turn-btn" onclick="endTurn()">Next Turn</button>
     </div>
 
     <script>
-        // Card generation functions for 100 unique cards per deck
-        const generateDeck = (type) => {
-            const deck = new Set();
-            while (deck.size < 100) {
-                let card;
-                switch (type) {
-                    case 'spark':
-                        card = generateSparkCard();
-                        break;
-                    case 'soul':
-                        card = generateSoulCard();
-                        break;
-                    case 'fire':
-                        card = generateFireCard();
-                        break;
-                    case 'action':
-                        card = generateActionCard();
-                        break;
-                    case 'teamwork':
-                        card = generateTeamworkCard();
-                        break;
-                }
-                deck.add(card);
-            }
-            return Array.from(deck);
-        };
+        console.log("Heart & Hustle script loaded successfully!");
 
-        function generateSparkCard() {
-            const starters = ["What’s the", "If you", "Tell me about", "Describe"];
-            const topics = [
-                "goofiest thing you’ve done this week",
-                "weirdest snack you love",
-                "silliest nickname you’ve had",
-                "most random thing in your pocket",
-                "best cartoon you’ve watched",
-                "funniest face you can make",
-                "craziest outfit you’ve worn",
-                "wildest thing you’d do for $5"
-            ];
-            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
-        }
-
-        function generateSoulCard() {
-            const starters = ["What’s a", "Tell me about a", "How do you", "What’s one"];
-            const topics = [
-                "memory that makes you smile",
-                "time you felt super brave",
-                "dream we could share",
-                "lesson life keeps teaching you",
-                "place you feel at peace",
-                "song that feels like home",
-                "moment you knew I was special",
-                "hope you have for us"
-            ];
-            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
-        }
-
-        function generateFireCard() {
-            const starters = ["What’s", "How do you", "Tell me about", "What’s one"];
-            const topics = [
-                "thing I do that melts you",
-                "secret wish you’ve held back",
-                "way I make you feel alive",
-                "fear you’d let me hold",
-                "spark that keeps us going",
-                "kiss you can’t forget",
-                "dream you’d whisper to me",
-                "heat you feel right now"
-            ];
-            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
-        }
-
-        function generateActionCard() {
-            const actions = [
-                "Mimic your partner’s",
-                "Act out",
-                "Sing a",
-                "Invent a",
-                "Give your partner a",
-                "Dance like"
-            ];
-            const details = [
-                "sneaky giggle for 20 seconds",
-                "first date in 30 seconds",
-                "silly love tune on the spot",
-                "wild handshake for us",
-                "twirly hug right now",
-                "a funky chicken for 15 seconds"
-            ];
-            return `${actions[Math.floor(Math.random() * actions.length)]} ${details[Math.floor(Math.random() * details.length)]}!`;
-        }
-
-        function generateTeamworkCard() {
-            const tasks = [
-                "Take turns shouting",
-                "Hold hands and",
-                "Make up a",
-                "Face each other and"
-            ];
-            const goals = [
-                "5 goofy compliments fast",
-                "spin until you giggle",
-                "2-line rap about us",
-                "mimic each other’s faces"
-            ];
-            return `${tasks[Math.floor(Math.random() * tasks.length)]} ${goals[Math.floor(Math.random() * goals.length)]}!`;
-        }
-
-        // Initialize decks
+        // Exact questions from your input
         const decks = {
-            spark: generateDeck('spark'),
-            soul: generateDeck('soul'),
-            fire: generateDeck('fire'),
-            action: generateDeck('action'),
-            teamwork: generateDeck('teamwork')
+            warmMeUp: [
+                "What’s something that always makes you feel loved?",
+                "How do you define emotional intimacy?",
+                "What’s your biggest fear in a relationship?",
+                "What’s one way I can make you feel more secure?",
+                "Have you ever had your heart broken? What did you learn from it?",
+                "What’s something you’ve never told anyone?",
+                "When do you feel most vulnerable?",
+                "What does love mean to you?",
+                "How do you handle emotional pain?",
+                "What’s your love language?",
+                "What are your top 3 life goals?",
+                "Where do you see yourself in 5 years?",
+                "What’s something you’re currently working on within yourself?",
+                "What legacy do you want to leave behind?",
+                "How do you handle failure?",
+                "What motivates you to keep going?",
+                "What’s a dream you’ve had since childhood?",
+                "What are your top 3 values in life?",
+                "How do you measure success?",
+                "What’s something you want to try but are scared to?",
+                "What’s your biggest insecurity?",
+                "How do you recharge when you’re overwhelmed?",
+                "What’s one experience that shaped who you are today?",
+                "If you could talk to your younger self, what would you say?",
+                "What part of your personality are you most proud of?",
+                "What emotion do you struggle to express?",
+                "When do you feel most confident?",
+                "What’s something people misunderstand about you?",
+                "How do you define inner peace?",
+                "What’s a habit you’re trying to break?",
+                "What does a healthy relationship look like to you?",
+                "What’s your definition of commitment?",
+                "What makes you feel most connected to your partner?",
+                "What’s your biggest turn-on emotionally?",
+                "How do you like to receive affection?",
+                "What’s your ideal date night?",
+                "What boundaries are important to you in a relationship?",
+                "What’s something you want to do more of together?",
+                "What scares you most about being vulnerable with me?",
+                "How can I support your personal goals?",
+                "What makes you feel desired?",
+                "What’s your biggest fantasy?",
+                "What do you find most attractive about me?",
+                "How do you define great intimacy?",
+                "When do you feel most connected during intimacy?",
+                "What’s something new you’d like to try together?",
+                "What’s your favorite way to be touched?",
+                "How important is physical connection to you?",
+                "What role does flirting play in keeping the spark alive?",
+                "What makes a kiss unforgettable?",
+                "Do you want children? Why or why not?",
+                "What kind of parent do you think you’d be?",
+                "What traditions do you want to create as a couple?",
+                "How do you feel about blending families?",
+                "What’s your dream home like?",
+                "What kind of lifestyle do you envision for us?",
+                "How do you handle family conflict?",
+                "What values would you want to pass down to your kids?",
+                "How should we support each other’s families?",
+                "What role does faith/spirituality play in your future?",
+                "If we wrote a book about our love story, what would the title be?",
+                "What’s a bucket list adventure you want us to do together?",
+                "If we had a couples podcast, what would it be about?",
+                "What would our theme song be?",
+                "Who would play us in a movie?",
+                "If we could wake up anywhere in the world tomorrow, where would it be?",
+                "What’s our couple nickname if we had one?",
+                "What’s your dream vacation with me?",
+                "What’s a funny memory you’ll never forget about us?",
+                "If we could design a love-themed amusement park, what would it include?",
+                "How do you prefer to resolve conflict?",
+                "What’s the best way to approach you when you’re upset?",
+                "How do you respond to criticism?",
+                "What’s one thing I say that always makes you feel heard?",
+                "How can we communicate better?",
+                "What does forgiveness mean to you?",
+                "How do you handle disagreements?",
+                "What’s something I can work on in our communication?",
+                "What’s something you’ve been afraid to tell me?",
+                "How can we build more trust?",
+                "Do you believe everything happens for a reason?",
+                "What’s your definition of soulmates?",
+                "What role does faith or spirituality play in your life?",
+                "Have you ever felt divinely guided in a decision?",
+                "What’s a moment in life that felt deeply spiritual?",
+                "Do you believe in past lives or divine connections?",
+                "What do you think our purpose is as a couple?",
+                "What does inner healing look like to you?",
+                "What do you pray or hope for most?",
+                "How do you tap into your intuition?",
+                "What’s one thing you appreciate about me that you haven’t said before?",
+                "How do you think we’ve grown as a couple?",
+                "What’s a small moment between us that meant a lot to you?",
+                "What’s one area we can grow stronger in together?",
+                "If we had to write vows today, what would you include?",
+                "What’s a promise you want to make to me today?",
+                "What does “forever” look like to you?",
+                "What’s one thing you’ve learned from me?",
+                "How do you know when you’re truly in love?",
+                "If this was our last conversation ever, what would you want to say?"
+            ],
+            beneathTheSkin: [
+                "What’s a wound from your past that still affects you today?",
+                "When was the last time you truly felt seen?",
+                "What does emotional safety in a relationship mean to you?",
+                "What scares you most about being fully open with someone?",
+                "Have you ever felt unloved in a relationship? What caused it?",
+                "How do you handle emotional pain when you’re alone?",
+                "What’s something about love that confuses or frustrates you?",
+                "Have you ever felt abandoned emotionally?",
+                "What triggers your deepest insecurities?",
+                "How do you self-soothe when you’re emotionally overwhelmed?",
+                "What’s one thing you wish people understood about you?",
+                "When do you feel most like your true self?",
+                "What limiting beliefs are you working to let go of?",
+                "What’s something you’re afraid to admit about yourself?",
+                "If your heart could speak, what would it say right now?",
+                "Do you ever feel like you’re hiding parts of yourself?",
+                "How do you define your identity outside of relationships?",
+                "What do you fear others would think if they saw the real you?",
+                "What’s something you regret never doing?",
+                "What parts of your childhood still show up in your adult life?",
+                "What’s been our biggest challenge as a couple?",
+                "How have we helped each other grow?",
+                "What’s a moment in our relationship that changed everything?",
+                "What do you think is the root of our connection?",
+                "What do you fear most about losing me?",
+                "What do you think love requires that most people overlook?",
+                "Have I ever hurt you unintentionally?",
+                "What’s something about our relationship that gives you peace?",
+                "Do you believe we bring out the best in each other?",
+                "What does “forever” feel like with me?",
+                "What does trust mean to you, really?",
+                "Have you ever had your trust broken beyond repair?",
+                "What makes you feel emotionally unsafe?",
+                "How do you know when someone is loyal to you?",
+                "Do you believe trust can be fully restored after it’s broken?",
+                "What’s one way I can earn more of your trust?",
+                "What makes you let your guard down?",
+                "When do you feel the safest with me?",
+                "How do you handle jealousy or suspicion?",
+                "Do you believe in transparency over privacy in relationships?",
+                "What’s your personal mission in life?",
+                "What do you think you were born to do?",
+                "What lights your soul on fire?",
+                "What’s one thing you hope to accomplish before you die?",
+                "Do you feel aligned with your purpose right now?",
+                "How can I support your dreams better?",
+                "What keeps you going when life gets hard?",
+                "Do you believe your life has divine meaning?",
+                "Who inspires you to be better?",
+                "What legacy do you want to leave behind?",
+                "What’s your definition of true love?",
+                "What does intimacy mean beyond the physical?",
+                "When did you realize you were in love with me?",
+                "What’s your deepest desire for our relationship?",
+                "How has your understanding of love changed over time?",
+                "What makes you feel most desired by me?",
+                "What do you need to feel emotionally connected?",
+                "What’s a love wound you’re still healing?",
+                "What’s your biggest fear when it comes to intimacy?",
+                "How do you show love when words fall short?",
+                "How were you taught to deal with conflict growing up?",
+                "What’s your natural response to confrontation?",
+                "How do you feel when you’re misunderstood by me?",
+                "What’s one unresolved hurt we’ve never fully talked about?",
+                "How do we fight fair?",
+                "What’s something I do in arguments that shuts you down?",
+                "How can we grow through our conflicts instead of fearing them?",
+                "What does forgiveness look like for you?",
+                "What do you need to feel heard during disagreements?",
+                "Do you believe love can survive any conflict?",
+                "Do you believe in soulmates or divine connection?",
+                "What do you think happens after we die?",
+                "What’s one spiritual truth that guides your life?",
+                "Have you ever felt spiritually connected to me?",
+                "What’s your relationship with God or the divine?",
+                "Do you think everything happens for a reason?",
+                "What do you pray for (or wish for) most often?",
+                "What do you believe about fate and free will?",
+                "Have you ever had a spiritual awakening?",
+                "What’s your biggest spiritual fear?",
+                "What’s a mystery in life that fascinates you?",
+                "Do you believe people can truly change?",
+                "What’s the most life-changing book or quote you’ve read?",
+                "What’s something you can’t explain but deeply believe?",
+                "What’s one experience you want to have before you die?",
+                "What’s something you’re still searching for?",
+                "If you could understand one universal truth, what would it be?",
+                "What has life taught you the hard way?",
+                "What truth are you still learning to accept?",
+                "What do you think is the key to happiness?",
+                "What’s one thing you’ve always wanted to tell me but haven’t?",
+                "How can I love you better starting today?",
+                "What’s one moment with me you’ll never forget?",
+                "What does “home” feel like with me?",
+                "What’s a fear I don’t know you carry?",
+                "What do you want our future to look like—really?",
+                "What does unconditional love mean to you?",
+                "If you could rewrite one moment in our story, what would it be?",
+                "What’s something you cherish that we’ve built together?",
+                "What do you need most from me—emotionally, spiritually, and practically?"
+            ],
+            nakedHours: [
+                "What’s the emotional pain you’ve buried the deepest?",
+                "What’s a fear you’ve never spoken out loud?",
+                "What part of your past are you still making peace with?",
+                "What lie do you often tell yourself about who you are?",
+                "What does emotional abandonment feel like to you?",
+                "In what ways do you sabotage love when you feel afraid?",
+                "How do you react when you feel emotionally exposed?",
+                "Who hurt you the most, and how did it change you?",
+                "What mask do you wear when you’re scared of being hurt?",
+                "What’s the hardest truth about yourself you’ve had to accept?",
+                "What does it mean to be fully known and still loved?",
+                "How do you differentiate need from love?",
+                "What does real commitment look like when things get ugly?",
+                "How have your past relationships shaped your definition of love?",
+                "What scares you about being completely dependent on someone emotionally?",
+                "When did you first feel “safe” with me?",
+                "What are you afraid you’re too much of—or not enough of—for me?",
+                "What role does emotional intimacy play in physical attraction for you?",
+                "What does “sacred union” mean to you?",
+                "How do you feel when I see parts of you that you don’t love yet?",
+                "What’s something you think about often but never say?",
+                "What’s a thought pattern you know is toxic but still struggle with?",
+                "What internal voice do you wish you could silence?",
+                "What belief system did you inherit but no longer align with?",
+                "When do you feel the most at war with yourself?",
+                "Do you feel like you’re living your truth?",
+                "What part of your identity do you feel misunderstood about?",
+                "What’s something you still don’t fully understand about yourself?",
+                "When did you last question everything you believe?",
+                "What would you change about your inner world if you could?",
+                "What wound are you still healing from that you rarely talk about?",
+                "What’s a pattern you’re afraid you’ll repeat in our relationship?",
+                "Who taught you love, and did they get it right?",
+                "What would healing look like for the younger version of you?",
+                "What’s something you used to believe about relationships that you no longer do?",
+                "When did you realize you had to grow or lose yourself?",
+                "What are you actively unlearning about connection?",
+                "How do you want to grow as a partner this year?",
+                "What does forgiveness look like when the pain still lingers?",
+                "What makes you feel like you’re truly evolving?",
+                "What does true surrender in a relationship look like to you?",
+                "What makes you feel like you need to protect yourself from me?",
+                "What’s your relationship with control—and how does it show up here?",
+                "How do you react when you feel powerless?",
+                "What makes trust break for you, even in small ways?",
+                "When do you feel tempted to withdraw emotionally?",
+                "What role does pride play in how you show up during conflict?",
+                "How do you define emotional loyalty?",
+                "What’s one thing you wish you could control—but can’t—in our relationship?",
+                "How do you build trust when it’s been shaken?",
+                "What’s your personal definition of consciousness?",
+                "Do you believe in fate, free will—or both?",
+                "What does “being present” in love mean to you?",
+                "What’s something you feel guided by that’s beyond explanation?",
+                "What does the “soul” mean to you?",
+                "Do you believe we met for a divine reason?",
+                "What’s one spiritual experience that changed you forever?",
+                "When do you feel most connected to something bigger than you?",
+                "What’s your definition of spiritual intimacy?",
+                "What’s your belief about why humans long for connection?",
+                "Do you believe all pain has a purpose?",
+                "What’s your soul hungry for right now?",
+                "What lesson keeps repeating in your life?",
+                "Have you ever had a “dark night of the soul”?",
+                "What’s your biggest existential fear?",
+                "Do you feel like you’re fulfilling your calling in life?",
+                "What does “becoming whole” mean to you?",
+                "What’s your deepest inner battle?",
+                "What do you think we’re all really searching for in this life?",
+                "What would your highest self want to say to you right now?",
+                "What does spiritual sexuality mean to you?",
+                "When do you feel closest to me during intimacy?",
+                "What emotional state makes you feel most aroused?",
+                "What’s something sacred to you about sex?",
+                "What part of your body holds the most emotion?",
+                "Do you see physical connection as healing?",
+                "What’s one thing you’ve never told me about what turns you on emotionally?",
+                "What does complete surrender in intimacy look like to you?",
+                "What’s your fear around not being “enough” in the bedroom?",
+                "What’s a deeper form of intimacy we haven’t explored yet?",
+                "In what ways are we mirrors for each other?",
+                "What have I shown you about yourself—good or bad?",
+                "What part of me do you see that you’re still trying to find in yourself?",
+                "How does our relationship challenge you to grow?",
+                "What energy do I bring into your life that you didn’t know you needed?",
+                "How do I reflect your fears—and your healing?",
+                "What do you think I see in you that you struggle to see in yourself?",
+                "What shadow of yours has come up in our connection?",
+                "When do you feel like we’re completely in sync?",
+                "What does our love teach you about yourself?",
+                "What’s something you need but are afraid to ask me for?",
+                "What part of me do you feel most connected to—and why?",
+                "What’s one thing you’ve felt for a long time but never voiced?",
+                "What truth do you carry in your heart that scares you?",
+                "What would you say to me if you knew I’d truly listen with no judgment?",
+                "What’s one thing I do that deeply impacts you—but I may not know it?",
+                "What are you most grateful for about me, that words don’t do justice?",
+                "If everything ended tomorrow, what would you regret not telling me?",
+                "What vow would you write for me right now, in this moment?",
+                "What does it mean to truly, fully choose each other—every single day?"
+            ],
+            theLoveLab: [
+                "Can we create a cozy space for a deep talk tonight?",
+                "Let’s write each other a love letter—then read it out loud.",
+                "Can we swap phones for an hour and share one thing we learned?",
+                "Let’s look at old photos together—what do you remember most?",
+                "Can we make a playlist that tells the story of our relationship?",
+                "Want to cook a recipe that reminds us of our childhood?",
+                "Let’s create a couples vision board—what do you see for us?",
+                "Can we take turns giving each other 10-minute back rubs while talking about our day?",
+                "Let’s re-watch our favorite movie together—what did we love about it the first time?",
+                "Want to write down 5 things we love about each other and tape them to the fridge?",
+                "Want to journal side-by-side for 15 minutes, then share what came up?",
+                "Can we draw a timeline of our relationship together so far?",
+                "Let’s write our future love story, 10 years from now.",
+                "Want to paint how we feel about our relationship—without words?",
+                "Let’s write down one fear, one dream, and one desire each—and discuss.",
+                "Can we take turns finishing the sentence: “What I love most about you is…”?",
+                "Let’s each write down what we think our love language is—and then swap.",
+                "Can we write a couple’s mission statement together?",
+                "Let’s create a list of 'Things We’ve Overcome' together.",
+                "Want to start a couples gratitude journal?",
+                "Want to try eye gazing for 60 seconds—no talking?",
+                "Let’s cuddle without distractions and talk about our love life.",
+                "Can we take turns giving a 3-minute guided massage—just for presence?",
+                "Want to dance together in the living room, even if we’re bad at it?",
+                "Can we try a slow, 3-minute kiss—no distractions?",
+                "Let’s lie down and place a hand on each other’s heart. What do you feel?",
+                "Want to do a “touch appreciation” exercise—naming places you love to be touched?",
+                "Can we create a sensual date night with no agenda—just exploration?",
+                "Let’s hold hands in silence for 2 minutes and say one truth that rises after.",
+                "Can we take a nap together in complete silence and stillness?",
+                "Want to take a walk without phones and just ask deep questions?",
+                "Can we go somewhere new in our city and reflect on the experience?",
+                "Let’s volunteer somewhere meaningful to us as a couple.",
+                "Want to go stargazing and talk about our place in the universe?",
+                "Can we take a 'first date' style trip and pretend we just met?",
+                "Let’s do something spontaneous—where would we go?",
+                "Want to spend a day offline exploring nature together?",
+                "Can we visit a bookstore and each pick a book for the other?",
+                "Let’s go on a drive and share stories from our childhood.",
+                "Want to try a new cultural food and reflect on the experience?",
+                "Let’s do 36 Questions That Lead to Love and see how deep we get.",
+                "Want to play a 'Yes Day' game—where one person plans it all?",
+                "Can we make a 'Couples Bucket List' and complete one today?",
+                "Let’s each pick a fear we want to overcome—then cheer each other on.",
+                "Want to make a 'jar of dares' filled with silly, sexy, or serious activities?",
+                "Can we try a 30-day challenge (gratitude, no phones, daily touch)?",
+                "Let’s set a timer and see how many things we can list that we love about each other.",
+                "Want to answer 'This or That' questions rapid-fire—then explain our answers?",
+                "Can we do a blindfolded taste test and guess each other’s picks?",
+                "Let’s each plan a surprise date and keep it a secret until the day of.",
+                "What would we do if we had 24 hours and no limits? Let’s act it out.",
+                "What’s something we’ve never done as a couple but want to try—can we plan it?",
+                "Let’s take turns asking each other our 'What If' fantasies.",
+                "Want to write a list of things we’ve never told each other—and share one each week?",
+                "Can we record a voice memo for our future selves as a couple?",
+                "Let’s imagine we’re writing a book about our love—what’s chapter one called?",
+                "Want to answer questions as our 'future selves' and reflect on it together?",
+                "Can we talk about our biggest heartbreaks—and what we needed then?",
+                "Let’s explore our differences: how do we view love, trust, purpose differently?",
+                "Want to create a shared mantra or affirmation for us to say daily?",
+                "Can we reflect on the highs and lows of this past year together?",
+                "Let’s make a 'relationship audit'—what’s working, what needs love?",
+                "Want to each choose a moment we’d relive in our relationship and why?",
+                "Can we create a ritual for ending arguments or hard days with connection?",
+                "Let’s reflect on how we’ve changed each other’s lives.",
+                "Want to each record a video message of appreciation for the other to watch later?",
+                "Can we each list 3 things we admire in the other and explain why?",
+                "Let’s identify one behavior or habit to grow together.",
+                "Want to reflect on what 'home' means to us—and how we bring that to each other?",
+                "Can we come up with a monthly relationship check-in routine?",
+                "Want to pray or meditate together—then talk about what came up?",
+                "Let’s read a scripture or quote and reflect on it from our perspectives.",
+                "Can we share our spiritual journeys—and how love plays a role in them?",
+                "Let’s write our personal definitions of 'soulmate' and compare them.",
+                "Want to do a guided breathwork or yoga session side by side?",
+                "Can we each draw or paint what 'healing' looks like in our relationship?",
+                "Let’s talk about what brings us peace—and how we create more of that.",
+                "Want to set a spiritual intention for our relationship this season?",
+                "Can we light a candle and share what we’re releasing emotionally?",
+                "Let’s create a ritual for expressing gratitude regularly.",
+                "Can we sit face-to-face and say the one thing we admire most about the other?",
+                "Let’s each describe the other using only metaphors or symbols.",
+                "Want to do a mirror meditation and talk about what came up?",
+                "Let’s swap 'a day in the life' stories from each other’s perspective.",
+                "Can we describe how we’ve grown because of this relationship?",
+                "Let’s take a photo of each other, then describe what we see—not just the surface.",
+                "Want to each make a list of how the other has healed or challenged us?",
+                "Let’s ask: 'What version of me do you see that I don’t?'",
+                "Can we draw each other—not for skill, but for soul?",
+                "Let’s make a list of what we want to protect in each other?",
+                "Let’s write a letter to our future selves 10 years from now.",
+                "Can we map out a dream year together—month by month?",
+                "Let’s pick a life lesson we want to teach our future children.",
+                "Want to talk about how we’ll support each other during hard seasons?",
+                "Can we imagine our relationship as an old couple and describe what we see?",
+                "Let’s talk about what success in love looks like to us.",
+                "Want to design our dream home together—on paper or Pinterest?",
+                "Can we plan a ritual for how we’ll stay connected during busy times?",
+                "Let’s create a family tradition that starts now?",
+                "Want to make a time capsule of our relationship and open it years later?"
+            ],
+            unfilteredLove: [
+                "What’s a truth about yourself you’re still trying to accept?",
+                "Do you think you’ll ever truly 'figure yourself out'?",
+                "What’s something you believe that most people would disagree with?",
+                "What do you lie about the most—to yourself or others?",
+                "What do you judge me for, even just a little?",
+                "What’s one emotional scar you never talk about?",
+                "Do you believe in God, the universe, or nothing at all?",
+                "What keeps you up at night that you’ve never told me?",
+                "What part of yourself are you most ashamed of?",
+                "If you could erase one memory, would you?",
+                "What’s one time you wanted to walk away from this relationship?",
+                "What’s the worst thing I’ve ever done to hurt you—intentionally or not?",
+                "If we broke up tomorrow, what would be the real reason?",
+                "What part of our relationship feels the most fake or performative?",
+                "What’s something I do in bed that secretly annoys you?",
+                "What’s your biggest fear about marrying me or committing long-term?",
+                "What’s something you wish I would say during sex—but never do?",
+                "Do you ever compare me to someone from your past?",
+                "Have you ever fantasized about someone else while we were together?",
+                "What would be a dealbreaker you haven’t told me about?",
+                "What’s your wildest fantasy you haven’t shared yet?",
+                "How satisfied are you—really—with our sex life?",
+                "What’s something kinky or taboo you’d try if there were zero judgment?",
+                "Have you ever faked it with me?",
+                "What turns you on emotionally that I don’t do enough?",
+                "What’s a weird turn-on you’ve never admitted?",
+                "What’s your favorite position—and your guilty pleasure one?",
+                "Have you ever been tempted to cheat—even emotionally?",
+                "What would 'uninhibited sex' look like for you?",
+                "Do you like being dominant, submissive, or something else entirely?",
+                "What’s a dark thought you’ve had that scared you?",
+                "Have you ever wished you could start your life over?",
+                "What do you hate about yourself the most?",
+                "When do you feel like a fraud?",
+                "What do you pretend to care about, but actually don’t?",
+                "What’s a belief you hold that would shock most people?",
+                "What’s the most morally gray thing you’ve ever done?",
+                "Do you think you’re capable of being toxic?",
+                "What’s one secret you’ll probably take to your grave?",
+                "Have you ever emotionally manipulated someone?",
+                "Who was your first heartbreak—and did you ever truly get over it?",
+                "What’s something you miss that you’ll never get back?",
+                "When did you first learn love can be painful?",
+                "What kind of love destroyed you?",
+                "Have you ever broken someone’s heart and not cared?",
+                "Do you think we could fall out of love one day?",
+                "What’s one breakup you regret—not because of them, but because of how you acted?",
+                "What wound still bleeds when no one’s looking?",
+                "Do you believe in second chances in love—or only one shot?",
+                "What’s the hardest goodbye you’ve ever said?",
+                "What’s the pettiest reason you’ve started a fight?",
+                "What’s something I do that you secretly resent?",
+                "Have you ever wished I was more like someone else?",
+                "What’s your most toxic trait in a relationship?",
+                "How do you react when you’re losing control emotionally?",
+                "What’s a manipulative thing you’ve done in a past relationship?",
+                "What part of our relationship do you struggle to trust?",
+                "What’s the ugliest thing you’ve ever said to someone you loved?",
+                "What’s your go-to coping mechanism that makes things worse?",
+                "What would you do if I betrayed you—truly?",
+                "What’s the last thing that made you cry alone?",
+                "What’s a grudge you still hold and why?",
+                "Have you ever been emotionally numb? What caused it?",
+                "What emotion do you hide the most and why?",
+                "What’s one thing you wish I’d stop pretending not to notice?",
+                "What makes you feel powerless?",
+                "What memory makes your stomach drop?",
+                "What do you fear I’ll find out about you?",
+                "What’s something you feel but are afraid to say out loud?",
+                "What’s the most out-of-character thing you’ve ever done?",
+                "Do you think your life has meaning—or are we all winging it?",
+                "What’s your personal definition of heaven or hell?",
+                "If no one ever judged you, who would you be?",
+                "Do you think people are born good, bad, or blank?",
+                "What’s something that keeps your ego alive?",
+                "If you had to disappear and start over, would you do it?",
+                "Who would you be without your trauma?",
+                "What’s one belief you wish you didn’t believe anymore?",
+                "If your soul had a name, what would it be?",
+                "Do you think the universe tests us—or we create our own chaos?",
+                "What’s something you think I need to hear—but haven’t told me?",
+                "What’s one way I make you feel small?",
+                "What’s one way I’ve changed you for the worse?",
+                "What’s one thing you wish I’d admit about myself?",
+                "Do you ever feel emotionally alone with me?",
+                "What part of our relationship is starting to feel transactional?",
+                "What’s something I do that makes you question our future?",
+                "What’s something about me that triggers your worst self?",
+                "What do you think I avoid being honest about?",
+                "What’s the thing you’re most afraid to tell me?",
+                "Would you stay if the sex was always average—but the love was deep?",
+                "What’s something you’d only say if you were leaving tomorrow?",
+                "Would you forgive me if I cheated and told you immediately?",
+                "If I died today, what would you wish you’d done differently with me?",
+                "What’s one memory you wish I didn’t have of you?",
+                "Would you choose emotional safety or thrilling love if you couldn’t have both?",
+                "What’s the one thing that could ruin us right now?",
+                "If I gave you a hall pass, who would it be?",
+                "What’s something you’d never want me to know—but would respect me more if I did?",
+                "If our love is a fire, are we feeding it—or watching it burn out?"
+            ]
         };
 
         const usedCards = {
-            spark: new Set(),
-            soul: new Set(),
-            fire: new Set(),
-            action: new Set(),
-            teamwork: new Set()
+            warmMeUp: new Set(),
+            beneathTheSkin: new Set(),
+            nakedHours: new Set(),
+            theLoveLab: new Set(),
+            unfilteredLove: new Set()
         };
 
         // Game state
@@ -244,17 +556,23 @@
             const used = usedCards[deckName];
             let card;
 
+            if (!deck) {
+                document.getElementById('card-display').innerHTML = "Error: Deck not found!";
+                console.error(`Deck ${deckName} not initialized`);
+                return;
+            }
+
             do {
                 card = deck[Math.floor(Math.random() * deck.length)];
-            } while (used.has(card) && used.size < 100);
+            } while (used.has(card) && used.size < deck.length);
 
-            if (used.size >= 100) {
-                document.getElementById('card-display').innerHTML = `<strong>${deckName.toUpperCase()}:</strong> All out of cards—wow, you’re good!`;
+            if (used.size >= deck.length) {
+                document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> All 100 cards drawn—wow, you’re deep!`;
                 return;
             }
 
             used.add(card);
-            document.getElementById('card-display').innerHTML = `<strong>${deckName.toUpperCase()}:</strong> ${card}`;
+            document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> ${card}`;
             addHearts();
         }
 
@@ -262,10 +580,10 @@
         function endTurn() {
             currentPlayer = currentPlayer === 1 ? 2 : 1;
             document.getElementById('turn').textContent = `Player ${currentPlayer}'s Turn`;
-            document.getElementById('card-display').innerHTML = "Pick a deck to keep the fun going!";
+            document.getElementById('card-display').innerHTML = "Pick a deck to spark the magic!";
         }
 
-        // Add floating hearts for extra flair
+        // Add floating hearts
         function addHearts() {
             for (let i = 0; i < 5; i++) {
                 const heart = document.createElement('div');
