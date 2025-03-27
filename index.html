@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart & Hustle</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        h1 {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 2px 2px 4px #ff6f61;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #fff;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .deck-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 25px;
+            font-size: 1.1em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            transform: scale(1.1);
+            background-color: #ff4d3f;
+        }
+        #card-display {
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            min-height: 150px;
+            max-width: 600px;
+            margin: 30px auto;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            font-size: 1.3em;
+            color: #333;
+            position: relative;
+            animation: cardFlip 0.5s ease-in-out;
+        }
+        @keyframes cardFlip {
+            0% { transform: rotateY(90deg); opacity: 0; }
+            100% { transform: rotateY(0); opacity: 1; }
+        }
+        #turn {
+            font-size: 1.5em;
+            color: #fff;
+            text-shadow: 1px 1px 3px #ff6f61;
+            margin: 10px 0;
+        }
+        .next-turn-btn {
+            background-color: #6b7280;
+        }
+        .next-turn-btn:hover {
+            background-color: #4b5563;
+        }
+        .hearts {
+            position: absolute;
+            font-size: 2em;
+            color: #ff6f61;
+            animation: float 3s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Heart & Hustle</h1>
+        <p>Get ready to laugh, love, and connect!</p>
+        <div id="turn">Player 1's Turn</div>
+        <div class="deck-buttons">
+            <button onclick="drawCard('spark')">✨ Spark</button>
+            <button onclick="drawCard('soul')">💡 Soul</button>
+            <button onclick="drawCard('fire')">🔥 Fire</button>
+            <button onclick="drawCard('action')">🎉 Action</button>
+            <button onclick="drawCard('teamwork')">🤝 Teamwork</button>
+        </div>
+        <div id="card-display">Pick a deck to start the fun!</div>
+        <button class="next-turn-btn" onclick="endTurn()">Next Turn</button>
+    </div>
+
+    <script>
+        // Card generation functions for 100 unique cards per deck
+        const generateDeck = (type) => {
+            const deck = new Set();
+            while (deck.size < 100) {
+                let card;
+                switch (type) {
+                    case 'spark':
+                        card = generateSparkCard();
+                        break;
+                    case 'soul':
+                        card = generateSoulCard();
+                        break;
+                    case 'fire':
+                        card = generateFireCard();
+                        break;
+                    case 'action':
+                        card = generateActionCard();
+                        break;
+                    case 'teamwork':
+                        card = generateTeamworkCard();
+                        break;
+                }
+                deck.add(card);
+            }
+            return Array.from(deck);
+        };
+
+        function generateSparkCard() {
+            const starters = ["What’s the", "If you", "Tell me about", "Describe"];
+            const topics = [
+                "goofiest thing you’ve done this week",
+                "weirdest snack you love",
+                "silliest nickname you’ve had",
+                "most random thing in your pocket",
+                "best cartoon you’ve watched",
+                "funniest face you can make",
+                "craziest outfit you’ve worn",
+                "wildest thing you’d do for $5"
+            ];
+            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
+        }
+
+        function generateSoulCard() {
+            const starters = ["What’s a", "Tell me about a", "How do you", "What’s one"];
+            const topics = [
+                "memory that makes you smile",
+                "time you felt super brave",
+                "dream we could share",
+                "lesson life keeps teaching you",
+                "place you feel at peace",
+                "song that feels like home",
+                "moment you knew I was special",
+                "hope you have for us"
+            ];
+            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
+        }
+
+        function generateFireCard() {
+            const starters = ["What’s", "How do you", "Tell me about", "What’s one"];
+            const topics = [
+                "thing I do that melts you",
+                "secret wish you’ve held back",
+                "way I make you feel alive",
+                "fear you’d let me hold",
+                "spark that keeps us going",
+                "kiss you can’t forget",
+                "dream you’d whisper to me",
+                "heat you feel right now"
+            ];
+            return `${starters[Math.floor(Math.random() * starters.length)]} ${topics[Math.floor(Math.random() * topics.length)]}?`;
+        }
+
+        function generateActionCard() {
+            const actions = [
+                "Mimic your partner’s",
+                "Act out",
+                "Sing a",
+                "Invent a",
+                "Give your partner a",
+                "Dance like"
+            ];
+            const details = [
+                "sneaky giggle for 20 seconds",
+                "first date in 30 seconds",
+                "silly love tune on the spot",
+                "wild handshake for us",
+                "twirly hug right now",
+                "a funky chicken for 15 seconds"
+            ];
+            return `${actions[Math.floor(Math.random() * actions.length)]} ${details[Math.floor(Math.random() * details.length)]}!`;
+        }
+
+        function generateTeamworkCard() {
+            const tasks = [
+                "Take turns shouting",
+                "Hold hands and",
+                "Make up a",
+                "Face each other and"
+            ];
+            const goals = [
+                "5 goofy compliments fast",
+                "spin until you giggle",
+                "2-line rap about us",
+                "mimic each other’s faces"
+            ];
+            return `${tasks[Math.floor(Math.random() * tasks.length)]} ${goals[Math.floor(Math.random() * goals.length)]}!`;
+        }
+
+        // Initialize decks
+        const decks = {
+            spark: generateDeck('spark'),
+            soul: generateDeck('soul'),
+            fire: generateDeck('fire'),
+            action: generateDeck('action'),
+            teamwork: generateDeck('teamwork')
+        };
+
+        const usedCards = {
+            spark: new Set(),
+            soul: new Set(),
+            fire: new Set(),
+            action: new Set(),
+            teamwork: new Set()
+        };
+
+        // Game state
+        let currentPlayer = 1;
+
+        // Draw a card
+        function drawCard(deckName) {
+            const deck = decks[deckName];
+            const used = usedCards[deckName];
+            let card;
+
+            do {
+                card = deck[Math.floor(Math.random() * deck.length)];
+            } while (used.has(card) && used.size < 100);
+
+            if (used.size >= 100) {
+                document.getElementById('card-display').innerHTML = `<strong>${deckName.toUpperCase()}:</strong> All out of cards—wow, you’re good!`;
+                return;
+            }
+
+            used.add(card);
+            document.getElementById('card-display').innerHTML = `<strong>${deckName.toUpperCase()}:</strong> ${card}`;
+            addHearts();
+        }
+
+        // Switch turns
+        function endTurn() {
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
+            document.getElementById('turn').textContent = `Player ${currentPlayer}'s Turn`;
+            document.getElementById('card-display').innerHTML = "Pick a deck to keep the fun going!";
+        }
+
+        // Add floating hearts for extra flair
+        function addHearts() {
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'hearts';
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+    </script>
+</body>
+</html>
