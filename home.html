@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Games Hub</title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Connecting Games Hub</h1>
+        <p>Pick a game to spark connection, conversation, laughter, and love!</p>
+        <nav>
+            <ul class="menu">
+                <li><a href="home.html" class="active">Home</a></li>
+                <li><a href="couples.html">Couples</a></li>
+                <li><a href="family.html">Family</a></li>
+                <li><a href="friends.html">Friends</a></li>
+                <li><a href="kids.html">Kids</a></li>
+                <li><a href="christian.html">Christian</a></li>
+            <!-- <li><a href="truthOrDare.html">Truth or Dare</a></li>
+                <li><a href="couplesQuiz.html">Couples Quiz</a></li>
+                <li><a href="loveRoulette.html">Love Roulette</a></li>
+                <li><a href="memoryMatch.html">Memory Match</a></li> -->
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        // Add floating hearts for visual flair
+        function addHearts() {
+            for (let i = 0; i < 5; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'hearts';
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${Math.random() * 3}s`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }
+        }
+
+        // Run on page load and repeat every 5 seconds
+        window.onload = () => {
+            addHearts();
+            setInterval(addHearts, 5000);
+        };
+    </script>
+</body>
+</html>
