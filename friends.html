@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon</title>
+    <link rel="stylesheet" href="css/friends.css">
+</head>
+<body>
+    <nav>
+        <ul class="menu">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="couples.html">Couples</a></li>
+            <li><a href="family.html">Family</a></li>
+            <li><a href="friends.html">Friends</a></li>
+            <li><a href="kids.html">Kids</a></li>
+            <li><a href="christian.html">Christian</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Coming Soon!</h1>
+        <p>Something special is brewing for this page—stay tuned!</p>
+        <div class="coming-soon">We’re working hard to bring you more fun, connection, and love. Check back soon!</div>
+    </div>
+
+    <script>
+        // Add floating stars for consistency
+        function addStars() {
+            for (let i = 0; i < 5; i++) {
+                const star = document.createElement('div');
+                star.className = 'stars';
+                star.innerHTML = '✨';
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.animationDelay = `${Math.random() * 3}s`;
+                document.body.appendChild(star);
+                setTimeout(() => star.remove(), 4000);
+            }
+        }
+
+        // Run on page load and repeat every 5 seconds
+        window.onload = () => {
+            addStars();
+            setInterval(addStars, 5000);
+        };
+    </script>
+</body>
+</html>
