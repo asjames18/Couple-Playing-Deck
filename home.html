@@ -5,44 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connecting Games Hub</title>
     <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Connecting Games Hub</h1>
-        <p>Pick a game to spark connection, conversation, laughter, and love!</p>
-        <nav>
-            <ul class="menu">
-                <li><a href="couples.html">Couples</a></li>
-                <li><a href="family.html">Family</a></li>
-                <li><a href="friends.html">Friends</a></li>
-                <li><a href="kids.html">Kids</a></li>
-                <li><a href="christian.html">Christian</a></li>
-            <!-- <li><a href="truthOrDare.html">Truth or Dare</a></li>
-                <li><a href="couplesQuiz.html">Couples Quiz</a></li>
-                <li><a href="loveRoulette.html">Love Roulette</a></li>
-                <li><a href="memoryMatch.html">Memory Match</a></li> -->
-            </ul>
-        </nav>
-    </div>
+    <div class="background-animation"></div>
+    
+    <main class="container">
+        <header class="hero">
+            <h1>Connecting Games Hub</h1>
+            <p class="subtitle">Spark meaningful connections through play</p>
+        </header>
+
+        <div class="categories-grid">
+            <section class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-heart"></i>
+                    <h2>Relationship Games</h2>
+                </div>
+                <div class="games-grid">
+                    <a href="couples.html" class="game-card">
+                        <span class="emoji">💑</span>
+                        <span class="title">Couples</span>
+                    </a>
+                    <a href="family.html" class="game-card">
+                        <span class="emoji">👨‍👩‍👧‍👦</span>
+                        <span class="title">Family</span>
+                    </a>
+                    <a href="friends.html" class="game-card">
+                        <span class="emoji">👥</span>
+                        <span class="title">Friends</span>
+                    </a>
+                    <a href="kids.html" class="game-card">
+                        <span class="emoji">🎮</span>
+                        <span class="title">Kids</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-comments"></i>
+                    <h2>Conversation Starters</h2>
+                </div>
+                <div class="games-grid">
+                    <a href="truthOrDare.html" class="game-card">
+                        <span class="emoji">🎲</span>
+                        <span class="title">Truth or Dare</span>
+                    </a>
+                    <a href="wouldYouRather.html" class="game-card">
+                        <span class="emoji">🤔</span>
+                        <span class="title">Would You Rather</span>
+                    </a>
+                    <a href="neverHaveIEver.html" class="game-card">
+                        <span class="emoji">🙈</span>
+                        <span class="title">Never Have I Ever</span>
+                    </a>
+                    <a href="twoTruths.html" class="game-card">
+                        <span class="emoji">🎯</span>
+                        <span class="title">Two Truths & a Lie</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-paint-brush"></i>
+                    <h2>Creative Connection</h2>
+                </div>
+                <div class="games-grid">
+                    <a href="storyTime.html" class="game-card">
+                        <span class="emoji">📚</span>
+                        <span class="title">Story Time</span>
+                    </a>
+                    <a href="memoryLane.html" class="game-card">
+                        <span class="emoji">🏞️</span>
+                        <span class="title">Memory Lane</span>
+                    </a>
+                    <a href="gratitude.html" class="game-card">
+                        <span class="emoji">🙏</span>
+                        <span class="title">Gratitude Journal</span>
+                    </a>
+                </div>
+            </section>
+
+            <section class="category-card">
+                <div class="category-header">
+                    <i class="fas fa-pray"></i>
+                    <h2>Spiritual Connection</h2>
+                </div>
+                <div class="games-grid">
+                    <a href="christian.html" class="game-card">
+                        <span class="emoji">✝️</span>
+                        <span class="title">Christian Games</span>
+                    </a>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <script>
-        // Add floating hearts for visual flair
-        function addHearts() {
-            for (let i = 0; i < 5; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'hearts';
-                heart.innerHTML = '❤️';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.animationDelay = `${Math.random() * 3}s`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
-            }
+        // Add floating elements
+        const emojis = ['❤️', '💖', '💝', '💕', '💓', '✨', '🌟'];
+        
+        function createFloatingElement() {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            element.style.left = `${Math.random() * 100}vw`;
+            element.style.animationDuration = `${3 + Math.random() * 2}s`;
+            element.style.animationDelay = `${Math.random() * 2}s`;
+            document.body.appendChild(element);
+            setTimeout(() => element.remove(), 5000);
         }
 
-        // Run on page load and repeat every 5 seconds
+        // Add click effect
+        document.addEventListener('click', (e) => {
+            for (let i = 0; i < 3; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                element.style.left = `${e.clientX}px`;
+                element.style.top = `${e.clientY}px`;
+                element.style.animationDuration = '1s';
+                element.style.transform = `rotate(${Math.random() * 360}deg)`;
+                document.body.appendChild(element);
+                setTimeout(() => element.remove(), 1000);
+            }
+        });
+
+        // Initialize animations
         window.onload = () => {
-            addHearts();
-            setInterval(addHearts, 5000);
+            setInterval(createFloatingElement, 3000);
         };
     </script>
 </body>
