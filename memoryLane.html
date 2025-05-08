@@ -30,10 +30,10 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
             position: relative;
-            overflow: hidden;
+            overflow-y: auto;
         }
 
         .background-animation {
@@ -63,7 +63,8 @@
             max-width: 800px;
             box-shadow: var(--shadow);
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            margin: 20px 0;
         }
 
         .home-link {
@@ -120,7 +121,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .memory-text {
@@ -142,6 +143,8 @@
             border-radius: 10px;
             margin-bottom: 20px;
             display: none;
+            max-height: 400px;
+            object-fit: cover;
         }
 
         .controls {
@@ -213,8 +216,13 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
             .game-container {
-                padding: 20px;
+                padding: 15px;
+                margin: 10px 0;
             }
 
             .game-title {
@@ -227,17 +235,56 @@
 
             .controls {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .btn {
                 width: 100%;
                 justify-content: center;
+                padding: 12px 20px;
             }
 
             .home-link {
                 position: static;
-                margin-bottom: 20px;
+                margin-bottom: 15px;
                 justify-content: center;
+                width: 100%;
+            }
+
+            .memory-container {
+                padding: 20px;
+                min-height: 150px;
+            }
+
+            .memory-image {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 10px;
+            }
+
+            .game-title {
+                font-size: 1.8em;
+            }
+
+            .memory-text {
+                font-size: 1.2em;
+            }
+
+            .memory-date {
+                font-size: 1em;
+            }
+
+            .btn {
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+
+            .memory-image {
+                max-height: 250px;
             }
         }
     </style>
