@@ -1,0 +1,134 @@
+const challenges = {
+    all: {
+        truth: [
+            "What's the most embarrassing thing you've ever done?",
+            "What's your biggest regret?",
+            "What's the biggest lie you've ever told?",
+            "What's your most embarrassing moment in public?",
+            "What's something you've never told anyone?",
+            "What's your biggest fear?",
+            "What's the most trouble you've ever been in?",
+            "What's your biggest insecurity?",
+            "What's something you're proud of but never share?",
+            "What's the most rebellious thing you've ever done?"
+        ],
+        dare: [
+            "Do your best dance move right now",
+            "Let the group post anything they want on your social media",
+            "Call your mom and tell her you're getting married",
+            "Let someone in the group go through your phone for 1 minute",
+            "Let the group choose your profile picture for a week",
+            "Do your best impression of someone in the group",
+            "Let someone in the group send a text to anyone in your contacts",
+            "Let the group choose your outfit for tomorrow",
+            "Do your best animal impression",
+            "Let someone in the group post a status on your social media"
+        ]
+    },
+    fun: {
+        truth: [
+            "What's the funniest thing you've ever done?",
+            "What's your most embarrassing childhood memory?",
+            "What's the silliest thing you've ever done to impress someone?",
+            "What's your most embarrassing fashion choice?",
+            "What's the funniest thing you've ever said to someone?",
+            "What's your most embarrassing nickname?",
+            "What's the silliest thing you've ever believed?",
+            "What's your most embarrassing moment in school?",
+            "What's the funniest thing you've ever done while drunk?",
+            "What's your most embarrassing social media post?"
+        ],
+        dare: [
+            "Do your best robot dance",
+            "Sing the alphabet backwards",
+            "Do your best celebrity impression",
+            "Let someone in the group give you a makeover",
+            "Do your best superhero pose",
+            "Let the group choose your ringtone",
+            "Do your best animal sound",
+            "Let someone in the group choose your next profile picture",
+            "Do your best movie scene reenactment",
+            "Let the group choose your next status update"
+        ]
+    },
+    deep: {
+        truth: [
+            "What's your biggest life lesson?",
+            "What's your biggest regret in life?",
+            "What's your biggest fear about the future?",
+            "What's your biggest insecurity?",
+            "What's your biggest dream?",
+            "What's your biggest disappointment?",
+            "What's your biggest achievement?",
+            "What's your biggest challenge?",
+            "What's your biggest hope?",
+            "What's your biggest regret in relationships?"
+        ],
+        dare: [
+            "Share your biggest fear with the group",
+            "Share your biggest dream with the group",
+            "Share your biggest regret with the group",
+            "Share your biggest achievement with the group",
+            "Share your biggest challenge with the group",
+            "Share your biggest hope with the group",
+            "Share your biggest disappointment with the group",
+            "Share your biggest insecurity with the group",
+            "Share your biggest life lesson with the group",
+            "Share your biggest relationship regret with the group"
+        ]
+    },
+    relationships: {
+        truth: [
+            "What's your biggest relationship regret?",
+            "What's your biggest relationship fear?",
+            "What's your biggest relationship dream?",
+            "What's your biggest relationship challenge?",
+            "What's your biggest relationship achievement?",
+            "What's your biggest relationship disappointment?",
+            "What's your biggest relationship insecurity?",
+            "What's your biggest relationship hope?",
+            "What's your biggest relationship lesson?",
+            "What's your biggest relationship regret?"
+        ],
+        dare: [
+            "Call your ex and tell them you miss them",
+            "Let the group choose your next date",
+            "Let someone in the group set up your dating profile",
+            "Let the group choose your next relationship status",
+            "Let someone in the group choose your next date outfit",
+            "Let the group choose your next date location",
+            "Let someone in the group choose your next date activity",
+            "Let the group choose your next date conversation topic",
+            "Let someone in the group choose your next date playlist",
+            "Let the group choose your next date gift"
+        ]
+    },
+    lifestyle: {
+        truth: [
+            "What's your biggest lifestyle regret?",
+            "What's your biggest lifestyle fear?",
+            "What's your biggest lifestyle dream?",
+            "What's your biggest lifestyle challenge?",
+            "What's your biggest lifestyle achievement?",
+            "What's your biggest lifestyle disappointment?",
+            "What's your biggest lifestyle insecurity?",
+            "What's your biggest lifestyle hope?",
+            "What's your biggest lifestyle lesson?",
+            "What's your biggest lifestyle regret?"
+        ],
+        dare: [
+            "Let the group choose your next meal",
+            "Let someone in the group choose your next workout",
+            "Let the group choose your next outfit",
+            "Let someone in the group choose your next hobby",
+            "Let the group choose your next vacation destination",
+            "Let someone in the group choose your next book",
+            "Let the group choose your next movie",
+            "Let someone in the group choose your next song",
+            "Let the group choose your next restaurant",
+            "Let someone in the group choose your next activity"
+        ]
+    }
+};
+
+export default challenges; 

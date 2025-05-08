@@ -3,8 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <link rel="stylesheet" href="css/kids.css">
+    <title>Family Connection Time</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --accent-color: #FFE66D;
+            --background-color: #F7FFF7;
+            --text-color: #2C3E50;
+            --card-background: #FFFFFF;
+            --border-radius: 20px;
+            --spacing: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--spacing);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 107, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 20%);
+        }
+
+        nav {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: var(--spacing);
+        }
+
+        .menu {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 10px;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .game-container {
+            max-width: 800px;
+            width: 100%;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: var(--spacing);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: var(--spacing);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 var(--accent-color);
+        }
+
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .activity-area {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing);
+            margin: var(--spacing) 0;
+        }
+
+        .activity-card {
+            background: var(--secondary-color);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-card i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .prompt-area {
+            background: var(--accent-color);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            margin: var(--spacing) 0;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .prompt-text {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .control-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .activity-area {
+                grid-template-columns: 1fr;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .prompt-text {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -14,34 +222,95 @@
             <li><a href="family.html">Family</a></li>
             <li><a href="friends.html">Friends</a></li>
             <li><a href="kids.html">Kids</a></li>
-            <li><a href="christian.html">Christian</a></li>
         </ul>
     </nav>
-    <div class="container">
-        <h1>Coming Soon!</h1>
-        <p>Something special is brewing for this page—stay tuned!</p>
-        <div class="coming-soon">We’re working hard to bring you more fun, connection, and love. Check back soon!</div>
+
+    <div class="game-container">
+        <div class="floating-elements" id="floatingElements"></div>
+        
+        <div class="game-header">
+            <h1 class="game-title">Family Connection Time</h1>
+            <p class="game-subtitle">Let's talk and grow together!</p>
+        </div>
+
+        <div class="activity-area">
+            <div class="activity-card" data-activity="feelings">
+                <i class="fas fa-heart"></i>
+                <p>How Are You Feeling?</p>
+            </div>
+            <div class="activity-card" data-activity="dreams">
+                <i class="fas fa-star"></i>
+                <p>Share Your Dreams</p>
+            </div>
+            <div class="activity-card" data-activity="memories">
+                <i class="fas fa-camera"></i>
+                <p>Memory Wall</p>
+            </div>
+            <div class="activity-card" data-activity="gratitude">
+                <i class="fas fa-hands"></i>
+                <p>Family Gratitude</p>
+            </div>
+        </div>
+
+        <div class="prompt-area">
+            <p class="prompt-text" id="promptText">Choose an activity to start your family connection time!</p>
+            <div class="controls">
+                <button class="control-button" id="nextButton">Next Question</button>
+            </div>
+        </div>
     </div>
 
+    <script src="js/kids-questions.js"></script>
     <script>
-        // Add floating stars for consistency
-        function addStars() {
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.innerHTML = '✨';
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 4000);
-            }
+        // Game state
+        let currentActivity = null;
+
+        // DOM elements
+        const activityCards = document.querySelectorAll('.activity-card');
+        const promptText = document.getElementById('promptText');
+        const nextButton = document.getElementById('nextButton');
+        const floatingElements = document.getElementById('floatingElements');
+
+        // Initialize floating elements
+        function createFloatingElements() {
+            const symbols = ['❤️', '🌟', '🌈', '👨‍👩‍👧‍👦', '🏠', '🎨', '📚', '🎮'];
+            symbols.forEach((symbol, index) => {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = symbol;
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${index * 1.5}s`;
+                floatingElements.appendChild(element);
+            });
         }
 
-        // Run on page load and repeat every 5 seconds
-        window.onload = () => {
-            addStars();
-            setInterval(addStars, 5000);
-        };
+        // Handle activity selection
+        activityCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const activity = card.dataset.activity;
+                currentActivity = activity;
+                
+                // Update UI
+                activityCards.forEach(c => c.style.opacity = '0.5');
+                card.style.opacity = '1';
+                
+                // Update prompt
+                const randomPrompt = discussionQuestions[activity][Math.floor(Math.random() * discussionQuestions[activity].length)];
+                promptText.textContent = randomPrompt;
+            });
+        });
+
+        // Handle next question
+        nextButton.addEventListener('click', () => {
+            if (currentActivity) {
+                const randomPrompt = discussionQuestions[currentActivity][Math.floor(Math.random() * discussionQuestions[currentActivity].length)];
+                promptText.textContent = randomPrompt;
+            }
+        });
+
+        // Initialize the game
+        createFloatingElements();
     </script>
 </body>
 </html>

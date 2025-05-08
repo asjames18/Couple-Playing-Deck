@@ -3,45 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <link rel="stylesheet" href="css/christian.css"> 
-</head>
-<body>
-    <nav>
-        <ul class="menu">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="couples.html">Couples</a></li>
-            <li><a href="family.html">Family</a></li>
-            <li><a href="friends.html">Friends</a></li>
-            <li><a href="kids.html">Kids</a></li>
-            <li><a href="christian.html">Christian</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <h1>Coming Soon!</h1>
-        <p>Something special is brewing for this page—stay tuned!</p>
-        <div class="coming-soon">We’re working hard to bring you more fun, connection, and love. Check back soon!</div>
-    </div>
+    <title>Divine Reflections</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #16213e;
+            --accent-color: #e94560;
+            --text-color: #f1f1f1;
+            --gold-color: #ffd700;
+            --background-color: #0f0f1a;
+            --card-background: rgba(26, 26, 46, 0.9);
+            --border-radius: 15px;
+            --spacing: 20px;
+        }
 
-    <script>
-        // Add floating stars for consistency
-        function addStars() {
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.innerHTML = '✨';
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 4000);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Merriweather', serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(233, 69, 96, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 215, 0, 0.1) 0%, transparent 20%);
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: var(--spacing);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: var(--spacing);
+            position: relative;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .game-title {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: var(--gold-color);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .spiritual-path {
+            display: flex;
+            justify-content: space-between;
+            margin: var(--spacing) 0;
+            position: relative;
+        }
+
+        .path-step {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--gold-color);
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gold-color);
+        }
+
+        .path-step:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .path-step.active {
+            background: var(--accent-color);
+            color: var(--text-color);
+        }
+
+        .path-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gold-color);
+            z-index: -1;
+        }
+
+        .reflection-area {
+            background: var(--primary-color);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            margin: var(--spacing) 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .reflection-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .bible-verse {
+            font-style: italic;
+            color: var(--gold-color);
+            margin-top: 15px;
+            font-size: 1rem;
+            padding: 10px;
+            border-left: 3px solid var(--gold-color);
+        }
+
+        .prayer-button {
+            background: var(--accent-color);
+            color: var(--text-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px auto;
+        }
+
+        .prayer-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4);
+        }
+
+        .spiritual-journal {
+            background: var(--secondary-color);
+            padding: var(--spacing);
+            border-radius: var(--border-radius);
+            margin-top: var(--spacing);
+            display: none;
+        }
+
+        .journal-textarea {
+            width: 100%;
+            min-height: 150px;
+            background: var(--primary-color);
+            border: 1px solid var(--gold-color);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            color: var(--text-color);
+            font-family: 'Merriweather', serif;
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .journal-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-element {
+            position: absolute;
+            color: var(--gold-color);
+            opacity: 0.1;
+            font-size: 2rem;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
             }
         }
 
-        // Run on page load and repeat every 5 seconds
-        window.onload = () => {
-            addStars();
-            setInterval(addStars, 5000);
-        };
+        .spiritual-milestone {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--gold-color);
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 15px;
+            }
+
+            .game-title {
+                font-size: 2.5rem;
+            }
+
+            .spiritual-path {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .path-step {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .reflection-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="floating-elements" id="floatingElements"></div>
+        
+        <div class="game-header">
+            <a href="home.html" class="home-button">
+                <i class="fas fa-home"></i>
+                Home
+            </a>
+            <h1 class="game-title">Divine Reflections</h1>
+            <p class="game-subtitle">A Journey of Spiritual Gratitude</p>
+        </div>
+
+        <div class="spiritual-path">
+            <div class="path-line"></div>
+            <div class="path-step" data-step="praise">🙏</div>
+            <div class="path-step" data-step="reflect">💭</div>
+            <div class="path-step" data-step="pray">✝</div>
+            <div class="path-step" data-step="grow">🌱</div>
+            <div class="path-step" data-step="share">❤</div>
+        </div>
+
+        <div class="reflection-area">
+            <p class="reflection-text" id="reflectionText">Begin your spiritual journey by selecting a path</p>
+            <p class="bible-verse" id="bibleVerse"></p>
+        </div>
+
+        <button class="prayer-button" id="prayerButton">
+            <i class="fas fa-pray"></i>
+            Open Prayer Journal
+        </button>
+
+        <div class="spiritual-journal" id="spiritualJournal">
+            <textarea class="journal-textarea" placeholder="Write your prayer or reflection here..."></textarea>
+        </div>
+
+        <div class="spiritual-milestone">
+            <span id="milestoneText">Your spiritual journey begins here</span>
+        </div>
+    </div>
+
+    <script type="module">
+        import { spiritualPaths } from './js/spiritual-content.js';
+
+        // Game state
+        let currentStep = null;
+        let journalEntries = [];
+
+        // DOM elements
+        const pathSteps = document.querySelectorAll('.path-step');
+        const reflectionText = document.getElementById('reflectionText');
+        const bibleVerse = document.getElementById('bibleVerse');
+        const prayerButton = document.getElementById('prayerButton');
+        const spiritualJournal = document.getElementById('spiritualJournal');
+        const journalTextarea = document.querySelector('.journal-textarea');
+        const milestoneText = document.getElementById('milestoneText');
+        const floatingElements = document.getElementById('floatingElements');
+
+        // Initialize floating elements
+        function createFloatingElements() {
+            const symbols = ['✝', '❤', '🙏', '🌿', '✨', '✝', '❤', '🙏', '🌿', '✨'];
+            symbols.forEach((symbol, index) => {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.textContent = symbol;
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${index * 1.5}s`;
+                floatingElements.appendChild(element);
+            });
+        }
+
+        // Update reflection content
+        function updateReflection(step) {
+            const content = spiritualPaths[step];
+            const randomPrompt = content.prompts[Math.floor(Math.random() * content.prompts.length)];
+            reflectionText.textContent = randomPrompt.text;
+            bibleVerse.textContent = randomPrompt.verse;
+            milestoneText.textContent = content.milestone;
+        }
+
+        // Handle path step selection
+        pathSteps.forEach(step => {
+            step.addEventListener('click', () => {
+                pathSteps.forEach(s => s.classList.remove('active'));
+                step.classList.add('active');
+                currentStep = step.dataset.step;
+                updateReflection(currentStep);
+            });
+        });
+
+        // Toggle prayer journal
+        prayerButton.addEventListener('click', () => {
+            spiritualJournal.style.display = spiritualJournal.style.display === 'none' ? 'block' : 'none';
+            prayerButton.innerHTML = spiritualJournal.style.display === 'none' 
+                ? '<i class="fas fa-pray"></i> Open Prayer Journal'
+                : '<i class="fas fa-times"></i> Close Prayer Journal';
+        });
+
+        // Save journal entry
+        journalTextarea.addEventListener('blur', () => {
+            if (journalTextarea.value.trim()) {
+                const entry = {
+                    step: currentStep,
+                    text: journalTextarea.value,
+                    date: new Date().toISOString()
+                };
+                journalEntries.push(entry);
+                localStorage.setItem('spiritualJournal', JSON.stringify(journalEntries));
+            }
+        });
+
+        // Load saved journal entries
+        function loadJournalEntries() {
+            const saved = localStorage.getItem('spiritualJournal');
+            if (saved) {
+                journalEntries = JSON.parse(saved);
+            }
+        }
+
+        // Initialize the game
+        createFloatingElements();
+        loadJournalEntries();
     </script>
 </body>
 </html>

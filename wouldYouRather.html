@@ -3,40 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon</title>
-    <link rel="stylesheet" href="css/christian.css"> 
-</head>
-<body>
-    <nav>
-        <ul class="menu">
-            <li><a href="home.html">Home</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <h1>Coming Soon!</h1>
-        <p>Something special is brewing for this page—stay tuned!</p>
-        <div class="coming-soon">We’re working hard to bring you more fun, connection, and love. Check back soon!</div>
-    </div>
+    <title>Would You Rather - Connecting Games Hub</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --option-a-color: #3498db;
+            --option-b-color: #e74c3c;
+            --neutral-color: #95a5a6;
+        }
 
-    <script>
-        // Add floating stars for consistency
-        function addStars() {
-            for (let i = 0; i < 5; i++) {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.innerHTML = '✨';
-                star.style.left = `${Math.random() * 100}vw`;
-                star.style.animationDelay = `${Math.random() * 3}s`;
-                document.body.appendChild(star);
-                setTimeout(() => star.remove(), 4000);
+        .game-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .game-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--option-a-color), var(--option-b-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .game-header p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .question-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(149, 165, 166, 0.2);
+            border-radius: 2px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(45deg, var(--option-a-color), var(--option-b-color));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .option-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .option-card.selected {
+            border-color: var(--neutral-color);
+            background: rgba(149, 165, 166, 0.1);
+        }
+
+        .option-card.option-a {
+            border-color: var(--option-a-color);
+        }
+
+        .option-card.option-b {
+            border-color: var(--option-b-color);
+        }
+
+        .option-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-label {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--option-a-color), var(--option-b-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .home-link:hover {
+            color: var(--option-a-color);
+            background: rgba(52, 152, 219, 0.1);
+        }
+
+        .home-link i {
+            margin-right: 0.5rem;
+        }
+
+        .category-selector {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .category-btn {
+            background: white;
+            border: 2px solid var(--neutral-color);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-btn.active {
+            background: linear-gradient(45deg, var(--option-a-color), var(--option-b-color));
+            color: white;
+            border-color: transparent;
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, rgba(52, 152, 219, 0.1) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(231, 76, 60, 0.1) 25%, transparent 25%);
+            background-size: 100px 100px;
+            animation: backgroundFlow 20s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes backgroundFlow {
+            0% {
+                background-position: 0 0, 0 0;
+            }
+            100% {
+                background-position: 100px 100px, -100px -100px;
             }
         }
 
-        // Run on page load and repeat every 5 seconds
-        window.onload = () => {
-            addStars();
-            setInterval(addStars, 5000);
-        };
+        .floating-element {
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: float 4s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            50% { transform: translateY(-50vh) rotate(180deg) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation"></div>
+    
+    <main class="container">
+        <div class="game-container">
+            <div class="game-header">
+                <h1>Would You Rather</h1>
+                <p>Choose between two options and discover what others think!</p>
+            </div>
+
+            <div class="category-selector">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="fun">Fun</button>
+                <button class="category-btn" data-category="deep">Deep</button>
+                <button class="category-btn" data-category="relationships">Relationships</button>
+                <button class="category-btn" data-category="lifestyle">Lifestyle</button>
+            </div>
+
+            <div class="question-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress-indicator"></div>
+                </div>
+                <div class="question-text" id="current-question">Loading question...</div>
+                <div class="options-container">
+                    <div class="option-card option-a" id="option-a">
+                        <div class="option-label">Option A</div>
+                        <div class="option-text" id="option-a-text"></div>
+                    </div>
+                    <div class="option-card option-b" id="option-b">
+                        <div class="option-label">Option B</div>
+                        <div class="option-text" id="option-b-text"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" id="next-question">Next Question</button>
+                <button class="btn" id="share-answer">Share Answer</button>
+            </div>
+
+            <a href="home.html" class="home-link">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </main>
+
+    <script type="module">
+        import questions from './js/questions.js';
+
+        let currentCategory = 'all';
+        let currentQuestionIndex = 0;
+        let selectedOption = null;
+        let usedQuestions = new Set();
+
+        function updateQuestion() {
+            const categoryQuestions = questions[currentCategory];
+            const totalQuestions = categoryQuestions.length;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
+            document.getElementById('progress-indicator').style.width = `${progress}%`;
+
+            const question = categoryQuestions[currentQuestionIndex];
+            document.getElementById('current-question').textContent = question.question;
+            document.getElementById('option-a-text').textContent = question.optionA;
+            document.getElementById('option-b-text').textContent = question.optionB;
+            
+            // Reset selection
+            selectedOption = null;
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+        }
+
+        function nextQuestion() {
+            const categoryQuestions = questions[currentCategory];
+            currentQuestionIndex = (currentQuestionIndex + 1) % categoryQuestions.length;
+            
+            // If we've used all questions in this category, reset the used questions
+            if (usedQuestions.size === categoryQuestions.length) {
+                usedQuestions.clear();
+            }
+            
+            // Find an unused question
+            while (usedQuestions.has(currentQuestionIndex)) {
+                currentQuestionIndex = (currentQuestionIndex + 1) % categoryQuestions.length;
+            }
+            
+            usedQuestions.add(currentQuestionIndex);
+            updateQuestion();
+            createFloatingElement();
+        }
+
+        function createFloatingElement() {
+            const element = document.createElement('div');
+            element.className = 'floating-element';
+            element.innerHTML = ['🤔', '💭', '✨', '🌟'][Math.floor(Math.random() * 4)];
+            element.style.left = `${Math.random() * 100}vw`;
+            element.style.animationDuration = `${3 + Math.random() * 2}s`;
+            document.body.appendChild(element);
+            setTimeout(() => element.remove(), 5000);
+        }
+
+        // Event Listeners
+        document.getElementById('next-question').addEventListener('click', nextQuestion);
+        
+        document.querySelectorAll('.option-card').forEach(card => {
+            card.addEventListener('click', () => {
+                selectedOption = card.id;
+                document.querySelectorAll('.option-card').forEach(c => {
+                    c.classList.remove('selected');
+                });
+                card.classList.add('selected');
+            });
+        });
+
+        document.getElementById('share-answer').addEventListener('click', () => {
+            if (!selectedOption) {
+                alert('Please select an option first!');
+                return;
+            }
+            const option = selectedOption === 'option-a' ? 'A' : 'B';
+            alert(`You chose Option ${option}! Share your reasoning with others.`);
+        });
+
+        document.querySelectorAll('.category-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.category-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                currentQuestionIndex = 0;
+                usedQuestions.clear();
+                updateQuestion();
+            });
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            updateQuestion();
+            setInterval(createFloatingElement, 3000);
+        });
     </script>
 </body>
 </html>
