@@ -24,6 +24,29 @@
             margin: 0 auto;
         }
 
+        /* Home Button */
+        .home-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
         /* Header */
         .header {
             text-align: center;
@@ -46,18 +69,56 @@
         /* Game Controls */
         .game-controls {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .controls-row {
             display: flex;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
+        }
+
+        .category-select-wrapper {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .category-select-wrapper label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .category-select {
+            flex: 1;
+            max-width: 300px;
+            padding: 10px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            background: white;
+            color: #2d3748;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-select:hover {
+            border-color: #667eea;
+        }
+
+        .category-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
         .btn {
@@ -98,16 +159,23 @@
         }
 
         .category-filter {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: none; /* Hide old filter buttons */
         }
 
-        .filter-btn {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-            border-radius: 20px;
+        .stats {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4a5568;
+            font-size: 0.95rem;
+            font-weight: 500;
+            padding: 12px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .stats span {
+            color: #667eea;
+            font-weight: 700;
         }
 
         .filter-btn.real-life {
@@ -158,19 +226,23 @@
         }
 
         /* Card Display Area */
+        .card-stats-section {
+            margin-bottom: 20px;
+        }
+
         .card-display-area {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 400px;
-            margin-bottom: 30px;
+            min-height: 350px;
+            margin-bottom: 20px;
         }
 
         .card-display {
             width: 100%;
             max-width: 500px;
-            min-height: 400px;
-            padding: 40px;
+            min-height: 350px;
+            padding: 35px;
             border-radius: 20px;
             box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             display: flex;
@@ -178,6 +250,57 @@
             position: relative;
             transition: transform 0.3s ease;
             color: white;
+            cursor: pointer;
+        }
+
+        .card-display:hover {
+            transform: scale(1.02);
+        }
+
+        .card-display.used:hover {
+            transform: scale(1.01);
+            opacity: 0.9;
+        }
+
+        .card-display:active {
+            transform: scale(0.98);
+        }
+
+        .card-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #e2e8f0;
+            color: #a0aec0;
+            border-color: #e2e8f0;
         }
 
         .card-display.flip-enter {
@@ -234,6 +357,82 @@
 
         .card-display.wild-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-display.used {
+            background: linear-gradient(135deg, #718096 0%, #4a5568 100%) !important;
+            opacity: 0.85;
+            position: relative;
+        }
+
+        /* Current card that's been used - keep original color but show badge */
+        .card-display.used.current-used.real-life {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.faith-culture {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.encouragement {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.fun-creative {
+            background: linear-gradient(135deg, #f6e05e 0%, #ecc94b 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.spiritually {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.culturally {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.prophetically {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.practically {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+            opacity: 1;
+        }
+        .card-display.used.current-used.wild-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            opacity: 1;
+        }
+
+        .card-display.used::after {
+            content: '✓ Used';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .card-display.new {
+            position: relative;
+        }
+
+        .card-display.new::after {
+            content: '✨ New';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 215, 0, 0.3);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            color: #fff;
+            border: 1px solid rgba(255, 215, 0, 0.5);
         }
 
         .card-header-display {
@@ -311,22 +510,30 @@
 
         /* Print Section */
         .print-section {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             margin-top: 30px;
             text-align: center;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .print-section h3 {
-            margin-bottom: 15px;
-            color: #2d3748;
+            margin-bottom: 8px;
+            color: #4a5568;
+            font-size: 1rem;
         }
 
         .print-section p {
-            color: #4a5568;
-            margin-bottom: 15px;
+            color: #718096;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .print-section .btn {
+            padding: 10px 20px;
+            font-size: 0.9rem;
         }
 
         /* Print Styles */
@@ -355,28 +562,157 @@
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .home-button {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                margin-bottom: 15px;
+            }
+
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                margin-bottom: 8px;
             }
 
             .tagline {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
-            .card-display {
-                padding: 30px 20px;
-                min-height: 350px;
-            }
-
-            .card-question-display {
-                font-size: 1.2rem;
+            .game-controls {
+                padding: 20px 15px;
+                margin-bottom: 20px;
             }
 
             .controls-row {
                 flex-direction: column;
+                gap: 10px;
             }
 
             .btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 0.95rem;
+            }
+
+            .btn-primary {
+                font-size: 1rem;
+                padding: 16px 20px;
+            }
+
+            .category-select-wrapper {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .category-select-wrapper label {
+                font-size: 0.85rem;
+            }
+
+            .category-select {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .stats {
+                font-size: 0.85rem;
+                margin-top: 12px;
+            }
+
+            .card-display-area {
+                min-height: 300px;
+                margin-bottom: 20px;
+            }
+
+            .card-display {
+                padding: 25px 18px;
+                min-height: 320px;
+                border-radius: 15px;
+            }
+
+            .card-header-display {
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+                gap: 10px;
+            }
+
+            .card-icon-display {
+                font-size: 1.5rem;
+            }
+
+            .card-category-display {
+                font-size: 0.75rem;
+            }
+
+            .card-question-display {
+                font-size: 1.1rem;
+                line-height: 1.6;
+            }
+
+            .card-footer-display {
+                padding-top: 15px;
+                font-size: 0.75rem;
+            }
+
+            .empty-state {
+                padding: 40px 20px;
+            }
+
+            .empty-state h2 {
+                font-size: 1.5rem;
+                margin-bottom: 12px;
+            }
+
+            .empty-state p {
+                font-size: 1rem;
+            }
+
+            .print-section {
+                padding: 20px 15px;
+                margin-top: 20px;
+            }
+
+            .print-section h3 {
+                font-size: 1.2rem;
+                margin-bottom: 12px;
+            }
+
+            .print-section p {
+                font-size: 0.9rem;
+                margin-bottom: 12px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .tagline {
+                font-size: 0.85rem;
+            }
+
+            .card-question-display {
+                font-size: 1rem;
+            }
+
+            .wild-card-icon {
+                font-size: 3rem;
+            }
+
+            .card-display {
+                min-height: 280px;
+            }
+
+            .card-navigation {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .nav-btn {
                 width: 100%;
             }
         }
@@ -384,6 +720,11 @@
 </head>
 <body>
     <div class="game-container">
+        <a href="home.html" class="home-button">
+            <span>←</span>
+            <span>Home</span>
+        </a>
+        
         <div class="header">
             <h1>Real Talk Round Cards</h1>
             <p class="tagline">Real Talk. Real Faith. Real Fun.</p>
@@ -396,18 +737,23 @@
                 <button class="btn btn-secondary" id="resetBtn">🔄 Reset Game</button>
             </div>
 
-            <div class="category-filter" style="margin-top: 20px;">
-                <button class="filter-btn btn active" data-category="all">All Categories</button>
-                <button class="filter-btn btn real-life" data-category="real-life">🎯 Real Life</button>
-                <button class="filter-btn btn faith-culture" data-category="faith-culture">🔑 Faith + Culture</button>
-                <button class="filter-btn btn encouragement" data-category="encouragement">💥 Encouragement</button>
-                <button class="filter-btn btn fun-creative" data-category="fun-creative">💡 Fun/Creative</button>
-                <button class="filter-btn btn spiritually" data-category="spiritually">🔹 Spiritually</button>
-                <button class="filter-btn btn culturally" data-category="culturally">🌐 Culturally</button>
-                <button class="filter-btn btn prophetically" data-category="prophetically">🔮 Prophetically</button>
-                <button class="filter-btn btn practically" data-category="practically">⚡ Practically</button>
+            <div class="category-select-wrapper">
+                <label for="categorySelect">Filter:</label>
+                <select id="categorySelect" class="category-select">
+                    <option value="all">All Categories</option>
+                    <option value="real-life">🎯 Real Life</option>
+                    <option value="faith-culture">🔑 Faith + Culture</option>
+                    <option value="encouragement">💥 Encouragement</option>
+                    <option value="fun-creative">💡 Fun/Creative</option>
+                    <option value="spiritually">🔹 Spiritually</option>
+                    <option value="culturally">🌐 Culturally</option>
+                    <option value="prophetically">🔮 Prophetically</option>
+                    <option value="practically">⚡ Practically</option>
+                </select>
             </div>
+        </div>
 
+        <div class="card-stats-section">
             <div class="stats" id="stats">
                 Cards remaining: <span id="remainingCount">160</span> | Drawn: <span id="drawnCount">0</span>
             </div>
@@ -428,6 +774,11 @@
                 </div>
                 <div class="card-footer-display" id="cardFooter">Pass card</div>
             </div>
+        </div>
+
+        <div class="card-navigation" id="cardNavigation" style="display: none;">
+            <button class="nav-btn" id="backBtn">← Previous</button>
+            <button class="nav-btn" id="nextBtn">Next →</button>
         </div>
 
         <div class="print-section">
@@ -622,6 +973,9 @@
         let currentDeck = [];
         let drawnCards = [];
         let currentCategory = 'all';
+        let cardHistory = []; // Array to track all cards shown in order
+        let currentCardIndex = -1; // Current position in history
+        let usedCardsSet = new Set(); // Track used cards by unique identifier
         let wildCard = { 
             icon: '🎲', 
             category: 'Wild Card', 
@@ -639,6 +993,9 @@
             // Create full deck with all cards
             currentDeck = [];
             drawnCards = [];
+            cardHistory = [];
+            currentCardIndex = -1;
+            usedCardsSet.clear();
             
             // Add wild card
             currentDeck.push({...wildCard, categoryKey: 'wild'});
@@ -652,7 +1009,16 @@
             
             shuffleDeck();
             updateStats();
+            updateNavigationButtons();
             showEmptyState();
+        }
+
+        function getCardId(card) {
+            // Create unique identifier for a card
+            if (card.type === 'wild-card') {
+                return 'wild-card';
+            }
+            return `${card.categoryKey || card.category}-${card.question}`;
         }
 
         function shuffleDeck() {
@@ -695,18 +1061,66 @@
             if (deckIndex !== -1) {
                 currentDeck.splice(deckIndex, 1);
                 drawnCards.push(drawnCard);
+                // Don't mark as used yet - will be marked when navigating away
             }
+
+            // Mark previous current card as used when drawing a new card
+            if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
+                usedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
+            }
+
+            // If we're not at the end of history, remove future cards
+            if (currentCardIndex < cardHistory.length - 1) {
+                cardHistory = cardHistory.slice(0, currentCardIndex + 1);
+            }
+
+            // Add to history
+            cardHistory.push({...drawnCard});
+            currentCardIndex = cardHistory.length - 1;
 
             displayCard(drawnCard);
             updateStats();
+            updateNavigationButtons();
+        }
+
+        function nextCard() {
+            // Mark current card as used when navigating away
+            if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
+                usedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
+            }
+            
+            // If we're at the end, draw a new card
+            if (currentCardIndex >= cardHistory.length - 1) {
+                drawCard();
+            } else {
+                // Move forward in history
+                currentCardIndex++;
+                displayCard(cardHistory[currentCardIndex]);
+                updateNavigationButtons();
+            }
+        }
+
+        function previousCard() {
+            // Mark current card as used when navigating away
+            if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
+                usedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
+            }
+            
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                displayCard(cardHistory[currentCardIndex]);
+                updateNavigationButtons();
+            }
         }
 
         function displayCard(card) {
             const cardDisplay = document.getElementById('cardDisplay');
             const emptyState = document.getElementById('emptyState');
+            const cardNavigation = document.getElementById('cardNavigation');
             
             emptyState.style.display = 'none';
             cardDisplay.style.display = 'flex';
+            if (cardNavigation) cardNavigation.style.display = 'flex';
             
             // Determine card class
             let cardClass = '';
@@ -716,13 +1130,32 @@
                 cardClass = card.categoryKey;
             }
             
+            // Check if card has been used
+            const cardId = getCardId(card);
+            const isUsed = usedCardsSet.has(cardId);
+            const isCurrentCard = currentCardIndex >= 0 && 
+                                  cardHistory[currentCardIndex] && 
+                                  getCardId(cardHistory[currentCardIndex]) === cardId;
+            
+            // Add 'used' class if card has been used (for badge display)
+            // But only apply grey background if it's not the current card
+            if (isUsed) {
+                cardClass += ' used';
+                if (isCurrentCard) {
+                    cardClass += ' current-used'; // Special class for current card that's been used
+                }
+            } else {
+                // Card is new - add 'new' class for badge display
+                cardClass += ' new';
+            }
+            
             cardDisplay.className = `card-display ${cardClass} flip-enter`;
             
             // Update card content
             document.getElementById('cardIcon').textContent = card.icon;
             document.getElementById('cardCategory').textContent = card.category;
             document.getElementById('cardQuestion').textContent = card.question;
-            document.getElementById('cardFooter').textContent = card.footer;
+            document.getElementById('cardFooter').innerHTML = `${card.footer} • Tap card for next`;
             
             // Special handling for wild card
             if (card.type === 'wild-card') {
@@ -736,11 +1169,33 @@
             setTimeout(() => {
                 cardDisplay.classList.remove('flip-enter');
             }, 500);
+
+            // Scroll card into view smoothly
+            setTimeout(() => {
+                cardDisplay.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        function updateNavigationButtons() {
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            if (backBtn) {
+                backBtn.disabled = currentCardIndex <= 0;
+            }
+            
+            if (nextBtn) {
+                const availableCards = getAvailableCards();
+                const hasNext = currentCardIndex < cardHistory.length - 1 || availableCards.length > 0;
+                nextBtn.disabled = !hasNext;
+            }
         }
 
         function showEmptyState() {
             document.getElementById('cardDisplay').style.display = 'none';
             document.getElementById('emptyState').style.display = 'block';
+            const cardNavigation = document.getElementById('cardNavigation');
+            if (cardNavigation) cardNavigation.style.display = 'none';
         }
 
         function updateStats() {
@@ -764,24 +1219,47 @@
             }
         });
 
-        // Category filter buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Update active state
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // Update current category
-                currentCategory = btn.dataset.category;
-                updateStats();
-            });
+        // Category filter dropdown
+        const categorySelect = document.getElementById('categorySelect');
+        categorySelect.addEventListener('change', (e) => {
+            currentCategory = e.target.value;
+            updateStats();
+            updateNavigationButtons();
+        });
+
+        // Card navigation
+        const cardDisplay = document.getElementById('cardDisplay');
+        cardDisplay.addEventListener('click', nextCard);
+
+        const backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent card click
+            previousCard();
+        });
+
+        const nextBtn = document.getElementById('nextBtn');
+        nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevent card click
+            nextCard();
         });
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space' && e.target === document.body) {
                 e.preventDefault();
-                drawCard();
+                if (cardHistory.length === 0) {
+                    drawCard();
+                } else {
+                    nextCard();
+                }
+            }
+            if (e.code === 'ArrowLeft' && e.target === document.body) {
+                e.preventDefault();
+                previousCard();
+            }
+            if (e.code === 'ArrowRight' && e.target === document.body) {
+                e.preventDefault();
+                nextCard();
             }
         });
 
