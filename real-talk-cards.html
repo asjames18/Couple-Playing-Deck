@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Talk Round Cards - Interactive Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+
+        .game-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        /* Game Controls */
+        .game-controls {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.1rem;
+            padding: 15px 35px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #2d3748;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .category-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 20px;
+        }
+
+        .filter-btn.real-life {
+            background: #4299e1;
+            color: white;
+        }
+
+        .filter-btn.faith-culture {
+            background: #9f7aea;
+            color: white;
+        }
+
+        .filter-btn.encouragement {
+            background: #f56565;
+            color: white;
+        }
+
+        .filter-btn.fun-creative {
+            background: #f6e05e;
+            color: #2d3748;
+        }
+
+        .stats {
+            text-align: center;
+            margin-top: 15px;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        /* Card Display Area */
+        .card-display-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            margin-bottom: 30px;
+        }
+
+        .card-display {
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s ease;
+            color: white;
+        }
+
+        .card-display.flip-enter {
+            animation: flipIn 0.5s ease;
+        }
+
+        @keyframes flipIn {
+            0% {
+                transform: rotateY(-90deg);
+                opacity: 0;
+            }
+            100% {
+                transform: rotateY(0deg);
+                opacity: 1;
+            }
+        }
+
+        .card-display.real-life {
+            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+        }
+
+        .card-display.faith-culture {
+            background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
+        }
+
+        .card-display.encouragement {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+        }
+
+        .card-display.fun-creative {
+            background: linear-gradient(135deg, #f6e05e 0%, #ecc94b 100%);
+            color: #2d3748;
+        }
+
+        .card-display.wild-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-header-display {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .card-display.fun-creative .card-header-display {
+            border-bottom-color: rgba(45, 55, 72, 0.2);
+        }
+
+        .card-icon-display {
+            font-size: 2rem;
+        }
+
+        .card-category-display {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-question-display {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .card-footer-display {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+            font-size: 0.8rem;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .card-display.fun-creative .card-footer-display {
+            border-top-color: rgba(45, 55, 72, 0.2);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .empty-state h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Wild Card Special Display */
+        .wild-card-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Print Section */
+        .print-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .print-section h3 {
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .print-section p {
+            color: #4a5568;
+            margin-bottom: 15px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .game-controls,
+            .print-section,
+            .btn {
+                display: none;
+            }
+
+            .card-display-area {
+                min-height: auto;
+                page-break-inside: avoid;
+            }
+
+            .card-display {
+                max-width: 100%;
+                page-break-inside: avoid;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .card-display {
+                padding: 30px 20px;
+                min-height: 350px;
+            }
+
+            .card-question-display {
+                font-size: 1.2rem;
+            }
+
+            .controls-row {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="header">
+            <h1>Real Talk Round Cards</h1>
+            <p class="tagline">Real Talk. Real Faith. Real Fun.</p>
+        </div>
+
+        <div class="game-controls">
+            <div class="controls-row">
+                <button class="btn btn-primary" id="drawCardBtn">🎴 Draw Card</button>
+                <button class="btn btn-secondary" id="shuffleBtn">🔀 Shuffle Deck</button>
+                <button class="btn btn-secondary" id="resetBtn">🔄 Reset Game</button>
+            </div>
+
+            <div class="category-filter" style="margin-top: 20px;">
+                <button class="filter-btn btn active" data-category="all">All Categories</button>
+                <button class="filter-btn btn real-life" data-category="real-life">🎯 Real Life</button>
+                <button class="filter-btn btn faith-culture" data-category="faith-culture">🔑 Faith + Culture</button>
+                <button class="filter-btn btn encouragement" data-category="encouragement">💥 Encouragement</button>
+                <button class="filter-btn btn fun-creative" data-category="fun-creative">💡 Fun/Creative</button>
+            </div>
+
+            <div class="stats" id="stats">
+                Cards remaining: <span id="remainingCount">80</span> | Drawn: <span id="drawnCount">0</span>
+            </div>
+        </div>
+
+        <div class="card-display-area">
+            <div class="empty-state" id="emptyState">
+                <h2>🎴 Ready to Play?</h2>
+                <p>Click "Draw Card" to get started!</p>
+            </div>
+            <div class="card-display" id="cardDisplay" style="display: none;">
+                <div class="card-header-display">
+                    <span class="card-icon-display" id="cardIcon">🎯</span>
+                    <span class="card-category-display" id="cardCategory">Real Life / Identity</span>
+                </div>
+                <div class="card-question-display" id="cardQuestion">
+                    Question will appear here
+                </div>
+                <div class="card-footer-display" id="cardFooter">Pass card</div>
+            </div>
+        </div>
+
+        <div class="print-section">
+            <h3>Want Printable Cards?</h3>
+            <p>Print this page to get physical cards for your youth group!</p>
+            <button class="btn btn-primary" onclick="window.print()">🖨️ Print Cards</button>
+        </div>
+    </div>
+
+    <script>
+        // All 80 questions organized by category
+        const allCards = {
+            'real-life': [
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's one thing people assume about you that's not true?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "Who do you feel safe being 100% yourself around?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's one pressure you feel every day just for being a teen?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'When do you feel most misunderstood?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's something you're proud of, even if nobody else notices it?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What part of yourself are you still learning to love?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "Who has influenced your identity the most so far?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'When people say "be yourself," what does that actually mean to you?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's a label you've been given that doesn't fit you anymore?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'What does confidence look like in your world?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'If you could rewrite your reputation, what would it say?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'What makes you feel seen and valued?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'How do you handle being judged or stereotyped?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's your biggest fear about growing up?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'Do you feel like your voice matters? Why or why not?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What's something you wish adults really understood about your generation?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What do you do when you feel lost in your own thoughts?", footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'What does "real" mean to you when it comes to friendships?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: 'Have you ever changed yourself just to be accepted?', footer: 'Pass card' },
+                { icon: '🎯', category: 'Real Life / Identity', question: "What does it mean to be you when nobody's watching?", footer: 'Pass card' }
+            ],
+            'faith-culture': [
+                { icon: '🔑', category: 'Faith + Culture', question: 'What does following Jesus actually look like in your school or circle?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'Do you think faith and culture can coexist? Why or why not?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What does "set apart" mean to you in a world that pushes you to fit in?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'How do you respond when someone challenges your faith?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: "What's one thing you struggle to understand about God?", footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'Has social media helped or hurt your faith walk?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What do you think Jesus would do if He was a teen in your school today?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: "What do you do when the Bible doesn't seem relevant to your situation?", footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'Is it hard to talk about your faith without sounding "extra"?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What do you think Heaven will really be like?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: "What's something you wish church would talk about more?", footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'How do you balance faith and fun without feeling judged?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'Have you ever doubted your faith? What brought you back?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: "What's one verse that actually helped you in real life?", footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'How do you know if your relationship with God is growing?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What makes you feel connected to God?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What\'s the difference between being "religious" and being in relationship with God?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What does spiritual warfare look like in 2025?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'Do you ever feel like Christianity is viewed as "uncool"? How do you handle that?', footer: 'Pass card' },
+                { icon: '🔑', category: 'Faith + Culture', question: 'What does Kingdom living look like for your generation?', footer: 'Pass card' }
+            ],
+            'encouragement': [
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What helps you bounce back when life hits hard?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's something you've overcome that you never thought you would?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's a habit that helps you stay mentally or spiritually strong?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'How do you speak life over yourself when negativity creeps in?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'Who in your life encourages you to keep going?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What do you do when your motivation runs out?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's one thing God's taught you through a hard season?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'How do you handle failure without losing your identity?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's something you've done scared, but did it anyway?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's your biggest growth area right now?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What does trusting God look like when nothing makes sense?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'How do you fight the feeling of not being enough?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What helps you forgive people who never apologized?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What's your favorite way to connect with God?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What do you say to your inner critic when it gets loud?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What does healing look like for you — mentally, emotionally, spiritually?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What\'s a "win" you celebrated this month — even if it was small?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "Who's your spiritual role model, and why?", footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: 'What does it mean to walk boldly in your purpose?', footer: 'Pass card' },
+                { icon: '💥', category: 'Encouragement / Growth', question: "What would you say to someone who's ready to give up?", footer: 'Pass card' }
+            ],
+            'fun-creative': [
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If your life was a movie, what would it be titled?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you had a superpower for your faith walk, what would it be?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "What's your theme song right now and why?", footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "What's your most-used emoji and what does it say about your mood lately?", footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you could sit and talk with any Bible character, who and why?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "What's one thing you wish you could say to the entire world on a mic?", footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What would you name your testimony if it was a Netflix special?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If God gave you a billboard for one week, what would it say?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What\'s your "comfort food" when your soul is tired?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "What's one worship song or lyric that hits different every time?", footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What would your alter ego be if you had a faith-based superhero name?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What social media trend do you secretly love (or hate)?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you could make your own holiday, what would it be and how would we celebrate?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you were a sneaker or shoe, what kind would you be and why?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "What's your dream job if money wasn't an issue?", footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What\'s your "hidden talent" that nobody really knows about?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you had 60 seconds to speak to your younger self, what would you say?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you could remix any Bible story into a movie, which one would you do?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: 'What\'s your dream place to travel and "unplug"?', footer: 'Pass card' },
+                { icon: '💡', category: 'Bonus Fun / Creative', question: "If you could team up with Jesus to do one thing in your city — what would y'all do?", footer: 'Pass card' }
+            ]
+        };
+
+        // Game state
+        let currentDeck = [];
+        let drawnCards = [];
+        let currentCategory = 'all';
+        let wildCard = { 
+            icon: '🎲', 
+            category: 'Wild Card', 
+            question: 'WILD CARD\n\nAsk anyone a question from any deck!', 
+            footer: 'Use anytime',
+            type: 'wild-card'
+        };
+
+        // Initialize game
+        function initGame() {
+            resetGame();
+        }
+
+        function resetGame() {
+            // Create full deck with all cards
+            currentDeck = [];
+            drawnCards = [];
+            
+            // Add wild card
+            currentDeck.push({...wildCard, categoryKey: 'wild'});
+            
+            // Add all cards from all categories
+            Object.keys(allCards).forEach(categoryKey => {
+                allCards[categoryKey].forEach(card => {
+                    currentDeck.push({...card, categoryKey});
+                });
+            });
+            
+            shuffleDeck();
+            updateStats();
+            showEmptyState();
+        }
+
+        function shuffleDeck() {
+            // Fisher-Yates shuffle
+            for (let i = currentDeck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
+            }
+        }
+
+        function getAvailableCards() {
+            if (currentCategory === 'all') {
+                return currentDeck;
+            }
+            return currentDeck.filter(card => {
+                if (card.type === 'wild-card') return true;
+                return card.categoryKey === currentCategory;
+            });
+        }
+
+        function drawCard() {
+            const availableCards = getAvailableCards();
+            
+            if (availableCards.length === 0) {
+                alert('No more cards available in this category! Try another category or reset the game.');
+                return;
+            }
+
+            // Get random card from available cards
+            const randomIndex = Math.floor(Math.random() * availableCards.length);
+            const drawnCard = availableCards[randomIndex];
+            
+            // Remove from deck and add to drawn
+            const deckIndex = currentDeck.findIndex(card => 
+                card === drawnCard || 
+                (card.categoryKey === drawnCard.categoryKey && 
+                 card.question === drawnCard.question)
+            );
+            
+            if (deckIndex !== -1) {
+                currentDeck.splice(deckIndex, 1);
+                drawnCards.push(drawnCard);
+            }
+
+            displayCard(drawnCard);
+            updateStats();
+        }
+
+        function displayCard(card) {
+            const cardDisplay = document.getElementById('cardDisplay');
+            const emptyState = document.getElementById('emptyState');
+            
+            emptyState.style.display = 'none';
+            cardDisplay.style.display = 'flex';
+            
+            // Determine card class
+            let cardClass = '';
+            if (card.type === 'wild-card') {
+                cardClass = 'wild-card';
+            } else {
+                cardClass = card.categoryKey;
+            }
+            
+            cardDisplay.className = `card-display ${cardClass} flip-enter`;
+            
+            // Update card content
+            document.getElementById('cardIcon').textContent = card.icon;
+            document.getElementById('cardCategory').textContent = card.category;
+            document.getElementById('cardQuestion').textContent = card.question;
+            document.getElementById('cardFooter').textContent = card.footer;
+            
+            // Special handling for wild card
+            if (card.type === 'wild-card') {
+                document.getElementById('cardQuestion').innerHTML = `
+                    <div class="wild-card-icon">${card.icon}</div>
+                    <div style="font-size: 1.2rem; font-weight: 600;">${card.question}</div>
+                `;
+            }
+            
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                cardDisplay.classList.remove('flip-enter');
+            }, 500);
+        }
+
+        function showEmptyState() {
+            document.getElementById('cardDisplay').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+        }
+
+        function updateStats() {
+            const availableCards = getAvailableCards();
+            const remaining = availableCards.length;
+            const drawn = drawnCards.length;
+            
+            document.getElementById('remainingCount').textContent = remaining;
+            document.getElementById('drawnCount').textContent = drawn;
+        }
+
+        // Event listeners
+        document.getElementById('drawCardBtn').addEventListener('click', drawCard);
+        document.getElementById('shuffleBtn').addEventListener('click', () => {
+            shuffleDeck();
+            alert('Deck shuffled!');
+        });
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset the game? All progress will be lost.')) {
+                resetGame();
+            }
+        });
+
+        // Category filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update current category
+                currentCategory = btn.dataset.category;
+                updateStats();
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && e.target === document.body) {
+                e.preventDefault();
+                drawCard();
+            }
+        });
+
+        // Initialize on load
+        initGame();
+    </script>
+</body>
+</html>
