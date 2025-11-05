@@ -130,6 +130,26 @@
             color: #2d3748;
         }
 
+        .filter-btn.spiritually {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .filter-btn.culturally {
+            background: #f97316;
+            color: white;
+        }
+
+        .filter-btn.prophetically {
+            background: #6366f1;
+            color: white;
+        }
+
+        .filter-btn.practically {
+            background: #10b981;
+            color: white;
+        }
+
         .stats {
             text-align: center;
             margin-top: 15px;
@@ -190,6 +210,26 @@
         .card-display.fun-creative {
             background: linear-gradient(135deg, #f6e05e 0%, #ecc94b 100%);
             color: #2d3748;
+        }
+
+        .card-display.spiritually {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+        }
+
+        .card-display.culturally {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: white;
+        }
+
+        .card-display.prophetically {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+        }
+
+        .card-display.practically {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
         }
 
         .card-display.wild-card {
@@ -362,10 +402,14 @@
                 <button class="filter-btn btn faith-culture" data-category="faith-culture">🔑 Faith + Culture</button>
                 <button class="filter-btn btn encouragement" data-category="encouragement">💥 Encouragement</button>
                 <button class="filter-btn btn fun-creative" data-category="fun-creative">💡 Fun/Creative</button>
+                <button class="filter-btn btn spiritually" data-category="spiritually">🔹 Spiritually</button>
+                <button class="filter-btn btn culturally" data-category="culturally">🌐 Culturally</button>
+                <button class="filter-btn btn prophetically" data-category="prophetically">🔮 Prophetically</button>
+                <button class="filter-btn btn practically" data-category="practically">⚡ Practically</button>
             </div>
 
             <div class="stats" id="stats">
-                Cards remaining: <span id="remainingCount">80</span> | Drawn: <span id="drawnCount">0</span>
+                Cards remaining: <span id="remainingCount">160</span> | Drawn: <span id="drawnCount">0</span>
             </div>
         </div>
 
@@ -483,6 +527,94 @@
                 { icon: '💡', category: 'Bonus Fun / Creative', question: 'If you could remix any Bible story into a movie, which one would you do?', footer: 'Pass card' },
                 { icon: '💡', category: 'Bonus Fun / Creative', question: 'What\'s your dream place to travel and "unplug"?', footer: 'Pass card' },
                 { icon: '💡', category: 'Bonus Fun / Creative', question: "If you could team up with Jesus to do one thing in your city — what would y'all do?", footer: 'Pass card' }
+            ],
+            'spiritually': [
+                { icon: '🔹', category: 'Spiritually', question: 'What does it mean to you to have a personal relationship with the Lord, not just follow a religion?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'When did faith first become *real* to you, and what changed in your life afterward?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What distractions pull your heart away from time with God the most?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: "How can you tell when you've drifted spiritually — and how do you find your way back?", footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: "What does holiness look like for someone living in today's world?", footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'Why do you think so many people believe in God but struggle to obey Him?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'How can we tell the difference between conviction from the Spirit and guilt from the enemy?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What does spiritual growth look like beyond just attending church?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'Why do you think prayer feels difficult for so many believers, and how can it become natural again?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What are some signs that a person is spiritually maturing?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'How does faith impact your identity and how you see yourself?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What happens when you try to live for both the world and the Lord at the same time?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: "How does obedience protect you even when it doesn't feel easy?", footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What role does repentance play in staying close to God?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'How do you feed your spirit daily?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'What would it look like for you to walk boldly in the Spirit this year?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'Why do you think God allows tests and trials in our spiritual walk?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'How do you handle moments when you feel distant from God?', footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: "What's one habit that could strengthen your spiritual life right now?", footer: 'Pass card' },
+                { icon: '🔹', category: 'Spiritually', question: 'How can you help someone else find their way back to faith without judging them?', footer: 'Pass card' }
+            ],
+            'culturally': [
+                { icon: '🌐', category: 'Culturally', question: 'What voices have the most influence on your generation right now?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How does culture teach people to see themselves — and how is that different from how Elohiym sees us?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What kind of "gods" does modern culture worship without realizing it?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How has technology changed the way people express their faith?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What message does popular music send about identity, love, or success?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How can we stay true to biblical values while still being relatable to others?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: "Why do people feel pressure to fit in, even when they know it's wrong?", footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: "How do you think social media affects people's relationship with truth?", footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: "What's the difference between *influencing* and *being influenced*?", footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How can a believer use their online presence to shine light instead of seeking likes?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'Why does standing for truth often come with rejection?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How do you think culture is shaping the way people see family, gender, or purpose?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What can we learn from how Yahusha engaged with culture in His time?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: "What are some examples of 'kingdom culture' you've seen in real life?", footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: "How do you know when you're compromising your values for acceptance?", footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What does it look like to be *in* the world but not *of* it?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How can creativity become a weapon for righteousness?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What cultural trend do you think is pulling people furthest from truth right now?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'How can believers reclaim influence in art, business, and media?', footer: 'Pass card' },
+                { icon: '🌐', category: 'Culturally', question: 'What would change if young believers led culture instead of following it?', footer: 'Pass card' }
+            ],
+            'prophetically': [
+                { icon: '🔮', category: 'Prophetically', question: "What parts of Scripture feel like they're being fulfilled in front of our eyes?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How does prophecy strengthen your faith instead of scaring you?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'Why do you think the world is becoming more confused about truth and identity?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "What's one event or trend that made you stop and say, 'This lines up with Scripture'?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "What does the Bible mean when it says people's love will grow cold?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How do you stay focused on your assignment in a world full of chaos?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'What do you think the Lord is saying to His people in this generation?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'Why do you think young believers are waking up spiritually right now?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How do you think technology fits into end-time prophecy?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How can prophecy help us see hope instead of fear?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "What role does Israel play in understanding the times we're in?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'Why do you think deception is increasing in media, religion, and politics?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "What are some 'false peace' messages you hear in today's world?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How can we stay spiritually alert without falling into anxiety?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "What's the danger of ignoring prophecy altogether?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'What does it mean to be part of the remnant in these last days?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: "How can we prepare our families for what's coming without living in panic?", footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'Why is discernment more important now than ever before?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'How can young people play a role in the restoration and revival the Lord is bringing?', footer: 'Pass card' },
+                { icon: '🔮', category: 'Prophetically', question: 'What does it look like to build the Kingdom now, knowing time is short?', footer: 'Pass card' }
+            ],
+            'practically': [
+                { icon: '⚡', category: 'Practically', question: 'What daily habits keep your faith strong in a world full of distractions?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How do you balance ambition and obedience to God?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What does discipline mean for someone trying to live holy?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What boundaries do you need to protect your peace and purity?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What kind of community do you need around you to stay focused on purpose?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How can faith guide your decisions in relationships, school, or business?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "What's one area in your life that God is calling you to grow in right now?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "How can you serve others with the gifts He's given you?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "What does success look like in the Kingdom compared to the world's definition?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How do you keep your joy when life feels heavy?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "What's the difference between confidence and pride — and how can you tell the line?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "How do you respond when people don't understand your walk of faith?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What does it mean to build legacy that honors God?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How can you be a light in your family or workplace without preaching at people?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "What's one practical way to make time for God every day?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How do you stay humble while walking in your calling?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What would change if you treated your purpose like an assignment instead of an option?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: "What are some practical ways to overcome temptation in everyday life?", footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'What\'s the biggest challenge of being "set apart" today — and how do you face it?', footer: 'Pass card' },
+                { icon: '⚡', category: 'Practically', question: 'How can you turn your faith into action this week?', footer: 'Pass card' }
             ]
         };
 
