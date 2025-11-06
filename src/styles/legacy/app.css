@@ -1,0 +1,96 @@
+/* Import Design System */
+@import url('./design-system.css');
+
+/* Legacy design tokens (kept for backward compatibility) */
+:root {
+  --color-bg: var(--color-bg-primary);
+  --color-text: var(--color-text-primary);
+  --color-muted: var(--color-text-muted);
+  --brand-1: var(--color-primary);
+  --brand-2: var(--color-secondary);
+  --surface: var(--color-bg-surface);
+  --card: var(--color-bg-card);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --shadow-elev: var(--shadow-gaming);
+  --spacing-1: var(--space-xs);
+  --spacing-2: var(--space-sm);
+  --spacing-3: var(--space-md);
+  --spacing-4: var(--space-lg);
+  --spacing-5: var(--space-xl);
+  --focus: 0 0 0 3px rgba(102, 126, 234, 0.35);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg: #f7fafc;
+    --color-text: #1a202c;
+    --surface: #ffffffcc;
+    --card: #ffffffee;
+  }
+}
+
+/* Base */
+html, body {
+  height: 100%;
+}
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utilities */
+.container-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-4);
+}
+
+.btn-app {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--brand-1), var(--brand-2));
+  color: #fff;
+  box-shadow: var(--shadow-elev);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-app:hover { transform: translateY(-2px); }
+.btn-app:focus-visible { outline: none; box-shadow: var(--focus); }
+
+.card-app {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elev);
+}
+
+/* App bar */
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(10px);
+}
+
+.app-actions { display: inline-flex; gap: 8px; }
+
+/* Dark mode toggle */
+.theme-toggle { background: var(--surface); color: var(--color-text); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+

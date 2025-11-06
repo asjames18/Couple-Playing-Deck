@@ -1,0 +1,204 @@
+/* Page Transitions - Smooth Animations Between Pages */
+
+/* Page Transition Container */
+.page-transition-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Fade Transition */
+.page-fade-enter {
+  opacity: 0;
+}
+
+.page-fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+.page-fade-exit {
+  opacity: 1;
+}
+
+.page-fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+/* Slide Transition */
+.page-slide-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.page-slide-enter-active {
+  transform: translateX(0);
+  opacity: 1;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.page-slide-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.page-slide-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Slide Up Transition */
+.page-slide-up-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.page-slide-up-enter-active {
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.page-slide-up-exit {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.page-slide-up-exit-active {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Scale Transition */
+.page-scale-enter {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.page-scale-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.page-scale-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.page-scale-exit-active {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+/* Card Flip Transition */
+.page-flip-enter {
+  transform: rotateY(90deg);
+  opacity: 0;
+}
+
+.page-flip-enter-active {
+  transform: rotateY(0deg);
+  opacity: 1;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transform-style: preserve-3d;
+}
+
+.page-flip-exit {
+  transform: rotateY(0deg);
+  opacity: 1;
+}
+
+.page-flip-exit-active {
+  transform: rotateY(-90deg);
+  opacity: 0;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transform-style: preserve-3d;
+}
+
+/* Loading Overlay */
+.page-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--color-bg-primary);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity var(--transition-base);
+}
+
+.page-loading-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Smooth Link Transitions */
+a[data-transition] {
+  transition: all var(--transition-fast);
+}
+
+a[data-transition]:hover {
+  transform: translateY(-2px);
+}
+
+/* Prevent Layout Shift */
+.page-content {
+  min-height: 100vh;
+  padding-bottom: calc(70px + var(--safe-area-bottom));
+}
+
+@media (min-width: 768px) {
+  .page-content {
+    padding-bottom: 0;
+    padding-top: calc(60px + var(--safe-area-top));
+  }
+}
+
+/* Transition States */
+.transitioning {
+  overflow: hidden;
+  position: relative;
+}
+
+.transitioning * {
+  pointer-events: none;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .page-fade-enter,
+  .page-fade-enter-active,
+  .page-fade-exit,
+  .page-fade-exit-active,
+  .page-slide-enter,
+  .page-slide-enter-active,
+  .page-slide-exit,
+  .page-slide-exit-active,
+  .page-slide-up-enter,
+  .page-slide-up-enter-active,
+  .page-slide-up-exit,
+  .page-slide-up-exit-active,
+  .page-scale-enter,
+  .page-scale-enter-active,
+  .page-scale-exit,
+  .page-scale-exit-active,
+  .page-flip-enter,
+  .page-flip-enter-active,
+  .page-flip-exit,
+  .page-flip-exit-active {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+

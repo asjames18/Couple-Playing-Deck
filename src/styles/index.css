@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import legacy CSS files */
+@import './legacy/design-system.css';
+@import './legacy/app.css';
+@import './legacy/navigation.css';
+@import './legacy/gaming.css';
+@import './legacy/transitions.css';
+@import './legacy/modern-ui.css';
+@import './legacy/animations.css';
+@import './legacy/loading-states.css';
+@import './legacy/typography-animations.css';
+@import './legacy/home.css';
+@import './legacy/couples.css';
+@import './legacy/family.css';
+@import './legacy/friends.css';
+@import './legacy/kids.css';
+@import './legacy/christian.css';
+@import './legacy/real-talk-cards.css';
+
+/* Base styles */
+@layer base {
+  body {
+    @apply font-base;
+  }
+}
+

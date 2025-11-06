@@ -1,0 +1,21 @@
+import { Link } from 'react-router-dom';
+
+interface BackButtonProps {
+  to?: string;
+  label?: string;
+}
+
+export default function BackButton({ to = '/', label = 'Back to Home' }: BackButtonProps) {
+  return (
+    <div style={{ marginBottom: '1rem' }}>
+      <Link
+        to={to}
+        className="btn-gaming-secondary"
+        style={{ textDecoration: 'none', display: 'inline-block' }}
+      >
+        ← {label}
+      </Link>
+    </div>
+  );
+}
+

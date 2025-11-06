@@ -1,0 +1,294 @@
+/* Bottom Navigation Bar - Mobile-First Gaming UI */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  background: var(--color-bg-card);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-sm) var(--space-md);
+  padding-bottom: calc(var(--space-sm) + var(--safe-area-bottom));
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  min-height: var(--touch-target-min);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: var(--font-family-base);
+}
+
+.bottom-nav-item:active {
+  transform: scale(0.95);
+}
+
+.bottom-nav-item-icon {
+  font-size: var(--font-size-xl);
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.bottom-nav-item-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.bottom-nav-item.active {
+  color: var(--color-primary);
+}
+
+.bottom-nav-item.active .bottom-nav-item-icon {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 8px rgba(102, 126, 234, 0.6));
+}
+
+.bottom-nav-item.active .bottom-nav-item-label {
+  font-weight: 600;
+}
+
+.bottom-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 0 0 var(--radius-full) var(--radius-full);
+  transition: width var(--transition-base);
+}
+
+.bottom-nav-item.active::before {
+  width: 60%;
+}
+
+.bottom-nav-item:hover:not(.active) {
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+}
+
+/* Badge for notifications/counts */
+.bottom-nav-badge {
+  position: absolute;
+  top: var(--space-xs);
+  right: var(--space-xs);
+  min-width: 18px;
+  height: 18px;
+  padding: 0 var(--space-xs);
+  background: var(--color-danger);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  animation: badgePulse 2s infinite;
+  z-index: 10;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.6);
+  }
+}
+
+/* Back/Home Button Component */
+.nav-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  min-height: var(--touch-target-min);
+  background: var(--color-bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  transition: all var(--transition-base);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-back-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left var(--transition-slow);
+}
+
+.nav-back-button:hover::before {
+  left: 100%;
+}
+
+.nav-back-button:hover {
+  background: var(--color-bg-card-hover);
+  border-color: rgba(102, 126, 234, 0.3);
+  transform: translateX(-2px);
+}
+
+.nav-back-button:active {
+  transform: translateX(0);
+}
+
+.nav-back-button-icon {
+  font-size: var(--font-size-lg);
+}
+
+/* Top Navigation Bar (for desktop/tablet) */
+.top-nav {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background: var(--color-bg-card);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-md) var(--space-lg);
+  padding-top: calc(var(--space-md) + var(--safe-area-top));
+  box-shadow: var(--shadow-card);
+}
+
+.top-nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-lg);
+}
+
+.top-nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.top-nav-links {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+}
+
+.top-nav-link {
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  font-weight: 500;
+}
+
+.top-nav-link:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-surface);
+}
+
+.top-nav-link.active {
+  color: var(--color-primary);
+  background: var(--color-bg-surface);
+}
+
+/* Responsive: Show top nav on larger screens, bottom nav on mobile */
+@media (min-width: 768px) {
+  .top-nav {
+    display: block;
+  }
+  
+  .bottom-nav {
+    display: none;
+  }
+  
+  /* Add padding to body to account for top nav */
+  body {
+    padding-top: calc(60px + var(--safe-area-top));
+  }
+}
+
+/* Add padding to body to account for bottom nav on mobile */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(70px + var(--safe-area-bottom));
+  }
+}
+
+/* Navigation Animation */
+@keyframes navSlideIn {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.bottom-nav {
+  animation: navSlideIn var(--transition-base) ease-out;
+}
+
+/* Enhanced Bottom Nav Item Animations */
+.bottom-nav-item-icon {
+  transition: all var(--transition-base);
+}
+
+.bottom-nav-item.active .bottom-nav-item-icon {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav {
+    animation: none;
+  }
+}
+

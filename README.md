@@ -1,51 +1,244 @@
 # Connecting Games Hub (PWA)
 
-Mobile-first, installable Progressive Web App bundling multiple mini-games (couples, family, friends, gratitude, real talk cards, and more).
+A modern, installable Progressive Web App built with React + TypeScript + Vite, featuring multiple connection games for couples, families, friends, and more.
 
-## Quick start
+## 🚀 Quick Start
 
-1. Install deps
+### Prerequisites
 
-```
-npm install
-```
+- Node.js v20 or higher
+- pnpm (recommended) or npm
 
-2. Run dev server
+### Setup
 
-```
-npm run dev
-```
+1. **Enable pnpm (if not already enabled)**
 
-3. Build
-
-```
-npm run build
+```bash
+corepack enable
+corepack prepare pnpm@latest --activate
 ```
 
-4. Preview production build
+2. **Install dependencies**
+
+```bash
+pnpm install
+```
+
+3. **Run development server**
+
+```bash
+pnpm dev
+```
+
+The app will be available at `http://localhost:5173`
+
+4. **Build for production**
+
+```bash
+pnpm build
+```
+
+5. **Preview production build**
+
+```bash
+pnpm preview
+```
+
+## 📦 Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm test` - Run tests with Vitest
+- `pnpm lint` - Run ESLint
+- `pnpm format` - Format code with Prettier
+
+## 🏗️ Project Structure
 
 ```
-npm run preview
+/
+├── public/              # Static assets
+│   ├── icons/          # App icons
+│   └── index.html       # HTML entry point
+├── src/
+│   ├── assets/         # Images, fonts, etc.
+│   ├── components/     # React components
+│   │   ├── games/      # Game-specific components
+│   │   └── __tests__/  # Component tests
+│   ├── hooks/          # Custom React hooks
+│   │   └── __tests__/  # Hook tests
+│   ├── lib/            # Utility functions
+│   │   ├── db.ts       # IndexedDB wrapper
+│   │   ├── analytics.ts # Google Analytics
+│   │   └── app-utils.ts # App utilities
+│   ├── pages/          # Page components
+│   ├── styles/         # CSS files
+│   │   └── legacy/     # Legacy CSS (preserved)
+│   ├── test/           # Test setup
+│   ├── App.tsx         # Main app component
+│   └── main.tsx        # Entry point
+├── vite.config.ts      # Vite configuration
+├── tsconfig.json       # TypeScript configuration
+├── tailwind.config.js  # Tailwind CSS configuration
+└── package.json        # Dependencies and scripts
 ```
 
-## PWA
-- Manifest: `manifest.webmanifest`
-- Service worker: `sw.js` (precache core assets, runtime cache for HTML/CSS/JS/images)
-- Icons: `/icons/`
+## 🎮 Features
 
-## Structure
-- Shared styles: `css/app.css`
-- Shared scripts: `js/app.js`
-- Per-page scripts moved to `js/*.page.js` or `js/<page>.js`
+### PWA (Progressive Web App)
 
-## Notes
-- Offline: Home and core assets are cached; first load required per page for full offline usage.
-- Theme: Use the Theme button on Home to toggle light/dark (persists).
+- **Installable**: Add to home screen on mobile and desktop
+- **Offline Support**: Works offline with service worker caching
+- **App-like Experience**: Standalone mode with custom splash screen
+- **Auto-update**: Service worker automatically updates in background
 
-## Accessibility
-- Landmarks, focus states, and touch targets considered; please report any issues.
+### Offline Behavior
 
-## License
+- **Cached Pages**: All visited pages are cached for offline access
+- **Cached Assets**: CSS, JS, images, and fonts are cached
+- **IndexedDB**: Game state, recent games, and stats persist offline
+- **Network First**: Pages attempt network fetch first, fall back to cache
+
+### Data Management
+
+- **IndexedDB**: All game data stored in IndexedDB for offline access
+- **React Query**: Server state management with caching
+- **Automatic Migration**: localStorage data automatically migrates to IndexedDB
+- **State Persistence**: Game progress, recent games, and stats persist across sessions
+
+### Games
+
+- **Couples**: Heart & Hustle - Deep connection questions
+- **Family**: Family bonding games
+- **Friends**: Friend connection games
+- **Kids**: Kid-friendly games
+- **Truth or Dare**: Classic truth or dare
+- **Would You Rather**: Choice-based questions
+- **Never Have I Ever**: Confession game
+- **Two Truths & a Lie**: Guessing game
+- **Story Time**: Collaborative storytelling
+- **Memory Lane**: Memory sharing
+- **Gratitude Journal**: Gratitude exercises
+- **Christian Games**: Faith-based games
+- **Real Talk Cards**: Deep conversation starters
+- **Love Escape**: Romantic games
+
+## 🔧 Development
+
+### TypeScript
+
+The project uses TypeScript with strict mode enabled. Type definitions are provided for all major dependencies.
+
+### Styling
+
+- **Tailwind CSS**: Utility-first CSS framework
+- **Legacy CSS**: Existing CSS files preserved in `src/styles/legacy/`
+- **Design System**: CSS variables for consistent theming
+- **Responsive**: Mobile-first design approach
+
+### State Management
+
+- **React Query**: Server state and caching
+- **Zustand**: Client state (theme, etc.)
+- **IndexedDB**: Persistent storage via `idb` library
+
+### Routing
+
+- **React Router**: Client-side routing
+- **URL Structure**: Clean URLs (e.g., `/couples` instead of `/couples.html`)
+- **Route Preservation**: Existing URL structure maintained
+
+## 🧪 Testing
+
+Tests are written with Vitest and React Testing Library:
+
+```bash
+pnpm test
+```
+
+Test files are located alongside components in `__tests__` directories.
+
+## 📱 PWA Features
+
+### Installation
+
+The app can be installed on:
+- **Chrome/Edge**: Install prompt appears automatically
+- **Safari (iOS)**: Add to Home Screen from share menu
+- **Firefox**: Install from address bar
+
+### Manifest
+
+The PWA manifest includes:
+- App name and description
+- Icons (192x192, 512x512, maskable)
+- Theme colors
+- Display mode (standalone)
+- Start URL
+
+### Service Worker
+
+- **Workbox**: Automatic service worker generation
+- **Caching Strategies**:
+  - Documents: NetworkFirst
+  - Assets: StaleWhileRevalidate
+  - Images/Fonts: StaleWhileRevalidate
+- **Auto-update**: Service worker updates automatically
+
+## 🚢 Deployment
+
+### Vercel
+
+1. Push to GitHub
+2. Import project in Vercel
+3. Deploy (automatic on push)
+
+### Netlify
+
+1. Push to GitHub
+2. Connect to Netlify
+3. Build command: `pnpm build`
+4. Publish directory: `dist`
+
+### Static Hosting
+
+Build the project and serve the `dist` directory:
+
+```bash
+pnpm build
+# Serve dist/ directory with any static file server
+```
+
+## 🔄 Migration Notes
+
+This project was migrated from a multi-page HTML/CSS/JS app to a React SPA. Key changes:
+
+- **Routing**: Client-side routing with React Router
+- **State**: localStorage → IndexedDB with automatic migration
+- **Components**: HTML pages → React components
+- **Build**: Vite replaces manual build process
+- **PWA**: vite-plugin-pwa replaces manual service worker
+
+### Preserved Features
+
+- All existing CSS styles
+- All game functionality
+- URL structure (mapped to React routes)
+- Design system and theme
+- Google Analytics integration
+
+## 📝 License
+
 MIT
 
+## 🤝 Contributing
 
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## 📧 Support
+
+For issues and questions, please open an issue on GitHub.

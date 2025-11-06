@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="100%" stop-color="#764ba2"/>
+    </linearGradient>
+  </defs>
+  <rect width="192" height="192" rx="32" fill="url(#g)"/>
+  <g fill="#fff" opacity="0.95" transform="translate(24,24)">
+    <rect x="0" y="0" width="144" height="144" rx="24" fill="rgba(255,255,255,0.2)"/>
+    <text x="72" y="92" font-family="Segoe UI, Arial, sans-serif" font-size="72" text-anchor="middle">🎮</text>
+  </g>
+  <title>Connecting Games Hub</title>
+</svg>
+
+
