@@ -106,11 +106,16 @@ export function useAggregatedStats() {
   let favoriteGame = null;
 
   Object.entries(stats).forEach(([gameId, gameStats]) => {
+    // Skip if gameStats is undefined or null
+    if (!gameStats) {
+      return;
+    }
+
     totalGames += gameStats.plays || 0;
     totalCards += gameStats.cardsDrawn || 0;
     totalTime += gameStats.timeSpent || 0;
 
-    if (gameStats.plays > maxPlays) {
+    if (gameStats.plays && gameStats.plays > maxPlays) {
       maxPlays = gameStats.plays;
       const metadata = getGameMetadata(gameId);
       favoriteGame = {

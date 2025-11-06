@@ -13,8 +13,8 @@ export default function BackButton({
     <div style={{ marginBottom: '1rem' }}>
       <Link
         to={to}
-        className="btn-gaming-secondary"
-        style={{ textDecoration: 'none', display: 'inline-block' }}
+        className="btn-gaming-secondary tap-target"
+        style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
       >
         ← {label}
       </Link>

@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useTheme } from '@/hooks/useTheme';
-import { exportData, importData, type ExportData } from '@/lib/db';
+import { exportData, importData, getSettings, saveSettings, type ExportData } from '@/lib/db';
 import { checkForUpdates } from '@/lib/pwa/updateService';
 import BackButton from '@/components/BackButton';
+import PrimaryButton from '@/components/PrimaryButton';
+import { pageTransition } from '@/lib/motion';
 
 export default function Settings() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [isExporting, setIsExporting] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   const [importSuccess, setImportSuccess] = useState(false);
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
+  const [hapticsEnabled, setHapticsEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    // Check if iOS
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    setIsIOS(iOS);
+
+    // Load settings
+    getSettings().then((settings) => {
+      if (settings.hapticsEnabled !== undefined) {
+        setHapticsEnabled(settings.hapticsEnabled);
+      }
+      if (settings.soundEnabled !== undefined) {
+        setSoundEnabled(settings.soundEnabled);
+      }
+    });
+  }, []);
 
   const handleExport = async () => {
     setIsExporting(true);
@@ -87,101 +109,138 @@ export default function Settings() {
     }
   };
 
-  return (
-    <div className="container">
-      <BackButton />
-      <h1>Settings</h1>
+  const handleThemeChange = async (newTheme: 'light' | 'dark' | 'system') => {
+    setTheme(newTheme);
+    const settings = await getSettings();
+    settings.theme = newTheme;
+    await saveSettings(settings);
+  };
 
-      <div
-        style={{
-          marginTop: '2rem',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1.5rem',
-        }}
-      >
-        {/* Theme Toggle */}
-        <div
-          style={{
-            padding: '1.5rem',
-            borderRadius: 'var(--radius-lg)',
-            background: 'var(--color-bg-card)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          <h2 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>
-            Appearance
-          </h2>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-            }}
-          >
-            <span>Theme</span>
-            <button
-              onClick={toggleTheme}
-              data-haptic
-              className="btn-gaming-secondary"
-              style={{ minWidth: '100px' }}
-            >
-              {theme === 'dark' ? '🌙 Dark' : '☀️ Light'}
-            </button>
+  const handleHapticsToggle = async () => {
+    const newValue = !hapticsEnabled;
+    setHapticsEnabled(newValue);
+    const settings = await getSettings();
+    settings.hapticsEnabled = newValue;
+    await saveSettings(settings);
+  };
+
+  const handleSoundToggle = async () => {
+    const newValue = !soundEnabled;
+    setSoundEnabled(newValue);
+    const settings = await getSettings();
+    settings.soundEnabled = newValue;
+    await saveSettings(settings);
+  };
+
+  return (
+    <motion.div
+      {...pageTransition}
+      className="container pb-24"
+      style={{ paddingBottom: 'calc(4rem + env(safe-area-inset-bottom, 0))' }}
+    >
+      <BackButton />
+      <h1 className="text-[32px] leading-[1.1] font-heading font-bold mb-2">Settings</h1>
+
+      <div className="flex flex-col gap-4 mt-6">
+        {/* Appearance */}
+        <div className="rounded-xl bg-card shadow-soft p-5 ring-1 ring-white/5">
+          <h2 className="text-lg font-semibold mb-4">Appearance</h2>
+          <div className="flex flex-col gap-3">
+            <label className="text-sm text-muted">Theme</label>
+            <div className="grid grid-cols-3 gap-2">
+              {(['system', 'light', 'dark'] as const).map((themeOption) => (
+                <button
+                  key={themeOption}
+                  onClick={() => handleThemeChange(themeOption)}
+                  className={`px-4 py-3 rounded-xl font-medium transition-colors tap-target focus-visible-ring ${
+                    theme === themeOption
+                      ? 'bg-primary text-white'
+                      : 'bg-card/50 text-muted hover:bg-card'
+                  }`}
+                  data-haptic
+                >
+                  {themeOption === 'system' ? '🌓 System' : themeOption === 'dark' ? '🌙 Dark' : '☀️ Light'}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Preferences */}
+        <div className="rounded-xl bg-card shadow-soft p-5 ring-1 ring-white/5">
+          <h2 className="text-lg font-semibold mb-4">Preferences</h2>
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Haptic Feedback</div>
+                <div className="text-sm text-muted">Vibrate on interactions</div>
+              </div>
+              <button
+                onClick={handleHapticsToggle}
+                className={`relative w-12 h-6 rounded-full transition-colors tap-target focus-visible-ring ${
+                  hapticsEnabled ? 'bg-primary' : 'bg-muted/30'
+                }`}
+                data-haptic={false}
+                aria-label={hapticsEnabled ? 'Disable haptics' : 'Enable haptics'}
+              >
+                <span
+                  className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                    hapticsEnabled ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="font-medium">Sound Effects</div>
+                <div className="text-sm text-muted">Play sounds on actions</div>
+              </div>
+              <button
+                onClick={handleSoundToggle}
+                className={`relative w-12 h-6 rounded-full transition-colors tap-target focus-visible-ring ${
+                  soundEnabled ? 'bg-primary' : 'bg-muted/30'
+                }`}
+                data-haptic
+                aria-label={soundEnabled ? 'Disable sound' : 'Enable sound'}
+              >
+                <span
+                  className={`absolute top-1 left-1 w-4 h-4 bg-white rounded-full transition-transform ${
+                    soundEnabled ? 'translate-x-6' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Data Management */}
-        <div
-          style={{
-            padding: '1.5rem',
-            borderRadius: 'var(--radius-lg)',
-            background: 'var(--color-bg-card)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          <h2 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>
-            Data Management
-          </h2>
-          <div
-            style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-          >
+        <div className="rounded-xl bg-card shadow-soft p-5 ring-1 ring-white/5">
+          <h2 className="text-lg font-semibold mb-4">Data Management</h2>
+          <div className="flex flex-col gap-4">
             <div>
-              <button
+              <PrimaryButton
                 onClick={handleExport}
                 disabled={isExporting}
+                className="w-full"
                 data-haptic
-                className="btn-gaming-primary"
-                style={{ width: '100%' }}
               >
                 {isExporting ? 'Exporting...' : '📥 Export Data'}
-              </button>
-              <p
-                style={{
-                  fontSize: '0.9rem',
-                  opacity: 0.7,
-                  marginTop: '0.5rem',
-                }}
-              >
+              </PrimaryButton>
+              <p className="text-sm text-muted mt-2">
                 Download a backup of all your game data, settings, and sessions
               </p>
             </div>
             <div>
               <label
                 htmlFor="import-file"
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  padding: '0.75rem 1rem',
-                  background: 'var(--color-primary)',
-                  color: 'white',
-                  borderRadius: 'var(--radius-md)',
-                  textAlign: 'center',
-                  cursor: isImporting ? 'not-allowed' : 'pointer',
-                  opacity: isImporting ? 0.6 : 1,
-                }}
+                className="block w-full"
               >
-                {isImporting ? 'Importing...' : '📤 Import Data'}
+                <PrimaryButton
+                  as="span"
+                  className={`w-full ${isImporting ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                >
+                  {isImporting ? 'Importing...' : '📤 Import Data'}
+                </PrimaryButton>
               </label>
               <input
                 id="import-file"
@@ -189,36 +248,16 @@ export default function Settings() {
                 accept=".json"
                 onChange={handleImport}
                 disabled={isImporting}
-                style={{ display: 'none' }}
+                className="hidden"
               />
-              <p
-                style={{
-                  fontSize: '0.9rem',
-                  opacity: 0.7,
-                  marginTop: '0.5rem',
-                }}
-              >
+              <p className="text-sm text-muted mt-2">
                 Restore from a previously exported backup file
               </p>
               {importError && (
-                <p
-                  style={{
-                    color: 'var(--color-error, #e74c3c)',
-                    fontSize: '0.9rem',
-                    marginTop: '0.5rem',
-                  }}
-                >
-                  {importError}
-                </p>
+                <p className="text-sm text-red-400 mt-2">{importError}</p>
               )}
               {importSuccess && (
-                <p
-                  style={{
-                    color: 'var(--color-success, #2ecc71)',
-                    fontSize: '0.9rem',
-                    marginTop: '0.5rem',
-                  }}
-                >
+                <p className="text-sm text-green-400 mt-2">
                   ✓ Data imported successfully! Reloading...
                 </p>
               )}
@@ -227,31 +266,36 @@ export default function Settings() {
         </div>
 
         {/* App Updates */}
-        <div
-          style={{
-            padding: '1.5rem',
-            borderRadius: 'var(--radius-lg)',
-            background: 'var(--color-bg-card)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          <h2 style={{ marginBottom: '1rem', fontSize: '1.2rem' }}>
-            App Updates
-          </h2>
-          <button
+        <div className="rounded-xl bg-card shadow-soft p-5 ring-1 ring-white/5">
+          <h2 className="text-lg font-semibold mb-4">App Updates</h2>
+          <PrimaryButton
             onClick={handleCheckUpdates}
             disabled={isCheckingUpdates}
+            className="w-full"
             data-haptic
-            className="btn-gaming-secondary"
-            style={{ width: '100%' }}
           >
             {isCheckingUpdates ? 'Checking...' : '🔄 Check for Updates'}
-          </button>
-          <p style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '0.5rem' }}>
+          </PrimaryButton>
+          <p className="text-sm text-muted mt-2">
             Check if a new version of the app is available
           </p>
         </div>
+
+        {/* iOS Install Guide */}
+        {isIOS && (
+          <div className="rounded-xl bg-card shadow-soft p-5 ring-1 ring-white/5">
+            <h2 className="text-lg font-semibold mb-4">Install App</h2>
+            <div className="text-sm text-muted space-y-2">
+              <p>Add this app to your home screen:</p>
+              <ol className="list-decimal list-inside space-y-1 ml-2">
+                <li>Tap the Share button <span className="inline-block">📤</span> at the bottom</li>
+                <li>Scroll down and tap "Add to Home Screen"</li>
+                <li>Tap "Add" to confirm</li>
+              </ol>
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </motion.div>
   );
 }

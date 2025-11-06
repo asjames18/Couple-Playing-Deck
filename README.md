@@ -211,14 +211,79 @@ The PWA manifest includes:
 
 ### Service Worker
 
-- **Workbox**: Automatic service worker generation
+- **Workbox**: Automatic service worker generation via `vite-plugin-pwa`
 - **Caching Strategies**:
-  - Documents: NetworkFirst
-  - Assets: StaleWhileRevalidate
-  - Images/Fonts: StaleWhileRevalidate
-- **Auto-update**: Service worker updates automatically
+  - **HTML pages**: NetworkFirst with 4s timeout (cache name: `pages`)
+  - **Static assets** (JS/CSS/JSON/webmanifest): StaleWhileRevalidate (cache name: `static`)
+  - **Images** (PNG/JPG/SVG/WebP/AVIF): CacheFirst with 30-day expiration, 80 entry limit (cache name: `images`)
+- **Auto-update**: Service worker updates automatically with user prompt
+- **Offline fallback**: `/offline.html` shown when page not cached
+
+### Image Optimization
+
+For best performance:
+
+- **Format**: Use AVIF or WebP when possible (better compression than PNG/JPG)
+- **Lazy loading**: Add `loading="lazy"` to images below the fold
+- **Responsive images**: Use `srcset` for different screen densities
+- **Vite optimization**: Vite automatically optimizes images during build
+
+Example:
+```html
+<img 
+  src="/image.webp" 
+  srcset="/image@2x.webp 2x" 
+  loading="lazy" 
+  alt="Description" 
+/>
+```
+
+### Performance & PWA Audit
+
+Run a Lighthouse audit to verify PWA compliance:
+
+```bash
+# Build the project
+pnpm build
+
+# Serve locally
+pnpm preview
+
+# Run Lighthouse (requires Chrome)
+npx lighthouse http://localhost:4173 --view
+```
+
+Expected results:
+- ✅ **Installable**: PWA install prompt works
+- ✅ **Offline**: App works offline with service worker
+- ✅ **Performance**: First Contentful Paint < 1.8s
+- ✅ **Accessibility**: WCAG AA compliance (tap targets ≥44px, color contrast)
+- ✅ **Best Practices**: HTTPS, valid manifest, service worker registered
+
+Screenshot the Lighthouse PWA audit results and include in your project documentation.
 
 ## 🚢 Deployment
+
+### Required Server Headers
+
+For optimal PWA functionality, ensure your hosting provider sets these headers:
+
+**Content Security Policy (CSP):**
+```
+default-src 'self';
+img-src 'self' data: blob:;
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;
+script-src 'self' 'unsafe-inline' https://www.googletagmanager.com;
+connect-src 'self' https://www.googletagmanager.com;
+```
+
+**Manifest:**
+- `manifest.webmanifest` should be served with `Content-Type: application/manifest+json`
+
+**Cache Headers:**
+- `sw.js` (service worker): `Cache-Control: no-cache, no-store, must-revalidate`
+- Hashed assets (JS/CSS): `Cache-Control: public, immutable, max-age=31536000`
 
 ### Vercel
 
@@ -226,12 +291,38 @@ The PWA manifest includes:
 2. Import project in Vercel
 3. Deploy (automatic on push)
 
+Vercel automatically handles:
+- Manifest Content-Type
+- Cache headers for static assets
+- CSP can be configured in `vercel.json`
+
 ### Netlify
 
 1. Push to GitHub
 2. Connect to Netlify
 3. Build command: `pnpm build`
 4. Publish directory: `dist`
+
+Add `_headers` file in `public/`:
+```
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/assets/*
+  Cache-Control: public, immutable, max-age=31536000
+```
+
+### Cloudflare Pages
+
+1. Push to GitHub
+2. Connect to Cloudflare Pages
+3. Build command: `pnpm build`
+4. Build output directory: `dist`
+
+Add `_headers` file in `public/` (same as Netlify).
 
 ### Static Hosting
 
@@ -241,6 +332,10 @@ Build the project and serve the `dist` directory:
 pnpm build
 # Serve dist/ directory with any static file server
 ```
+
+Ensure your server:
+- Serves `manifest.webmanifest` with correct Content-Type
+- Sets appropriate cache headers for service worker and assets
 
 ## 🔄 Migration Notes
 

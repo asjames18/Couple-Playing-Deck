@@ -30,7 +30,26 @@ export interface GameStats {
 }
 
 export interface Settings {
-  theme: 'light' | 'dark';
+  theme: 'light' | 'dark' | 'system';
+  hapticsEnabled?: boolean;
+  soundEnabled?: boolean;
+  energy?: {
+    current: number;
+    max: number;
+    lastUpdated: number;
+  };
+  streak?: {
+    current: number;
+    longest: number;
+    lastPlayedDate: string;
+  };
+  xp?: {
+    current: number;
+    level: number;
+    xpToNextLevel: number;
+  };
+  achievements?: string[]; // Array of achievement IDs
+  preferredGameMode?: 'normal' | 'chill' | 'honesty' | 'challenge';
   [key: string]: unknown;
 }
 
@@ -138,7 +157,7 @@ export async function getDB(): Promise<IDBPDatabase<GamesDB>> {
 export async function getSettings(): Promise<Settings> {
   const db = await getDB();
   const settings = await db.get('settings', 'app');
-  return settings || { theme: 'dark' };
+  return settings || { theme: 'dark', hapticsEnabled: true, soundEnabled: false };
 }
 
 export async function saveSettings(settings: Settings): Promise<void> {
@@ -197,11 +216,17 @@ export async function clearRecentGames(): Promise<void> {
 // Game stats operations
 export async function getGameStats(): Promise<Record<string, GameStats>> {
   const db = await getDB();
-  const allStats = await db.getAll('gameStats');
+  const keys = await db.getAllKeys('gameStats');
   const stats: Record<string, GameStats> = {};
-  for (const stat of allStats) {
-    stats[stat.key as string] = stat.value;
+  
+  // Get each stat by its key
+  for (const key of keys) {
+    const stat = await db.get('gameStats', key);
+    if (stat) {
+      stats[key as string] = stat;
+    }
   }
+  
   return stats;
 }
 
@@ -349,6 +374,18 @@ export async function exportData(): Promise<ExportData> {
 }
 
 export async function importData(data: ExportData): Promise<void> {
+  // Validate data structure
+  if (!data || typeof data !== 'object') {
+    throw new Error('Invalid import data: must be an object');
+  }
+
+  // Handle version mismatches - allow importing from older versions
+  if (data.version && data.version > DB_VERSION) {
+    throw new Error(
+      `Import data version (${data.version}) is newer than current database version (${DB_VERSION}). Please update the app.`
+    );
+  }
+
   const db = await getDB();
   const tx = db.transaction(
     ['settings', 'recentGames', 'gameStats', 'sessions', 'decks'],
@@ -357,39 +394,94 @@ export async function importData(data: ExportData): Promise<void> {
 
   // Import settings
   if (data.settings) {
+    if (typeof data.settings !== 'object') {
+      throw new Error('Invalid settings data');
+    }
     await tx.objectStore('settings').put(data.settings, 'app');
   }
 
   // Import recent games
   if (data.recentGames) {
+    if (!Array.isArray(data.recentGames)) {
+      throw new Error('Invalid recentGames data: must be an array');
+    }
     const recentGamesStore = tx.objectStore('recentGames');
     await recentGamesStore.clear();
     for (const game of data.recentGames) {
-      await recentGamesStore.add(game);
+      // Validate game structure
+      if (
+        game &&
+        typeof game === 'object' &&
+        typeof game.url === 'string' &&
+        typeof game.name === 'string'
+      ) {
+        await recentGamesStore.add(game);
+      }
     }
   }
 
   // Import game stats
   if (data.gameStats) {
+    if (typeof data.gameStats !== 'object' || Array.isArray(data.gameStats)) {
+      throw new Error('Invalid gameStats data: must be an object');
+    }
     const statsStore = tx.objectStore('gameStats');
     for (const [key, value] of Object.entries(data.gameStats)) {
-      await statsStore.put(value, key);
+      if (
+        value &&
+        typeof value === 'object' &&
+        typeof (value as GameStats).plays === 'number'
+      ) {
+        await statsStore.put(value, key);
+      }
     }
   }
 
   // Import sessions
   if (data.sessions) {
+    if (!Array.isArray(data.sessions)) {
+      throw new Error('Invalid sessions data: must be an array');
+    }
     const sessionsStore = tx.objectStore('sessions');
     for (const session of data.sessions) {
-      await sessionsStore.put(session);
+      // Validate session structure
+      if (
+        session &&
+        typeof session === 'object' &&
+        typeof session.sessionId === 'string' &&
+        typeof session.deckId === 'string'
+      ) {
+        await sessionsStore.put(session);
+      }
     }
   }
 
-  // Import decks
+  // Import decks with validation
   if (data.decks) {
+    if (!Array.isArray(data.decks)) {
+      throw new Error('Invalid decks data: must be an array');
+    }
     const decksStore = tx.objectStore('decks');
     for (const deck of data.decks) {
-      await decksStore.put(deck);
+      // Validate deck structure
+      if (
+        deck &&
+        typeof deck === 'object' &&
+        typeof deck.deckId === 'string' &&
+        typeof deck.name === 'string' &&
+        Array.isArray(deck.cards)
+      ) {
+        // Ensure required fields exist
+        const validDeck: Deck = {
+          deckId: deck.deckId,
+          name: deck.name,
+          cards: deck.cards,
+          custom: deck.custom ?? false,
+          createdAt: deck.createdAt ?? Date.now(),
+          ...deck,
+        };
+        await decksStore.put(validDeck);
+      }
     }
   }
 

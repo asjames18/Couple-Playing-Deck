@@ -4,6 +4,7 @@ import { trackPageView } from './lib/analytics';
 import { useTheme } from './hooks/useTheme';
 import Home from './pages/Home';
 import BottomNavigation from './components/BottomNavigation';
+import StatusBar from './components/StatusBar';
 import InstallPrompt from './components/InstallPrompt';
 import OfflineBanner from './components/OfflineBanner';
 import UpdatePrompt from './components/UpdatePrompt';
@@ -67,7 +68,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-bg-primary">
+      <div className="min-h-screen bg-bg text-fg pb-20" style={{ paddingBottom: 'calc(5rem + env(safe-area-inset-bottom, 0))', paddingTop: 'calc(4rem + env(safe-area-inset-top, 0))' }}>
+        <StatusBar />
         <OfflineBanner />
         <InstallPrompt />
         <UpdatePrompt />

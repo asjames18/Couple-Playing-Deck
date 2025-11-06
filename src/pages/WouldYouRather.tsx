@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useTrackGamePlay, useRelatedGames } from '@/hooks/useGameState';
 import { useWouldYouRather } from '@/hooks/useWouldYouRather';
+import { useHaptics } from '@/hooks/useHaptics';
 import BackButton from '@/components/BackButton';
+import GameScreen from '@/components/GameScreen';
+import PrimaryButton from '@/components/PrimaryButton';
 import { Link } from 'react-router-dom';
+import { pageTransition } from '@/lib/motion';
 import type { WouldYouRatherCategory } from '@/lib/game-data/would-you-rather-questions';
 
 export default function WouldYouRather() {
@@ -10,10 +15,20 @@ export default function WouldYouRather() {
   const relatedGames = useRelatedGames('would-you-rather');
   const { currentQuestion, currentCategory, drawQuestion, changeCategory } =
     useWouldYouRather();
+  const { triggerShort } = useHaptics();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'would-you-rather' });
   }, [trackGamePlay]);
+
+  const handleDrawQuestion = () => {
+    drawQuestion();
+    triggerShort();
+    trackGamePlay.mutate({
+      gameId: 'would-you-rather',
+      data: { cardsDrawn: 1 },
+    });
+  };
 
   const categories: WouldYouRatherCategory[] = [
     'all',
@@ -23,158 +38,114 @@ export default function WouldYouRather() {
     'lifestyle',
   ];
 
-  return (
-    <div className="container">
-      <BackButton />
-      <h1>Would You Rather</h1>
-      <p>Make tough choices and see what your friends choose!</p>
+  if (currentQuestion) {
+    return (
+      <motion.div {...pageTransition} className="pb-24">
+        <GameScreen
+          prompt={
+            <div className="space-y-4">
+              <div className="text-base leading-6 font-semibold mb-4 font-heading">
+                {currentQuestion.question}
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  className="px-4 py-6 rounded-xl bg-white/5 text-sm font-medium
+                           ring-1 ring-white/10 hover:ring-primary/30 hover:bg-white/10
+                           transition-all tap-target focus-visible-ring lighting-3d"
+                  data-haptic
+                >
+                  {currentQuestion.optionA}
+                </motion.button>
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  className="px-4 py-6 rounded-xl bg-white/5 text-sm font-medium
+                           ring-1 ring-white/10 hover:ring-primary/30 hover:bg-white/10
+                           transition-all tap-target focus-visible-ring lighting-3d"
+                  data-haptic
+                >
+                  {currentQuestion.optionB}
+                </motion.button>
+              </div>
+            </div>
+          }
+          onNext={handleDrawQuestion}
+          canGoNext={true}
+        />
+      </motion.div>
+    );
+  }
 
-      <div
-        className="category-selector"
-        style={{
-          marginBottom: '1rem',
-          display: 'flex',
-          gap: '0.5rem',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-        }}
-      >
+  return (
+    <motion.div
+      {...pageTransition}
+      className="container pb-24"
+      style={{ paddingBottom: 'calc(4rem + env(safe-area-inset-bottom, 0))' }}
+    >
+      <BackButton />
+      <h1 className="text-[32px] leading-[1.1] font-heading font-bold mb-2">
+        Would You Rather
+      </h1>
+      <p className="text-base leading-6 text-muted mb-6 font-body">
+        Make tough choices and see what your friends choose!
+      </p>
+
+      <div className="flex flex-wrap gap-2 justify-center mb-6">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => changeCategory(cat)}
-            className={`category-btn ${currentCategory === cat ? 'active' : ''}`}
+            className={`px-4 py-2 rounded-xl font-medium transition-all tap-target focus-visible-ring ${
+              currentCategory === cat
+                ? 'bg-primary text-white'
+                : 'bg-card text-muted hover:bg-card-hover ring-1 ring-white/5'
+            }`}
             data-haptic
-            style={{
-              padding: '0.5rem 1rem',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid rgba(255, 255, 255, 0.2)',
-              background:
-                currentCategory === cat
-                  ? 'var(--color-primary)'
-                  : 'transparent',
-              color: 'var(--color-text)',
-              cursor: 'pointer',
-            }}
           >
             {cat.charAt(0).toUpperCase() + cat.slice(1)}
           </button>
         ))}
       </div>
 
-      <button
-        onClick={drawQuestion}
+      <PrimaryButton
+        onClick={handleDrawQuestion}
+        className="w-full mb-6"
         data-haptic
-        className="btn-gaming-primary"
-        style={{ marginBottom: '1rem' }}
       >
         Get Question
-      </button>
+      </PrimaryButton>
 
-      {currentQuestion && (
-        <div
-          className="question-container"
-          style={{
-            minHeight: '200px',
-            padding: '2rem',
-            marginTop: '1rem',
-            borderRadius: 'var(--radius-lg)',
-            background: 'var(--color-bg-card)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        >
-          <div
-            className="question-text"
-            style={{
-              fontSize: '1.3rem',
-              fontWeight: '600',
-              marginBottom: '2rem',
-            }}
-          >
-            {currentQuestion.question}
-          </div>
-          <div
-            className="options-container"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '1rem',
-            }}
-          >
-            <button
-              className="option-card btn-gaming-secondary"
-              data-haptic
-              style={{
-                padding: '1.5rem',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '1.1rem',
-                minHeight: '100px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              {currentQuestion.optionA}
-            </button>
-            <button
-              className="option-card btn-gaming-secondary"
-              data-haptic
-              style={{
-                padding: '1.5rem',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '1.1rem',
-                minHeight: '100px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-              }}
-            >
-              {currentQuestion.optionB}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {!currentQuestion && (
-        <div
-          id="card-display"
-          className="card-display"
-          style={{
-            minHeight: '200px',
-            padding: '2rem',
-            marginTop: '1rem',
-            borderRadius: 'var(--radius-lg)',
-            background: 'var(--color-bg-card)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            textAlign: 'center',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          Click "Get Question" to start!
-        </div>
-      )}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-2xl bg-card shadow-soft p-8 ring-1 ring-white/5 text-center"
+      >
+        <p className="text-muted">Click "Get Question" to start!</p>
+      </motion.div>
 
       {relatedGames.length > 0 && (
-        <div className="related-games-section" style={{ marginTop: '2rem' }}>
-          <h3>You might also like:</h3>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mt-8"
+        >
+          <h3 className="text-lg font-semibold mb-4">You might also like:</h3>
+          <div className="flex flex-wrap gap-3">
             {relatedGames.map((game) => (
               <Link
                 key={game.id}
                 to={`/${game.id}`}
-                className="btn-gaming-secondary"
+                className="px-4 py-2 rounded-xl bg-card text-sm font-medium
+                         ring-1 ring-white/5 hover:ring-white/10 transition-all
+                         tap-target focus-visible-ring"
                 style={{ textDecoration: 'none' }}
               >
                 {game.icon} {game.name}
               </Link>
             ))}
           </div>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }

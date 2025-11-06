@@ -21,9 +21,137 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cinematic Relationship Gaming Platform - Design Tokens */
+/* Visual Identity: "Warm-Energy Meets Futuristic Glow" */
+
+:root {
+  /* Background Colors */
+  --bg: 14 14 16;        /* #0E0E10 - near-black */
+  --bg-gradient-end: 26 10 46; /* #1a0a2e - deep plum */
+  --fg: 240 240 244;     /* near-white */
+  --muted: 152 161 178;
+  
+  /* Primary Accent Colors (RGB format for alpha support) */
+  --primary: 217 70 239; /* #D946EF - fuchsia-violet */
+  --primary-600: 192 38 211; /* darker fuchsia */
+  --gold: 250 204 21;    /* #FACC15 - gold for energy */
+  --gold-600: 217 119 6; /* darker gold */
+  
+  /* Secondary & Semantic Colors */
+  --secondary: 59 130 246; /* #3B82F6 - soft blue for CTA */
+  --success: 74 222 128;   /* #4ADE80 - green for energy */
+  --warning: 251 191 36;  /* #FBBF24 - amber */
+  --error: 239 68 68;     /* #EF4444 - red */
+  --info: 59 130 246;     /* #3B82F6 - blue */
+  
+  /* Card & Surface */
+  --card: 22 25 29;
+  --card-hover: 30 30 40;
+  --ring: 217 70 239;     /* fuchsia for focus rings */
+  
+  /* Gradient Overlays */
+  --gradient-overlay-1: linear-gradient(180deg, rgba(217,70,239,.3), rgba(250,204,21,.15));
+  --gradient-primary: linear-gradient(135deg, #D946EF, #FACC15);
+  --gradient-energy: linear-gradient(90deg, #D946EF, #FACC15);
+  
+  /* 3D Lighting */
+  --glow-top-left: rgba(217, 70, 239, 0.3);
+  --shadow-bottom-right: rgba(0, 0, 0, 0.5);
+}
+
+:root.light {
+  --bg: 250 250 252;
+  --bg-gradient-end: 240 240 250;
+  --fg: 18 20 24;
+  --card: 255 255 255;
+  --card-hover: 245 245 250;
+  --muted: 100 116 139;
+  --glow-top-left: rgba(217, 70, 239, 0.15);
+  --shadow-bottom-right: rgba(0, 0, 0, 0.1);
+}
+
+/* Subtle Background Treatment */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(60% 60% at 50% 50%, rgba(217, 70, 239, 0.08), transparent),
+    linear-gradient(180deg, rgb(var(--bg)), rgb(var(--bg-gradient-end)));
+  z-index: -1;
+  pointer-events: none;
+}
+
 /* Base styles */
 @layer base {
   body {
     @apply font-base;
+    color: rgb(var(--fg));
+    background: rgb(var(--bg));
+    min-height: 100vh;
+    position: relative;
+  }
+  
+  /* Typography hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  
+  /* Label styles for gamification */
+  .label-gaming {
+    @apply uppercase tracking-widest text-xs font-semibold;
+  }
+}
+
+/* Accessibility: Tap target sizes (minimum 44×44px for mobile) */
+@layer utilities {
+  .tap-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Subtle glow effects */
+  .glow-fuchsia {
+    box-shadow: 0 2px 8px rgba(217, 70, 239, 0.2);
+  }
+  
+  .glow-gold {
+    box-shadow: 0 2px 8px rgba(250, 204, 21, 0.2);
+  }
+  
+  /* Text gradients */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #D946EF, #FACC15);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .text-gradient-energy {
+    background: linear-gradient(90deg, #D946EF, #FACC15);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  /* Subtle depth effect */
+  .lighting-3d {
+    box-shadow: 
+      0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Shimmer animation for energy bar */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s ease-in-out infinite;
   }
 }

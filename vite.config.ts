@@ -26,11 +26,12 @@ export default defineConfig({
         name: 'Connecting Games Hub',
         short_name: 'Games Hub',
         description: 'Spark meaningful connections through play',
-        start_url: '/',
+        start_url: '/?source=pwa',
+        scope: '/',
         display: 'standalone',
         orientation: 'portrait',
-        theme_color: '#667eea',
-        background_color: '#0f0f1a',
+            theme_color: '#0E0E10',
+            background_color: '#0E0E10',
         categories: ['games', 'entertainment'],
         icons: [
           {
@@ -59,11 +60,12 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api/, /^\/_/],
         runtimeCaching: [
           {
-            urlPattern: ({ request }) => request.destination === 'document',
+            // HTML navigations: network-first
+            urlPattern: ({ request }) => request.mode === 'navigate',
             handler: 'NetworkFirst',
             options: {
-              cacheName: 'html-cache',
-              networkTimeoutSeconds: 3,
+              cacheName: 'pages',
+              networkTimeoutSeconds: 4,
               plugins: [
                 {
                   cacheWillUpdate: async ({ response }) => {
@@ -74,19 +76,21 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: ({ request }) =>
-              ['style', 'script', 'worker'].includes(request.destination),
+            // static assets: stale-while-revalidate
+            urlPattern: ({ url }) =>
+              /\.(?:js|css|json|webmanifest)$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
             options: {
-              cacheName: 'asset-cache',
+              cacheName: 'static',
             },
           },
           {
-            urlPattern: ({ request }) =>
-              ['image', 'font'].includes(request.destination),
+            // images: cache-first with cap
+            urlPattern: ({ url }) =>
+              /\.(?:png|jpg|jpeg|gif|svg|webp|avif)$/.test(url.pathname),
             handler: 'CacheFirst',
             options: {
-              cacheName: 'static-cache',
+              cacheName: 'images',
               expiration: {
                 maxEntries: 80,
                 maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days

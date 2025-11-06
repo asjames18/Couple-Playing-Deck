@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useState } from 'react';
+import { Home, Gamepad2, Clock, BarChart3 } from 'lucide-react';
 import { useRecentGames } from '@/hooks/useGameState';
 import { getGameMetadata } from '@/lib/game-metadata';
 
@@ -84,47 +85,59 @@ export default function BottomNavigation() {
   return (
     <>
       <nav
-        className="bottom-nav"
+        className="fixed bottom-0 inset-x-0 z-40 bg-card/90 backdrop-blur-md border-t border-white/5"
         role="navigation"
         aria-label="Main navigation"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0)' }}
       >
-        <Link
-          to="/"
-          className={`bottom-nav-item ${isActive('/') ? 'active' : ''}`}
-        >
-          <span className="bottom-nav-item-icon" aria-hidden="true">
-            🏠
-          </span>
-          <span className="bottom-nav-item-label">Home</span>
-        </Link>
+        <div className="grid grid-cols-4 h-16 text-sm">
+          <Link
+            to="/"
+            className={`flex flex-col items-center justify-center gap-1 hover:opacity-90 transition-all tap-target ${
+              isActive('/') 
+                ? 'text-primary' 
+                : 'text-muted'
+            }`}
+            aria-label="Home"
+          >
+            <Home className="w-5 h-5" />
+            <span className="text-xs">Home</span>
+          </Link>
 
-        <a
-          href="#"
-          className={`bottom-nav-item ${isGamePage() ? 'active' : ''}`}
-          onClick={handleGamesClick}
-        >
-          <span className="bottom-nav-item-icon" aria-hidden="true">
-            🎮
-          </span>
-          <span className="bottom-nav-item-label">Games</span>
-        </a>
+          <button
+            onClick={handleGamesClick}
+            className={`flex flex-col items-center justify-center gap-1 hover:opacity-90 transition-all tap-target ${
+              isGamePage() 
+                ? 'text-primary' 
+                : 'text-muted'
+            }`}
+            aria-label="Games"
+          >
+            <Gamepad2 className="w-5 h-5" />
+            <span className="text-xs">Games</span>
+          </button>
 
-        <a href="#" className="bottom-nav-item" onClick={handleRecentClick}>
-          <span className="bottom-nav-item-icon" aria-hidden="true">
-            ⭐
-          </span>
-          <span className="bottom-nav-item-label">Recent</span>
-          {recentGames.length > 0 && (
-            <span className="bottom-nav-badge">{recentGames.length}</span>
-          )}
-        </a>
+          <button
+            onClick={handleRecentClick}
+            className="flex flex-col items-center justify-center gap-1 hover:opacity-90 transition-all tap-target text-muted relative"
+            aria-label="Recent"
+          >
+            <Clock className="w-5 h-5" />
+            <span className="text-xs">Recent</span>
+            {recentGames.length > 0 && (
+              <span className="absolute top-0 right-1/4 w-2 h-2 bg-primary rounded-full" />
+            )}
+          </button>
 
-        <a href="#" className="bottom-nav-item" onClick={handleStatsClick}>
-          <span className="bottom-nav-item-icon" aria-hidden="true">
-            📊
-          </span>
-          <span className="bottom-nav-item-label">Stats</span>
-        </a>
+          <button
+            onClick={handleStatsClick}
+            className="flex flex-col items-center justify-center gap-1 hover:opacity-90 transition-all tap-target text-muted"
+            aria-label="Stats"
+          >
+            <BarChart3 className="w-5 h-5" />
+            <span className="text-xs">Stats</span>
+          </button>
+        </div>
       </nav>
 
       {/* Games Overlay */}
