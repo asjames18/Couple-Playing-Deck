@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Divine Reflections</title>
+    <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -359,88 +360,6 @@
         </div>
     </div>
 
-    <script type="module">
-        import { spiritualPaths } from './js/spiritual-content.js';
-
-        // Game state
-        let currentStep = null;
-        let journalEntries = [];
-
-        // DOM elements
-        const pathSteps = document.querySelectorAll('.path-step');
-        const reflectionText = document.getElementById('reflectionText');
-        const bibleVerse = document.getElementById('bibleVerse');
-        const prayerButton = document.getElementById('prayerButton');
-        const spiritualJournal = document.getElementById('spiritualJournal');
-        const journalTextarea = document.querySelector('.journal-textarea');
-        const milestoneText = document.getElementById('milestoneText');
-        const floatingElements = document.getElementById('floatingElements');
-
-        // Initialize floating elements
-        function createFloatingElements() {
-            const symbols = ['✝', '❤', '🙏', '🌿', '✨', '✝', '❤', '🙏', '🌿', '✨'];
-            symbols.forEach((symbol, index) => {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.textContent = symbol;
-                element.style.left = `${Math.random() * 100}%`;
-                element.style.top = `${Math.random() * 100}%`;
-                element.style.animationDelay = `${index * 1.5}s`;
-                floatingElements.appendChild(element);
-            });
-        }
-
-        // Update reflection content
-        function updateReflection(step) {
-            const content = spiritualPaths[step];
-            const randomPrompt = content.prompts[Math.floor(Math.random() * content.prompts.length)];
-            reflectionText.textContent = randomPrompt.text;
-            bibleVerse.textContent = randomPrompt.verse;
-            milestoneText.textContent = content.milestone;
-        }
-
-        // Handle path step selection
-        pathSteps.forEach(step => {
-            step.addEventListener('click', () => {
-                pathSteps.forEach(s => s.classList.remove('active'));
-                step.classList.add('active');
-                currentStep = step.dataset.step;
-                updateReflection(currentStep);
-            });
-        });
-
-        // Toggle prayer journal
-        prayerButton.addEventListener('click', () => {
-            spiritualJournal.style.display = spiritualJournal.style.display === 'none' ? 'block' : 'none';
-            prayerButton.innerHTML = spiritualJournal.style.display === 'none' 
-                ? '<i class="fas fa-pray"></i> Open Prayer Journal'
-                : '<i class="fas fa-times"></i> Close Prayer Journal';
-        });
-
-        // Save journal entry
-        journalTextarea.addEventListener('blur', () => {
-            if (journalTextarea.value.trim()) {
-                const entry = {
-                    step: currentStep,
-                    text: journalTextarea.value,
-                    date: new Date().toISOString()
-                };
-                journalEntries.push(entry);
-                localStorage.setItem('spiritualJournal', JSON.stringify(journalEntries));
-            }
-        });
-
-        // Load saved journal entries
-        function loadJournalEntries() {
-            const saved = localStorage.getItem('spiritualJournal');
-            if (saved) {
-                journalEntries = JSON.parse(saved);
-            }
-        }
-
-        // Initialize the game
-        createFloatingElements();
-        loadJournalEntries();
-    </script>
+    <script type="module" src="./js/christian.js"></script>
 </body>
 </html>

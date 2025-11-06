@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Lane</title>
+    <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -332,69 +333,6 @@
         </div>
     </div>
 
-    <script type="module">
-        import memories from './js/memories.js';
-
-        let currentMemoryIndex = 0;
-        let totalMemories = 0;
-
-        function updateMemory() {
-            const memoryText = document.getElementById('memory-text');
-            const memoryDate = document.getElementById('memory-date');
-            const memoryImage = document.getElementById('memory-image');
-            const progress = document.getElementById('progress');
-
-            const memory = memories[currentMemoryIndex];
-            
-            memoryText.textContent = memory.text;
-            memoryDate.textContent = memory.date;
-            
-            if (memory.image) {
-                memoryImage.src = memory.image;
-                memoryImage.style.display = 'block';
-            } else {
-                memoryImage.style.display = 'none';
-            }
-
-            // Update progress
-            const progressPercentage = ((currentMemoryIndex + 1) / totalMemories) * 100;
-            progress.style.width = `${progressPercentage}%`;
-        }
-
-        window.nextMemory = () => {
-            currentMemoryIndex = (currentMemoryIndex + 1) % totalMemories;
-            updateMemory();
-        };
-
-        window.shareMemory = () => {
-            // Here you could add functionality to share the memory
-            // For example, copying to clipboard or sharing on social media
-            const memory = memories[currentMemoryIndex];
-            const shareText = `${memory.date}: ${memory.text}`;
-            navigator.clipboard.writeText(shareText)
-                .then(() => alert('Memory copied to clipboard!'))
-                .catch(err => console.error('Failed to copy memory:', err));
-        };
-
-        // Initialize
-        totalMemories = memories.length;
-        updateMemory();
-
-        // Add floating elements
-        const floatingElements = document.createElement('div');
-        floatingElements.className = 'floating-elements';
-        document.querySelector('.game-container').appendChild(floatingElements);
-
-        const symbols = ['📸', '📅', '💭', '🌟', '💫', '✨'];
-        for (let i = 0; i < 20; i++) {
-            const element = document.createElement('div');
-            element.className = 'floating-element';
-            element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            element.style.left = `${Math.random() * 100}%`;
-            element.style.top = `${Math.random() * 100}%`;
-            element.style.animationDelay = `${Math.random() * 5}s`;
-            floatingElements.appendChild(element);
-        }
-    </script>
+    <script type="module" src="./js/memoryLane.page.js"></script>
 </body>
 </html>

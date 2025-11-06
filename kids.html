@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Family Connection Time</title>
+    <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -364,56 +365,6 @@
     </div>
 
     <script src="js/kids-questions.js"></script>
-    <script>
-        // Game state
-        let currentActivity = null;
-
-        // DOM elements
-        const activityCards = document.querySelectorAll('.activity-card');
-        const promptText = document.getElementById('promptText');
-        const nextButton = document.getElementById('nextButton');
-        const floatingElements = document.getElementById('floatingElements');
-
-        // Initialize floating elements
-        function createFloatingElements() {
-            const symbols = ['❤️', '🌟', '🌈', '👨‍👩‍👧‍👦', '🏠', '🎨', '📚', '🎮'];
-            symbols.forEach((symbol, index) => {
-                const element = document.createElement('div');
-                element.className = 'floating-element';
-                element.textContent = symbol;
-                element.style.left = `${Math.random() * 100}%`;
-                element.style.top = `${Math.random() * 100}%`;
-                element.style.animationDelay = `${index * 1.5}s`;
-                floatingElements.appendChild(element);
-            });
-        }
-
-        // Handle activity selection
-        activityCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const activity = card.dataset.activity;
-                currentActivity = activity;
-                
-                // Update UI
-                activityCards.forEach(c => c.style.opacity = '0.5');
-                card.style.opacity = '1';
-                
-                // Update prompt
-                const randomPrompt = discussionQuestions[activity][Math.floor(Math.random() * discussionQuestions[activity].length)];
-                promptText.textContent = randomPrompt;
-            });
-        });
-
-        // Handle next question
-        nextButton.addEventListener('click', () => {
-            if (currentActivity) {
-                const randomPrompt = discussionQuestions[currentActivity][Math.floor(Math.random() * discussionQuestions[currentActivity].length)];
-                promptText.textContent = randomPrompt;
-            }
-        });
-
-        // Initialize the game
-        createFloatingElements();
-    </script>
+    <script type="module" src="./js/kids.js"></script>
 </body>
 </html>

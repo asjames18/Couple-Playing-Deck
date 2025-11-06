@@ -13,6 +13,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connecting Games Hub</title>
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="/manifest.webmanifest">
+    <link rel="icon" href="/icons/icon-192.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,6 +25,15 @@
     <div class="background-animation"></div>
     
     <main class="container">
+        <nav class="app-bar" role="navigation" aria-label="Global">
+            <div style="display:flex;align-items:center;gap:8px">
+                <span style="font-size:1.25rem">🎮</span>
+                <span>Connecting Games Hub</span>
+            </div>
+            <div class="app-actions">
+                <button class="btn-app theme-toggle" data-haptic onclick="window.__toggleTheme?.()">Theme</button>
+            </div>
+        </nav>
         <header class="hero">
             <h1>Connecting Games Hub</h1>
             <p class="subtitle">Spark meaningful connections through play</p>
@@ -117,6 +130,12 @@
         </div>
     </main>
 
+    <script type="module">
+        import { initApp, toggleTheme, registerServiceWorker } from './js/app.js';
+        initApp();
+        registerServiceWorker();
+        window.__toggleTheme = toggleTheme;
+    </script>
     <script>
         // Add floating elements
         const emojis = ['✨', '🌟', '🎯', '🎨', '💫', '⭐', '🔮', '💎'];

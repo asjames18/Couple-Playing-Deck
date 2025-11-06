@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Never Have I Ever</title>
+    <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -374,71 +375,6 @@
         </div>
     </div>
 
-    <script type="module">
-        import statements from './js/statements.js';
-
-        let currentCategory = 'all';
-        let currentStatement = null;
-        let timerInterval = null;
-        let timeLeft = 30;
-        let score = 0;
-
-        function updateStatement() {
-            const statementText = document.querySelector('.statement-text');
-            const timer = document.querySelector('.timer');
-            const categoryStatements = statements[currentCategory];
-            const randomIndex = Math.floor(Math.random() * categoryStatements.length);
-            currentStatement = categoryStatements[randomIndex];
-            
-            statementText.textContent = `Never have I ever ${currentStatement}`;
-
-            // Start timer
-            timeLeft = 30;
-            if (timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                timer.textContent = `Time remaining: ${timeLeft}s`;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timer.textContent = "Time's up!";
-                }
-            }, 1000);
-        }
-
-        window.nextStatement = () => {
-            updateStatement();
-        };
-
-        window.incrementScore = () => {
-            score++;
-            document.getElementById('score').textContent = score;
-        };
-
-        // Category selection
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelector('.category-btn.active').classList.remove('active');
-                btn.classList.add('active');
-                currentCategory = btn.dataset.category;
-                updateStatement();
-            });
-        });
-
-        // Add floating elements
-        const floatingElements = document.createElement('div');
-        floatingElements.className = 'floating-elements';
-        document.querySelector('.game-container').appendChild(floatingElements);
-
-        const symbols = ['🍷', '🍺', '🥂', '🍸', '🍹', '🍾'];
-        for (let i = 0; i < 20; i++) {
-            const element = document.createElement('div');
-            element.className = 'floating-element';
-            element.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            element.style.left = `${Math.random() * 100}%`;
-            element.style.top = `${Math.random() * 100}%`;
-            element.style.animationDelay = `${Math.random() * 5}s`;
-            floatingElements.appendChild(element);
-        }
-    </script>
+    <script type="module" src="./js/neverHaveIEver.page.js"></script>
 </body>
 </html>

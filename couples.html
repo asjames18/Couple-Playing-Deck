@@ -13,6 +13,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heart & Hustle</title>
+    <link rel="stylesheet" href="css/app.css">
     <link rel="stylesheet" href="css/couples.css">
     
 </head>
@@ -44,10 +45,9 @@
         <div id="card-display">Pick a deck to spark the magic!</div>
     </div>
 
+    <script type="module" src="./js/couples.js"></script>
     <script>
-        console.log("Heart & Hustle script loaded successfully!");
-
-        // Exact questions from your input
+        // Keep global function for buttons if needed
         const baseQuestions = {
             warmMeUp: [
                 "What’s something that always makes you feel loved?",
@@ -562,76 +562,7 @@
         };
 
         // Generate decks with 5000 cards by repeating base questions
-        const generateDeck = (type) => {
-            const base = baseQuestions[type];
-            const deck = [];
-            const targetSize = 5000;
-            for (let i = 0; i < 50; i++) {
-                deck.push(...base);
-            }
-            console.log(`${type} deck generated with ${deck.length} cards`);
-            return deck;
-        };
-
-        // Initialize decks
-        const decks = {
-            warmMeUp: generateDeck('warmMeUp'),
-            beneathTheSkin: generateDeck('beneathTheSkin'),
-            nakedHours: generateDeck('nakedHours'),
-            theLoveLab: generateDeck('theLoveLab'),
-            unfilteredLove: generateDeck('unfilteredLove')
-        };
-
-        const usedCards = {
-            warmMeUp: new Set(),
-            beneathTheSkin: new Set(),
-            nakedHours: new Set(),
-            theLoveLab: new Set(),
-            unfilteredLove: new Set()
-        };
-
-        // Game state
-        let currentPlayer = 1;
-
-        // Draw a card
-        function drawCard(deckName) {
-            const deck = decks[deckName];
-            const used = usedCards[deckName];
-            let card;
-
-            if (!deck) {
-                document.getElementById('card-display').innerHTML = "Error: Deck not found!";
-                console.error(`Deck ${deckName} not initialized`);
-                return;
-            }
-
-            do {
-                card = deck[Math.floor(Math.random() * deck.length)];
-            } while (used.has(card) && used.size < deck.length);
-
-            if (used.size >= deck.length) {
-                document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> All out of cards—legendary run!`;
-                return;
-            }
-
-            used.add(card);
-            document.getElementById('card-display').innerHTML = `<strong>${deckName.replace(/([A-Z])/g, ' $1').toUpperCase()}:</strong> ${card}`;
-            addHearts();
-        }
-
-    
-        // Add floating hearts
-        function addHearts() {
-            for (let i = 0; i < 5; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'hearts';
-                heart.innerHTML = '❤️';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.animationDelay = `${Math.random() * 2}s`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 3000);
-            }
-        }
+        // drawCard is now defined in js/couples.js and exposed on window
     </script>
 </body>
 </html>
