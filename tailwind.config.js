@@ -30,6 +30,18 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }: { addUtilities: (utilities: Record<string, Record<string, string>>) => void }) {
+      addUtilities({
+        '.focus-visible-ring': {
+          '&:focus-visible': {
+            outline: '2px solid var(--color-primary)',
+            outlineOffset: '2px',
+            borderRadius: 'var(--radius-md)',
+          },
+        },
+      });
+    },
+  ],
 }
 

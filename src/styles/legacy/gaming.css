@@ -40,7 +40,11 @@
 
 .card-flip-back {
   transform: rotateY(180deg);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
 }
 
 .card-flip-content {
@@ -74,13 +78,22 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   animation: scoreShimmer 2s infinite;
 }
 
 @keyframes scoreShimmer {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 .score-value {
@@ -94,8 +107,13 @@
 }
 
 @keyframes scorePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.3); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
 }
 
 /* Progress Bar Gaming Style */
@@ -111,7 +129,12 @@
 
 .progress-bar-gaming-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary));
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-primary)
+  );
   background-size: 200% 100%;
   border-radius: var(--radius-full);
   transition: width var(--transition-base);
@@ -122,8 +145,12 @@
 }
 
 @keyframes progressFlow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
 }
 
 .progress-bar-gaming-fill::after {
@@ -133,13 +160,22 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
   animation: progressShine 1.5s infinite;
 }
 
 @keyframes progressShine {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .progress-bar-label {
@@ -179,7 +215,8 @@
 }
 
 @keyframes particleFloat {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) translateX(0) scale(1);
     opacity: 0;
   }
@@ -242,7 +279,9 @@
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
   transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
+  transition:
+    width 0.6s,
+    height 0.6s;
 }
 
 .btn-gaming-glow:active::after {
@@ -263,7 +302,9 @@
 }
 
 @keyframes spinnerRotate {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Achievement Badge */
@@ -272,7 +313,11 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-sm) var(--space-md);
-  background: linear-gradient(135deg, var(--color-warning), var(--color-accent));
+  background: linear-gradient(
+    135deg,
+    var(--color-warning),
+    var(--color-accent)
+  );
   border-radius: var(--radius-full);
   color: var(--color-text-primary);
   font-weight: 600;
@@ -338,19 +383,28 @@
   font-size: var(--font-size-lg);
   color: var(--color-warning);
   text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
-  box-shadow: 0 0 20px rgba(251, 191, 36, 0.3), var(--shadow-card);
+  box-shadow:
+    0 0 20px rgba(251, 191, 36, 0.3),
+    var(--shadow-card);
 }
 
 .timer-gaming.warning {
   color: var(--color-danger);
   text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3), var(--shadow-card);
+  box-shadow:
+    0 0 20px rgba(239, 68, 68, 0.3),
+    var(--shadow-card);
   animation: timerPulse 1s infinite;
 }
 
 @keyframes timerPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 /* Level/XP Display */
@@ -373,7 +427,11 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-secondary)
+  );
   border-radius: 50%;
   color: var(--color-text-primary);
   font-weight: 700;
@@ -395,4 +453,3 @@
     transition: none !important;
   }
 }
-

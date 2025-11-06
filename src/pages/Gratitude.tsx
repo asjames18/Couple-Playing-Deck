@@ -7,7 +7,13 @@ import { Link } from 'react-router-dom';
 export default function Gratitude() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('gratitude');
-  const { currentPrompt, currentCategory, categories, drawPrompt, changeCategory } = useGratitude();
+  const {
+    currentPrompt,
+    currentCategory,
+    categories,
+    drawPrompt,
+    changeCategory,
+  } = useGratitude();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'gratitude' });
@@ -19,7 +25,16 @@ export default function Gratitude() {
       <h1>Gratitude Journal</h1>
       <p>Express your gratitude and reflect on what you're thankful for!</p>
 
-      <div className="category-selector" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="category-selector"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         <button
           onClick={() => changeCategory('all')}
           className={`category-btn ${currentCategory === 'all' ? 'active' : ''}`}
@@ -28,7 +43,10 @@ export default function Gratitude() {
             padding: '0.5rem 1rem',
             borderRadius: 'var(--radius-md)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
-            background: currentCategory === 'all' ? 'var(--color-primary)' : 'transparent',
+            background:
+              currentCategory === 'all'
+                ? 'var(--color-primary)'
+                : 'transparent',
             color: 'var(--color-text)',
             cursor: 'pointer',
           }}
@@ -45,7 +63,10 @@ export default function Gratitude() {
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: currentCategory === cat ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentCategory === cat
+                  ? 'var(--color-primary)'
+                  : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
             }}
@@ -55,7 +76,12 @@ export default function Gratitude() {
         ))}
       </div>
 
-      <button onClick={drawPrompt} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawPrompt}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Get Gratitude Prompt
       </button>
 
@@ -72,10 +98,14 @@ export default function Gratitude() {
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '0.5rem' }}>
+          <div
+            style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '0.5rem' }}
+          >
             {currentPrompt.category}
           </div>
-          <div style={{ fontSize: '1.3rem', fontWeight: '600', lineHeight: '1.8' }}>
+          <div
+            style={{ fontSize: '1.3rem', fontWeight: '600', lineHeight: '1.8' }}
+          >
             {currentPrompt.text}
           </div>
         </div>
@@ -122,4 +152,3 @@ export default function Gratitude() {
     </div>
   );
 }
-

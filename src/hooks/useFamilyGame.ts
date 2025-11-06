@@ -1,5 +1,8 @@
 import { useDeckGame } from './useDeckGame';
-import { familyQuestions, type FamilyDeckName } from '@/lib/game-data/family-questions';
+import {
+  familyQuestions,
+  type FamilyDeckName,
+} from '@/lib/game-data/family-questions';
 
 const generateDeck = (type: FamilyDeckName): string[] => {
   const base = familyQuestions[type];
@@ -28,4 +31,3 @@ export function useFamilyGame() {
     outOfCardsMessage: () => 'All out of cards—family legend status!',
   });
 }
-

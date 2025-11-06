@@ -1,11 +1,4 @@
-import {
-  getRecentGames,
-  addRecentGame,
-  getGameStats,
-  updateGameStat,
-  getSettings,
-  saveSettings,
-} from './db';
+import { addRecentGame, updateGameStat, getSettings, saveSettings } from './db';
 
 const RECENT_GAMES_KEY = 'recentGames';
 const GAME_STATS_KEY = 'gameStats';
@@ -70,6 +63,11 @@ export async function migrateLocalStorage(): Promise<void> {
       }
     }
 
+    // Purge all old localStorage keys after successful migration
+    localStorage.removeItem(RECENT_GAMES_KEY);
+    localStorage.removeItem(GAME_STATS_KEY);
+    localStorage.removeItem(THEME_KEY);
+
     // Mark migration as complete
     localStorage.setItem('migration_complete', 'true');
   } catch (e) {
@@ -80,4 +78,3 @@ export async function migrateLocalStorage(): Promise<void> {
 export function shouldMigrate(): boolean {
   return localStorage.getItem('migration_complete') !== 'true';
 }
-

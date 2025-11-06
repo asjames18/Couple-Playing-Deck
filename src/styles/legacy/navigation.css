@@ -111,7 +111,8 @@
 }
 
 @keyframes badgePulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
   }
@@ -148,7 +149,12 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
   transition: left var(--transition-slow);
 }
 
@@ -233,11 +239,11 @@
   .top-nav {
     display: block;
   }
-  
+
   .bottom-nav {
     display: none;
   }
-  
+
   /* Add padding to body to account for top nav */
   body {
     padding-top: calc(60px + var(--safe-area-top));
@@ -277,7 +283,8 @@
 }
 
 @keyframes iconPulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -291,4 +298,3 @@
     animation: none;
   }
 }
-

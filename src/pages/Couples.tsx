@@ -15,7 +15,14 @@ export default function Couples() {
     trackGamePlay.mutate({ gameId: 'couples' });
   }, [trackGamePlay]);
 
-  const handleDrawCard = (deckName: 'warmMeUp' | 'beneathTheSkin' | 'nakedHours' | 'theLoveLab' | 'unfilteredLove') => {
+  const handleDrawCard = (
+    deckName:
+      | 'warmMeUp'
+      | 'beneathTheSkin'
+      | 'nakedHours'
+      | 'theLoveLab'
+      | 'unfilteredLove'
+  ) => {
     drawCard(deckName);
     setHeartTrigger((prev) => prev + 1);
     trackGamePlay.mutate({
@@ -29,26 +36,85 @@ export default function Couples() {
       <BackButton />
       <h1>Heart & Hustle</h1>
       <p>Dive deep, laugh hard, and connect like never before!</p>
-      <div className="deck-buttons">
-        <button onClick={() => handleDrawCard('warmMeUp')} data-haptic>
+      <div className="deck-buttons" role="group" aria-label="Deck selection">
+        <button
+          onClick={() => handleDrawCard('warmMeUp')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDrawCard('warmMeUp');
+            }
+          }}
+          aria-label="Draw card from Warm Me Up deck"
+          data-haptic
+          className="focus-visible-ring"
+        >
           🌟 Warm Me Up
         </button>
-        <button onClick={() => handleDrawCard('beneathTheSkin')} data-haptic>
+        <button
+          onClick={() => handleDrawCard('beneathTheSkin')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDrawCard('beneathTheSkin');
+            }
+          }}
+          aria-label="Draw card from Beneath the Skin deck"
+          data-haptic
+          className="focus-visible-ring"
+        >
           🪞 Beneath the Skin
         </button>
-        <button onClick={() => handleDrawCard('nakedHours')} data-haptic>
+        <button
+          onClick={() => handleDrawCard('nakedHours')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDrawCard('nakedHours');
+            }
+          }}
+          aria-label="Draw card from Naked Hours deck"
+          data-haptic
+          className="focus-visible-ring"
+        >
           🌙 Naked Hours
         </button>
-        <button onClick={() => handleDrawCard('theLoveLab')} data-haptic>
+        <button
+          onClick={() => handleDrawCard('theLoveLab')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDrawCard('theLoveLab');
+            }
+          }}
+          aria-label="Draw card from The Love Lab deck"
+          data-haptic
+          className="focus-visible-ring"
+        >
           🔬 The Love Lab
         </button>
-        <button onClick={() => handleDrawCard('unfilteredLove')} data-haptic>
+        <button
+          onClick={() => handleDrawCard('unfilteredLove')}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleDrawCard('unfilteredLove');
+            }
+          }}
+          aria-label="Draw card from Unfiltered Love deck"
+          data-haptic
+          className="focus-visible-ring"
+        >
           💣 Unfiltered Love
         </button>
       </div>
       <div
         id="card-display"
         className="card-display"
+        role="region"
+        aria-live="polite"
+        aria-atomic="false"
+        aria-label="Current card"
         style={{
           minHeight: '100px',
           padding: '1rem',
@@ -87,4 +153,3 @@ export default function Couples() {
     </div>
   );
 }
-

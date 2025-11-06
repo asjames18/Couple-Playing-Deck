@@ -13,7 +13,6 @@ export default function LoveEscape() {
     player2,
     setPlayer1,
     setPlayer2,
-    difficulty,
     gameStarted,
     gameCompleted,
     gameFailed,
@@ -96,7 +95,13 @@ export default function LoveEscape() {
           }}
         >
           <div style={{ marginBottom: '1rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text-secondary)' }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: 'var(--color-text-secondary)',
+              }}
+            >
               Player 1 Name:
             </label>
             <input
@@ -116,7 +121,13 @@ export default function LoveEscape() {
             />
           </div>
           <div style={{ marginBottom: '1.5rem' }}>
-            <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--color-text-secondary)' }}>
+            <label
+              style={{
+                display: 'block',
+                marginBottom: '0.5rem',
+                color: 'var(--color-text-secondary)',
+              }}
+            >
               Player 2 Name:
             </label>
             <input
@@ -135,7 +146,11 @@ export default function LoveEscape() {
               }}
             />
           </div>
-          <button className="btn-gaming-primary" onClick={handleNameSubmit} data-haptic>
+          <button
+            className="btn-gaming-primary"
+            onClick={handleNameSubmit}
+            data-haptic
+          >
             Continue
           </button>
         </div>
@@ -154,7 +169,9 @@ export default function LoveEscape() {
           }}
         >
           <h2 style={{ marginBottom: '1.5rem' }}>Choose Difficulty</h2>
-          <div style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}>
+          <div
+            style={{ display: 'flex', gap: '1rem', flexDirection: 'column' }}
+          >
             <button
               className="btn-gaming-primary"
               onClick={() => handleStartGame('easy')}
@@ -204,10 +221,20 @@ export default function LoveEscape() {
               gap: '1rem',
             }}
           >
-            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>Time Left: {timeDisplay}</div>
-            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>Hints Left: {hintsLeft}</div>
-            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>Score: {score}</div>
-            <button className="btn-gaming-secondary" onClick={togglePause} data-haptic>
+            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>
+              Time Left: {timeDisplay}
+            </div>
+            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>
+              Hints Left: {hintsLeft}
+            </div>
+            <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>
+              Score: {score}
+            </div>
+            <button
+              className="btn-gaming-secondary"
+              onClick={togglePause}
+              data-haptic
+            >
               {isPaused ? 'Resume' : 'Pause'}
             </button>
           </div>
@@ -241,8 +268,8 @@ export default function LoveEscape() {
               borderRadius: 'var(--radius-md)',
             }}
           >
-            Dear {player1} & {player2}, Cupid challenges you to prove your love through a quiz! Answer questions to
-            unlock your dream date night!
+            Dear {player1} & {player2}, Cupid challenges you to prove your love
+            through a quiz! Answer questions to unlock your dream date night!
           </div>
 
           {currentQuestion && (
@@ -254,11 +281,25 @@ export default function LoveEscape() {
                 borderRadius: 'var(--radius-md)',
               }}
             >
-              <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>{stageTitle}</h3>
-              <p style={{ fontSize: '1.2rem', marginBottom: '1rem', lineHeight: '1.6' }}>
+              <h3 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>
+                {stageTitle}
+              </h3>
+              <p
+                style={{
+                  fontSize: '1.2rem',
+                  marginBottom: '1rem',
+                  lineHeight: '1.6',
+                }}
+              >
                 {currentQuestion.question}
               </p>
-              <p style={{ fontStyle: 'italic', marginBottom: '1rem', color: 'var(--color-text-secondary)' }}>
+              <p
+                style={{
+                  fontStyle: 'italic',
+                  marginBottom: '1rem',
+                  color: 'var(--color-text-secondary)',
+                }}
+              >
                 Discuss together before answering!
               </p>
               <input
@@ -284,7 +325,12 @@ export default function LoveEscape() {
                 }}
               />
               <div style={{ display: 'flex', gap: '1rem' }}>
-                <button className="btn-gaming-primary" onClick={handleSubmitAnswer} disabled={isPaused} data-haptic>
+                <button
+                  className="btn-gaming-primary"
+                  onClick={handleSubmitAnswer}
+                  disabled={isPaused}
+                  data-haptic
+                >
                   Submit
                 </button>
                 <button
@@ -328,7 +374,7 @@ export default function LoveEscape() {
           }}
         >
           <h2 style={{ marginBottom: '1rem', fontSize: '2rem' }}>
-            {gameCompleted ? '🎉 Congratulations!' : '⏰ Time\'s Up!'}
+            {gameCompleted ? '🎉 Congratulations!' : "⏰ Time's Up!"}
           </h2>
           <p style={{ fontSize: '1.2rem', marginBottom: '1.5rem' }}>
             {gameCompleted
@@ -337,12 +383,21 @@ export default function LoveEscape() {
           </p>
           <div style={{ marginBottom: '1.5rem' }}>
             <p style={{ fontSize: '1.1rem' }}>Final Score: {score}</p>
-            <p style={{ fontSize: '1.1rem' }}>Questions Answered: {questionsAnswered}/15</p>
+            <p style={{ fontSize: '1.1rem' }}>
+              Questions Answered: {questionsAnswered}/15
+            </p>
           </div>
           {achievements.length > 0 && (
             <div style={{ marginBottom: '1.5rem' }}>
               <h3 style={{ marginBottom: '0.5rem' }}>Achievements:</h3>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center',
+                }}
+              >
                 {achievements.map((achievement, index) => (
                   <span
                     key={index}
@@ -359,7 +414,11 @@ export default function LoveEscape() {
               </div>
             </div>
           )}
-          <button className="btn-gaming-primary" onClick={handleReset} data-haptic>
+          <button
+            className="btn-gaming-primary"
+            onClick={handleReset}
+            data-haptic
+          >
             Play Again
           </button>
         </div>
@@ -385,4 +444,3 @@ export default function LoveEscape() {
     </div>
   );
 }
-

@@ -83,7 +83,11 @@ export default function BottomNavigation() {
 
   return (
     <>
-      <nav className="bottom-nav" role="navigation" aria-label="Main navigation">
+      <nav
+        className="bottom-nav"
+        role="navigation"
+        aria-label="Main navigation"
+      >
         <Link
           to="/"
           className={`bottom-nav-item ${isActive('/') ? 'active' : ''}`}
@@ -105,11 +109,7 @@ export default function BottomNavigation() {
           <span className="bottom-nav-item-label">Games</span>
         </a>
 
-        <a
-          href="#"
-          className="bottom-nav-item"
-          onClick={handleRecentClick}
-        >
+        <a href="#" className="bottom-nav-item" onClick={handleRecentClick}>
           <span className="bottom-nav-item-icon" aria-hidden="true">
             ⭐
           </span>
@@ -119,11 +119,7 @@ export default function BottomNavigation() {
           )}
         </a>
 
-        <a
-          href="#"
-          className="bottom-nav-item"
-          onClick={handleStatsClick}
-        >
+        <a href="#" className="bottom-nav-item" onClick={handleStatsClick}>
           <span className="bottom-nav-item-icon" aria-hidden="true">
             📊
           </span>
@@ -134,7 +130,10 @@ export default function BottomNavigation() {
       {/* Games Overlay */}
       {showGamesMenu && (
         <div className="games-overlay" onClick={closeOverlays}>
-          <div className="games-overlay-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="games-overlay-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="games-overlay-header">
               <h2>All Games</h2>
               <button className="games-overlay-close" onClick={closeOverlays}>
@@ -161,7 +160,10 @@ export default function BottomNavigation() {
       {/* Recent Games Overlay */}
       {showRecentGames && (
         <div className="games-overlay" onClick={closeOverlays}>
-          <div className="games-overlay-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="games-overlay-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="games-overlay-header">
               <h2>Recently Played</h2>
               <button className="games-overlay-close" onClick={closeOverlays}>
@@ -202,7 +204,10 @@ export default function BottomNavigation() {
       {/* Stats Overlay */}
       {showStats && (
         <div className="games-overlay" onClick={closeOverlays}>
-          <div className="games-overlay-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="games-overlay-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="games-overlay-header">
               <h2>Statistics</h2>
               <button className="games-overlay-close" onClick={closeOverlays}>
@@ -220,4 +225,3 @@ export default function BottomNavigation() {
     </>
   );
 }
-

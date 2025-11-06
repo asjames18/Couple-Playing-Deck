@@ -46,4 +46,3 @@ export function StarAnimation({ trigger }: { trigger: number }) {
     </>
   );
 }
-

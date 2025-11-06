@@ -1,5 +1,8 @@
 import { useDeckGame } from './useDeckGame';
-import { friendsQuestions, type FriendsDeckName } from '@/lib/game-data/friends-questions';
+import {
+  friendsQuestions,
+  type FriendsDeckName,
+} from '@/lib/game-data/friends-questions';
 
 const generateDeck = (type: FriendsDeckName): string[] => {
   const base = friendsQuestions[type];
@@ -28,4 +31,3 @@ export function useFriendsGame() {
     outOfCardsMessage: () => 'All out of cards—squad goals achieved!',
   });
 }
-

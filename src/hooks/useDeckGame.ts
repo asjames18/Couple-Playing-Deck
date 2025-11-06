@@ -12,7 +12,11 @@ interface DeckGameOptions {
   outOfCardsMessage: (deckName: string) => string;
 }
 
-export function useDeckGame({ decks, formatDeckName, outOfCardsMessage }: DeckGameOptions) {
+export function useDeckGame({
+  decks,
+  formatDeckName,
+  outOfCardsMessage,
+}: DeckGameOptions) {
   const [currentCard, setCurrentCard] = useState<CardDisplay | null>(null);
   const decksRef = useRef(decks);
   const usedCardsRef = useRef<Record<string, Set<string>>>(() => {
@@ -80,4 +84,3 @@ export function useDeckGame({ decks, formatDeckName, outOfCardsMessage }: DeckGa
     resetDeck,
   };
 }
-

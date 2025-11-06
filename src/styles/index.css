@@ -1,8 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* Import legacy CSS files */
+/* Import legacy CSS files first */
 @import './legacy/design-system.css';
 @import './legacy/app.css';
 @import './legacy/navigation.css';
@@ -20,10 +16,14 @@
 @import './legacy/christian.css';
 @import './legacy/real-talk-cards.css';
 
+/* Tailwind directives must come after @import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Base styles */
 @layer base {
   body {
     @apply font-base;
   }
 }
-

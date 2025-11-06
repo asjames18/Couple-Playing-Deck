@@ -55,4 +55,3 @@ describe('useGameState', () => {
     expect(db.getRecentGames).toHaveBeenCalled();
   });
 });
-

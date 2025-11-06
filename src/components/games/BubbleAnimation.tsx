@@ -46,4 +46,3 @@ export function BubbleAnimation({ trigger }: { trigger: number }) {
     </>
   );
 }
-

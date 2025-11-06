@@ -8,13 +8,20 @@ import type { WouldYouRatherCategory } from '@/lib/game-data/would-you-rather-qu
 export default function WouldYouRather() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('would-you-rather');
-  const { currentQuestion, currentCategory, drawQuestion, changeCategory } = useWouldYouRather();
+  const { currentQuestion, currentCategory, drawQuestion, changeCategory } =
+    useWouldYouRather();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'would-you-rather' });
   }, [trackGamePlay]);
 
-  const categories: WouldYouRatherCategory[] = ['all', 'fun', 'deep', 'relationships', 'lifestyle'];
+  const categories: WouldYouRatherCategory[] = [
+    'all',
+    'fun',
+    'deep',
+    'relationships',
+    'lifestyle',
+  ];
 
   return (
     <div className="container">
@@ -22,7 +29,16 @@ export default function WouldYouRather() {
       <h1>Would You Rather</h1>
       <p>Make tough choices and see what your friends choose!</p>
 
-      <div className="category-selector" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="category-selector"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
@@ -33,7 +49,10 @@ export default function WouldYouRather() {
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: currentCategory === cat ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentCategory === cat
+                  ? 'var(--color-primary)'
+                  : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
             }}
@@ -43,7 +62,12 @@ export default function WouldYouRather() {
         ))}
       </div>
 
-      <button onClick={drawQuestion} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawQuestion}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Get Question
       </button>
 
@@ -59,10 +83,24 @@ export default function WouldYouRather() {
             border: '1px solid rgba(255, 255, 255, 0.1)',
           }}
         >
-          <div className="question-text" style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '2rem' }}>
+          <div
+            className="question-text"
+            style={{
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              marginBottom: '2rem',
+            }}
+          >
             {currentQuestion.question}
           </div>
-          <div className="options-container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div
+            className="options-container"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '1rem',
+            }}
+          >
             <button
               className="option-card btn-gaming-secondary"
               data-haptic
@@ -140,4 +178,3 @@ export default function WouldYouRather() {
     </div>
   );
 }
-

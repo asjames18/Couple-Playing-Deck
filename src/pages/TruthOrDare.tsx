@@ -22,7 +22,13 @@ export default function TruthOrDare() {
     trackGamePlay.mutate({ gameId: 'truth-or-dare' });
   }, [trackGamePlay]);
 
-  const categories: ChallengeCategory[] = ['all', 'fun', 'deep', 'relationships', 'lifestyle'];
+  const categories: ChallengeCategory[] = [
+    'all',
+    'fun',
+    'deep',
+    'relationships',
+    'lifestyle',
+  ];
 
   return (
     <div className="container">
@@ -30,7 +36,16 @@ export default function TruthOrDare() {
       <h1>Truth or Dare</h1>
       <p>Choose truth or dare and reveal your secrets!</p>
 
-      <div className="category-selector" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="category-selector"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
@@ -41,7 +56,10 @@ export default function TruthOrDare() {
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: currentCategory === cat ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentCategory === cat
+                  ? 'var(--color-primary)'
+                  : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
             }}
@@ -51,7 +69,14 @@ export default function TruthOrDare() {
         ))}
       </div>
 
-      <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          gap: '1rem',
+          justifyContent: 'center',
+          marginBottom: '1rem',
+        }}
+      >
         <button onClick={getTruth} data-haptic className="btn-gaming-primary">
           🔍 Truth
         </button>
@@ -84,7 +109,10 @@ export default function TruthOrDare() {
           >
             {currentChallenge.type.toUpperCase()}
           </div>
-          <div className="challenge-text" style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>
+          <div
+            className="challenge-text"
+            style={{ fontSize: '1.2rem', marginBottom: '1rem' }}
+          >
             {currentChallenge.text}
           </div>
           {timeLeft !== null && (
@@ -144,4 +172,3 @@ export default function TruthOrDare() {
     </div>
   );
 }
-

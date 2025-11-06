@@ -36,7 +36,9 @@
 .page-slide-enter-active {
   transform: translateX(0);
   opacity: 1;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .page-slide-exit {
@@ -47,7 +49,9 @@
 .page-slide-exit-active {
   transform: translateX(-100%);
   opacity: 0;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 /* Slide Up Transition */
@@ -59,7 +63,9 @@
 .page-slide-up-enter-active {
   transform: translateY(0);
   opacity: 1;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .page-slide-up-exit {
@@ -70,7 +76,9 @@
 .page-slide-up-exit-active {
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 /* Scale Transition */
@@ -82,7 +90,9 @@
 .page-scale-enter-active {
   transform: scale(1);
   opacity: 1;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 .page-scale-exit {
@@ -93,7 +103,9 @@
 .page-scale-exit-active {
   transform: scale(0.9);
   opacity: 0;
-  transition: transform var(--transition-base), opacity var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    opacity var(--transition-base);
 }
 
 /* Card Flip Transition */
@@ -105,7 +117,9 @@
 .page-flip-enter-active {
   transform: rotateY(0deg);
   opacity: 1;
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transition:
+    transform var(--transition-slow),
+    opacity var(--transition-slow);
   transform-style: preserve-3d;
 }
 
@@ -117,7 +131,9 @@
 .page-flip-exit-active {
   transform: rotateY(-90deg);
   opacity: 0;
-  transition: transform var(--transition-slow), opacity var(--transition-slow);
+  transition:
+    transform var(--transition-slow),
+    opacity var(--transition-slow);
   transform-style: preserve-3d;
 }
 
@@ -201,4 +217,3 @@ a[data-transition]:hover {
     opacity: 1 !important;
   }
 }
-

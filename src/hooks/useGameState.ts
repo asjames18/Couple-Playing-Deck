@@ -5,23 +5,32 @@ import {
   getGameStats,
   updateGameStat,
   RecentGame,
-  GameStats,
 } from '@/lib/db';
 import { getGameMetadata, getRelatedGames } from '@/lib/game-metadata';
 
+// Query keys - separate for local (IDB) vs remote data
+export const queryKeys = {
+  recentGames: ['games', 'recent'] as const,
+  gameStats: ['games', 'stats'] as const,
+  gameStat: (gameId: string) => ['games', 'stats', gameId] as const,
+  // Future: remote queries would use different keys like ['api', 'games']
+};
+
 export function useRecentGames() {
   return useQuery({
-    queryKey: ['recentGames'],
+    queryKey: queryKeys.recentGames,
     queryFn: getRecentGames,
-    staleTime: 1000 * 60, // 1 minute
+    staleTime: Infinity, // IDB-only data never goes stale
+    gcTime: 1000 * 60 * 60, // Keep in cache for 1 hour
   });
 }
 
 export function useGameStats() {
   return useQuery({
-    queryKey: ['gameStats'],
+    queryKey: queryKeys.gameStats,
     queryFn: getGameStats,
-    staleTime: 1000 * 60, // 1 minute
+    staleTime: Infinity, // IDB-only data never goes stale
+    gcTime: 1000 * 60 * 60, // Keep in cache for 1 hour
   });
 }
 
@@ -70,8 +79,8 @@ export function useTrackGamePlay() {
       await updateGameStat(gameId, gameStats);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recentGames'] });
-      queryClient.invalidateQueries({ queryKey: ['gameStats'] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.recentGames });
+      queryClient.invalidateQueries({ queryKey: queryKeys.gameStats });
     },
   });
 }
@@ -125,4 +134,3 @@ export function useAggregatedStats() {
 export function useRelatedGames(currentGameId: string) {
   return getRelatedGames(currentGameId);
 }
-

@@ -7,8 +7,21 @@ import { Link } from 'react-router-dom';
 export default function TwoTruths() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('two-truths');
-  const { statements, lieIndex, timeLeft, gameStarted, gameEnded, selectedIndex, isCorrect, startGame, makeGuess, resetGame } = useTwoTruths();
-  const [inputStatements, setInputStatements] = useState<[string, string, string]>(['', '', '']);
+  const {
+    statements,
+    lieIndex,
+    timeLeft,
+    gameStarted,
+    gameEnded,
+    selectedIndex,
+    isCorrect,
+    startGame,
+    makeGuess,
+    resetGame,
+  } = useTwoTruths();
+  const [inputStatements, setInputStatements] = useState<
+    [string, string, string]
+  >(['', '', '']);
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'two-truths' });
@@ -39,7 +52,10 @@ export default function TwoTruths() {
     <div className="container">
       <BackButton />
       <h1>Two Truths & a Lie</h1>
-      <p>Challenge your friends to spot the lie among your statements. Can they see through your deception?</p>
+      <p>
+        Challenge your friends to spot the lie among your statements. Can they
+        see through your deception?
+      </p>
 
       {!gameStarted ? (
         <div className="game-section" style={{ marginTop: '2rem' }}>
@@ -54,8 +70,11 @@ export default function TwoTruths() {
             }}
           >
             <p style={{ margin: 0, color: 'var(--color-text-secondary)' }}>
-              <strong style={{ color: 'var(--mystery-color, #9b59b6)' }}>How to play:</strong> Enter three statements
-              about yourself. Two must be true, and one must be a lie. Make them interesting and believable!
+              <strong style={{ color: 'var(--mystery-color, #9b59b6)' }}>
+                How to play:
+              </strong>{' '}
+              Enter three statements about yourself. Two must be true, and one
+              must be a lie. Make them interesting and believable!
             </p>
           </div>
           <input
@@ -63,7 +82,13 @@ export default function TwoTruths() {
             className="statement-input"
             placeholder="Enter your first statement..."
             value={inputStatements[0]}
-            onChange={(e) => setInputStatements([e.target.value, inputStatements[1], inputStatements[2]])}
+            onChange={(e) =>
+              setInputStatements([
+                e.target.value,
+                inputStatements[1],
+                inputStatements[2],
+              ])
+            }
             style={{
               width: '100%',
               padding: '1rem',
@@ -80,7 +105,13 @@ export default function TwoTruths() {
             className="statement-input"
             placeholder="Enter your second statement..."
             value={inputStatements[1]}
-            onChange={(e) => setInputStatements([inputStatements[0], e.target.value, inputStatements[2]])}
+            onChange={(e) =>
+              setInputStatements([
+                inputStatements[0],
+                e.target.value,
+                inputStatements[2],
+              ])
+            }
             style={{
               width: '100%',
               padding: '1rem',
@@ -97,7 +128,13 @@ export default function TwoTruths() {
             className="statement-input"
             placeholder="Enter your third statement..."
             value={inputStatements[2]}
-            onChange={(e) => setInputStatements([inputStatements[0], inputStatements[1], e.target.value])}
+            onChange={(e) =>
+              setInputStatements([
+                inputStatements[0],
+                inputStatements[1],
+                e.target.value,
+              ])
+            }
             style={{
               width: '100%',
               padding: '1rem',
@@ -110,7 +147,11 @@ export default function TwoTruths() {
             }}
           />
           <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-            <button className="btn-gaming-primary" onClick={handleStartGame} data-haptic>
+            <button
+              className="btn-gaming-primary"
+              onClick={handleStartGame}
+              data-haptic
+            >
               Start the Game
             </button>
           </div>
@@ -123,7 +164,10 @@ export default function TwoTruths() {
               fontSize: '1.8rem',
               textAlign: 'center',
               margin: '1rem 0',
-              color: timeLeft <= 10 ? 'var(--lie-color, #e74c3c)' : 'var(--mystery-color, #9b59b6)',
+              color:
+                timeLeft <= 10
+                  ? 'var(--lie-color, #e74c3c)'
+                  : 'var(--mystery-color, #9b59b6)',
               fontWeight: '600',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             }}
@@ -167,7 +211,9 @@ export default function TwoTruths() {
                           borderColor: 'var(--truth-color, #2ecc71)',
                         }
                       : {}),
-                    ...(gameEnded && index === selectedIndex && index !== lieIndex
+                    ...(gameEnded &&
+                    index === selectedIndex &&
+                    index !== lieIndex
                       ? {
                           background: 'rgba(231, 76, 60, 0.1)',
                           borderColor: 'var(--lie-color, #e74c3c)',
@@ -188,7 +234,9 @@ export default function TwoTruths() {
                   >
                     Statement {index + 1}
                   </div>
-                  <div style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>{statement}</div>
+                  <div style={{ fontSize: '1.1rem', lineHeight: '1.6' }}>
+                    {statement}
+                  </div>
                 </div>
               );
             })}
@@ -222,7 +270,11 @@ export default function TwoTruths() {
             </div>
           )}
           <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-            <button className="btn-gaming-secondary" onClick={handleReset} data-haptic>
+            <button
+              className="btn-gaming-secondary"
+              onClick={handleReset}
+              data-haptic
+            >
               Play Again
             </button>
           </div>
@@ -249,4 +301,3 @@ export default function TwoTruths() {
     </div>
   );
 }
-

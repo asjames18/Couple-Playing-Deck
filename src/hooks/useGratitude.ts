@@ -1,13 +1,14 @@
 import { useState, useCallback, useRef } from 'react';
 import {
-  gratitudePrompts,
   getGratitudePromptsByCategory,
   getGratitudeCategories,
   type GratitudePrompt,
 } from '@/lib/game-data/gratitude-prompts';
 
 export function useGratitude() {
-  const [currentPrompt, setCurrentPrompt] = useState<GratitudePrompt | null>(null);
+  const [currentPrompt, setCurrentPrompt] = useState<GratitudePrompt | null>(
+    null
+  );
   const [currentCategory, setCurrentCategory] = useState<string>('all');
   const usedPromptsRef = useRef<Set<string>>(new Set());
 
@@ -63,4 +64,3 @@ export function useGratitude() {
     changeCategory,
   };
 }
-

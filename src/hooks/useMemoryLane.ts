@@ -6,7 +6,9 @@ export function useMemoryLane() {
   const usedMemoriesRef = useRef<Set<string>>(new Set());
 
   const getRandomMemory = useCallback((): Memory | null => {
-    const available = memories.filter((m) => !usedMemoriesRef.current.has(m.date));
+    const available = memories.filter(
+      (m) => !usedMemoriesRef.current.has(m.date)
+    );
 
     if (available.length === 0) {
       usedMemoriesRef.current.clear();
@@ -38,4 +40,3 @@ export function useMemoryLane() {
     reset,
   };
 }
-

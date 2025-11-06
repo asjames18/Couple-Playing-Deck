@@ -6,7 +6,8 @@ import {
 
 export function useNeverHaveIEver() {
   const [currentStatement, setCurrentStatement] = useState<string | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<NeverHaveIEverCategory>('all');
+  const [currentCategory, setCurrentCategory] =
+    useState<NeverHaveIEverCategory>('all');
   const usedStatementsRef = useRef<Set<string>>(new Set());
 
   const getRandomStatement = useCallback(
@@ -17,7 +18,9 @@ export function useNeverHaveIEver() {
       }
 
       // Filter out used statements
-      const available = statements.filter((s) => !usedStatementsRef.current.has(s));
+      const available = statements.filter(
+        (s) => !usedStatementsRef.current.has(s)
+      );
 
       if (available.length === 0) {
         // Reset if all statements used
@@ -64,4 +67,3 @@ export function useNeverHaveIEver() {
     reset,
   };
 }
-

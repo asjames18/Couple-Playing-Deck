@@ -2,7 +2,7 @@
 
 export const kidsQuestions = {
   feelings: [
-    "How are you feeling today? What made you feel this way?",
+    'How are you feeling today? What made you feel this way?',
     "What's something that made you happy today?",
     "What's something that made you feel proud?",
     "What's something that made you feel loved?",
@@ -55,10 +55,10 @@ export const kidsQuestions = {
   ],
   dreams: [
     "What's your biggest dream? How can we help you achieve it?",
-    "If you could be anything when you grow up, what would it be?",
+    'If you could be anything when you grow up, what would it be?',
     "What's something you'd like to learn or try?",
     "What's your favorite thing to imagine?",
-    "What would you like to do together as a family?",
+    'What would you like to do together as a family?',
     "What's a place you'd love to visit one day?",
     "What's something you'd like to create or build?",
     "What's a skill you'd like to master?",
@@ -168,4 +168,3 @@ export const kidsQuestions = {
 };
 
 export type KidsCategory = keyof typeof kidsQuestions;
-

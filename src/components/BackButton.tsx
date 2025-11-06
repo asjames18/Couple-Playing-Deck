@@ -5,7 +5,10 @@ interface BackButtonProps {
   label?: string;
 }
 
-export default function BackButton({ to = '/', label = 'Back to Home' }: BackButtonProps) {
+export default function BackButton({
+  to = '/',
+  label = 'Back to Home',
+}: BackButtonProps) {
   return (
     <div style={{ marginBottom: '1rem' }}>
       <Link
@@ -18,4 +21,3 @@ export default function BackButton({ to = '/', label = 'Back to Home' }: BackBut
     </div>
   );
 }
-

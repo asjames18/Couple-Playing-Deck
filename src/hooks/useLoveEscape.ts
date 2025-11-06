@@ -1,5 +1,10 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
-import { questions, type DifficultyLevel, type Stage, type LoveEscapeQuestion } from '@/lib/game-data/love-escape-questions';
+import {
+  questions,
+  type DifficultyLevel,
+  type Stage,
+  type LoveEscapeQuestion,
+} from '@/lib/game-data/love-escape-questions';
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -10,17 +15,17 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-function selectQuestions(difficulty: DifficultyLevel): LoveEscapeQuestion[] {
+function selectQuestions(_difficulty: DifficultyLevel): LoveEscapeQuestion[] {
   const stages: Stage[] = ['easy', 'normal', 'hard'];
   const selected: LoveEscapeQuestion[] = [];
-  
+
   stages.forEach((stage) => {
     const available = [...questions[stage]];
     const shuffled = shuffleArray(available);
     // Select 5 questions from each stage
     selected.push(...shuffled.slice(0, 5));
   });
-  
+
   return selected;
 }
 
@@ -47,7 +52,9 @@ export function useLoveEscape() {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [score, setScore] = useState(0);
   const [currentStage, setCurrentStage] = useState<Stage>('easy');
-  const [currentQuestions, setCurrentQuestions] = useState<LoveEscapeQuestion[]>([]);
+  const [currentQuestions, setCurrentQuestions] = useState<
+    LoveEscapeQuestion[]
+  >([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [showHint, setShowHint] = useState(false);
@@ -58,7 +65,10 @@ export function useLoveEscape() {
   const timerIntervalRef = useRef<number | null>(null);
 
   const currentQuestion = useMemo(() => {
-    if (currentQuestions.length > 0 && currentQuestionIndex < currentQuestions.length) {
+    if (
+      currentQuestions.length > 0 &&
+      currentQuestionIndex < currentQuestions.length
+    ) {
       return currentQuestions[currentQuestionIndex];
     }
     return null;
@@ -68,32 +78,29 @@ export function useLoveEscape() {
     return Math.min(100, Math.round((questionsAnswered / 15) * 100));
   }, [questionsAnswered]);
 
-  const startGame = useCallback(
-    (level: DifficultyLevel) => {
-      const selectedQuestions = selectQuestions(level);
-      setDifficulty(level);
-      setTimeLeft(TIME_LIMITS[level]);
-      setHintsLeft(HINT_LIMITS[level]);
-      setCurrentQuestions(selectedQuestions);
-      setCurrentQuestionIndex(0);
-      setCurrentStage('easy');
-      setQuestionsAnswered(0);
-      setScore(0);
-      setUserAnswer('');
-      setShowHint(false);
-      setAchievements([]);
-      setGameCompleted(false);
-      setGameFailed(false);
-      setGameStarted(true);
-      setIsPaused(false);
+  const startGame = useCallback((level: DifficultyLevel) => {
+    const selectedQuestions = selectQuestions(level);
+    setDifficulty(level);
+    setTimeLeft(TIME_LIMITS[level]);
+    setHintsLeft(HINT_LIMITS[level]);
+    setCurrentQuestions(selectedQuestions);
+    setCurrentQuestionIndex(0);
+    setCurrentStage('easy');
+    setQuestionsAnswered(0);
+    setScore(0);
+    setUserAnswer('');
+    setShowHint(false);
+    setAchievements([]);
+    setGameCompleted(false);
+    setGameFailed(false);
+    setGameStarted(true);
+    setIsPaused(false);
 
-      // Add achievement for quick completion
-      if (TIME_LIMITS[level] <= 600) {
-        setAchievements((prev) => [...prev, 'Quick Hearts']);
-      }
-    },
-    []
-  );
+    // Add achievement for quick completion
+    if (TIME_LIMITS[level] <= 600) {
+      setAchievements((prev) => [...prev, 'Quick Hearts']);
+    }
+  }, []);
 
   const checkAnswer = useCallback(() => {
     if (!currentQuestion) return false;
@@ -110,7 +117,7 @@ export function useLoveEscape() {
       // Move to next question
       if (currentQuestionIndex < currentQuestions.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
-        
+
         // Update stage based on progress
         const newIndex = currentQuestionIndex + 1;
         if (newIndex < 5) {
@@ -217,7 +224,7 @@ export function useLoveEscape() {
     player2,
     setPlayer1,
     setPlayer2,
-    
+
     // Game state
     difficulty,
     gameStarted,
@@ -237,7 +244,7 @@ export function useLoveEscape() {
     setUserAnswer,
     showHint,
     achievements,
-    
+
     // Actions
     startGame,
     checkAnswer,
@@ -246,4 +253,3 @@ export function useLoveEscape() {
     resetGame,
   };
 }
-

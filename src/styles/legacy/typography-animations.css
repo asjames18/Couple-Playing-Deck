@@ -2,7 +2,12 @@
 
 /* Gradient Text */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-secondary)
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -11,16 +16,26 @@
 }
 
 .text-gradient-static {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 @keyframes gradientText {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Text Reveal Animation */
@@ -52,17 +67,28 @@
   overflow: hidden;
   border-right: 2px solid var(--color-primary);
   white-space: nowrap;
-  animation: typing 3s steps(40, end), blinkCursor 0.75s step-end infinite;
+  animation:
+    typing 3s steps(40, end),
+    blinkCursor 0.75s step-end infinite;
 }
 
 @keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blinkCursor {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--color-primary); }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--color-primary);
+  }
 }
 
 /* Glitch Effect */
@@ -96,34 +122,69 @@
 }
 
 @keyframes glitch {
-  0%, 100% { transform: translate(0); }
-  20% { transform: translate(-2px, 2px); }
-  40% { transform: translate(-2px, -2px); }
-  60% { transform: translate(2px, 2px); }
-  80% { transform: translate(2px, -2px); }
+  0%,
+  100% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
 }
 
 @keyframes glitch-anim {
-  0% { clip: rect(31px, 9999px, 94px, 0); }
-  20% { clip: rect(54px, 9999px, 66px, 0); }
-  40% { clip: rect(28px, 9999px, 100px, 0); }
-  60% { clip: rect(67px, 9999px, 85px, 0); }
-  80% { clip: rect(2px, 9999px, 14px, 0); }
-  100% { clip: rect(76px, 9999px, 61px, 0); }
+  0% {
+    clip: rect(31px, 9999px, 94px, 0);
+  }
+  20% {
+    clip: rect(54px, 9999px, 66px, 0);
+  }
+  40% {
+    clip: rect(28px, 9999px, 100px, 0);
+  }
+  60% {
+    clip: rect(67px, 9999px, 85px, 0);
+  }
+  80% {
+    clip: rect(2px, 9999px, 14px, 0);
+  }
+  100% {
+    clip: rect(76px, 9999px, 61px, 0);
+  }
 }
 
 @keyframes glitch-anim2 {
-  0% { clip: rect(65px, 9999px, 100px, 0); }
-  20% { clip: rect(41px, 9999px, 74px, 0); }
-  40% { clip: rect(66px, 9999px, 73px, 0); }
-  60% { clip: rect(30px, 9999px, 92px, 0); }
-  80% { clip: rect(88px, 9999px, 98px, 0); }
-  100% { clip: rect(62px, 9999px, 85px, 0); }
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+  20% {
+    clip: rect(41px, 9999px, 74px, 0);
+  }
+  40% {
+    clip: rect(66px, 9999px, 73px, 0);
+  }
+  60% {
+    clip: rect(30px, 9999px, 92px, 0);
+  }
+  80% {
+    clip: rect(88px, 9999px, 98px, 0);
+  }
+  100% {
+    clip: rect(62px, 9999px, 85px, 0);
+  }
 }
 
 /* Text Shadow Animations */
 .text-shadow-glow {
-  text-shadow: 
+  text-shadow:
     0 0 10px currentColor,
     0 0 20px currentColor,
     0 0 30px currentColor;
@@ -131,14 +192,15 @@
 }
 
 @keyframes textGlow {
-  0%, 100% {
-    text-shadow: 
+  0%,
+  100% {
+    text-shadow:
       0 0 10px currentColor,
       0 0 20px currentColor,
       0 0 30px currentColor;
   }
   50% {
-    text-shadow: 
+    text-shadow:
       0 0 20px currentColor,
       0 0 30px currentColor,
       0 0 40px currentColor,
@@ -200,7 +262,12 @@
 h1.hero-title {
   font-size: var(--font-size-4xl);
   font-weight: 700;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent), var(--color-secondary));
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-accent),
+    var(--color-secondary)
+  );
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -261,10 +328,9 @@ h3.subsection-title {
   h1.hero-title {
     animation: none !important;
   }
-  
+
   .text-typing {
     border-right: none;
     white-space: normal;
   }
 }
-

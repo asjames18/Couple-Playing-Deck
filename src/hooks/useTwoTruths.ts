@@ -123,4 +123,3 @@ export function useTwoTruths() {
     resetGame,
   };
 }
-

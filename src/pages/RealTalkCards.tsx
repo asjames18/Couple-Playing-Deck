@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { useTrackGamePlay, useRelatedGames } from '@/hooks/useGameState';
 import { useRealTalkCards } from '@/hooks/useRealTalkCards';
 import BackButton from '@/components/BackButton';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import type { RealTalkCategory } from '@/lib/game-data/real-talk-cards';
 
 export default function RealTalkCards() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('real-talk-cards');
   const {
@@ -22,6 +23,24 @@ export default function RealTalkCards() {
     resetGame,
   } = useRealTalkCards();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  // Initialize category from query param
+  useEffect(() => {
+    const deckParam = searchParams.get('deck');
+    if (deckParam && deckParam !== currentCategory) {
+      changeCategory(deckParam as RealTalkCategory);
+    }
+  }, [searchParams, currentCategory, changeCategory]);
+
+  // Update URL when category changes
+  const handleCategoryChange = (category: RealTalkCategory) => {
+    changeCategory(category);
+    if (category === 'all') {
+      setSearchParams({});
+    } else {
+      setSearchParams({ deck: category });
+    }
+  };
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'real-talk-cards' });
@@ -101,10 +120,18 @@ export default function RealTalkCards() {
             marginBottom: '1rem',
           }}
         >
-          <button className="btn-gaming-primary" onClick={handleDrawCard} data-haptic>
+          <button
+            className="btn-gaming-primary"
+            onClick={handleDrawCard}
+            data-haptic
+          >
             Draw Card
           </button>
-          <button className="btn-gaming-secondary" onClick={shuffleDeck} data-haptic>
+          <button
+            className="btn-gaming-secondary"
+            onClick={shuffleDeck}
+            data-haptic
+          >
             Shuffle
           </button>
           <button
@@ -112,7 +139,9 @@ export default function RealTalkCards() {
             onClick={handleReset}
             data-haptic
             style={{
-              background: showResetConfirm ? 'var(--color-error, #e74c3c)' : undefined,
+              background: showResetConfirm
+                ? 'var(--color-error, #e74c3c)'
+                : undefined,
             }}
           >
             {showResetConfirm ? 'Click again to reset' : 'Reset'}
@@ -129,11 +158,17 @@ export default function RealTalkCards() {
             justifyContent: 'center',
           }}
         >
-          <label style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>Category:</label>
+          <label
+            style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}
+          >
+            Category:
+          </label>
           <select
             className="category-select"
             value={currentCategory}
-            onChange={(e) => changeCategory(e.target.value as RealTalkCategory)}
+            onChange={(e) =>
+              handleCategoryChange(e.target.value as RealTalkCategory)
+            }
             style={{
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
@@ -168,14 +203,27 @@ export default function RealTalkCards() {
       {currentCard ? (
         <div
           className="card-display-area"
+          role="region"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-label="Card display"
           style={{
             minHeight: '400px',
             marginBottom: '1.5rem',
           }}
         >
-          <div
-            className="card-display"
+          <button
+            className="card-display focus-visible-ring"
             onClick={nextCard}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                nextCard();
+              }
+            }}
+            aria-label="Current card - click or press space to go to next card"
+            role="button"
+            aria-pressed="false"
             style={{
               padding: '2rem',
               minHeight: '400px',
@@ -187,6 +235,8 @@ export default function RealTalkCards() {
               flexDirection: 'column',
               justifyContent: 'space-between',
               transition: 'transform 0.2s ease',
+              width: '100%',
+              textAlign: 'left',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.02)';
@@ -242,8 +292,12 @@ export default function RealTalkCards() {
             >
               {currentCard.type === 'wild-card' ? (
                 <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>{currentCard.icon}</div>
-                  <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>{currentCard.question}</div>
+                  <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>
+                    {currentCard.icon}
+                  </div>
+                  <div style={{ fontSize: '1.2rem', fontWeight: '600' }}>
+                    {currentCard.question}
+                  </div>
                 </div>
               ) : (
                 currentCard.question
@@ -263,7 +317,7 @@ export default function RealTalkCards() {
             >
               {currentCard.footer} • Tap card for next
             </div>
-          </div>
+          </button>
 
           <div
             className="card-navigation"
@@ -322,10 +376,22 @@ export default function RealTalkCards() {
             textAlign: 'center',
           }}
         >
-          <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--color-text-secondary)' }}>
+          <h2
+            style={{
+              fontSize: '1.5rem',
+              marginBottom: '1rem',
+              color: 'var(--color-text-secondary)',
+            }}
+          >
             Ready to start?
           </h2>
-          <p style={{ fontSize: '1.1rem', opacity: 0.9, color: 'var(--color-text-secondary)' }}>
+          <p
+            style={{
+              fontSize: '1.1rem',
+              opacity: 0.9,
+              color: 'var(--color-text-secondary)',
+            }}
+          >
             Click "Draw Card" to begin your conversation journey!
           </p>
         </div>
@@ -351,4 +417,3 @@ export default function RealTalkCards() {
     </div>
   );
 }
-

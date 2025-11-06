@@ -1,5 +1,10 @@
 import { useState, useCallback, useMemo, useEffect } from 'react';
-import { allCards, wildCard, type RealTalkCard, type RealTalkCategory } from '@/lib/game-data/real-talk-cards';
+import {
+  allCards,
+  wildCard,
+  type RealTalkCard,
+  type RealTalkCategory,
+} from '@/lib/game-data/real-talk-cards';
 
 export interface RealTalkCardWithKey extends RealTalkCard {
   categoryKey: string;
@@ -20,7 +25,8 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function useRealTalkCards() {
-  const [currentCategory, setCurrentCategory] = useState<RealTalkCategory>('all');
+  const [currentCategory, setCurrentCategory] =
+    useState<RealTalkCategory>('all');
   const [currentDeck, setCurrentDeck] = useState<RealTalkCardWithKey[]>([]);
   const [cardHistory, setCardHistory] = useState<RealTalkCardWithKey[]>([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(-1);
@@ -28,9 +34,7 @@ export function useRealTalkCards() {
 
   // Initialize deck
   const initializeDeck = useCallback(() => {
-    const deck: RealTalkCardWithKey[] = [
-      { ...wildCard, categoryKey: 'wild' },
-    ];
+    const deck: RealTalkCardWithKey[] = [{ ...wildCard, categoryKey: 'wild' }];
     Object.keys(allCards).forEach((categoryKey) => {
       allCards[categoryKey].forEach((card) => {
         deck.push({ ...card, categoryKey });
@@ -64,7 +68,9 @@ export function useRealTalkCards() {
   const drawCard = useCallback(() => {
     const availableCards = getAvailableCards(currentDeck);
     if (availableCards.length === 0) {
-      throw new Error('No more cards available in this category! Try another category or reset the game.');
+      throw new Error(
+        'No more cards available in this category! Try another category or reset the game.'
+      );
     }
 
     const randomIndex = Math.floor(Math.random() * availableCards.length);
@@ -72,16 +78,17 @@ export function useRealTalkCards() {
     const deckIndex = currentDeck.findIndex(
       (card) =>
         card === drawnCard ||
-        (card.categoryKey === drawnCard.categoryKey && card.question === drawnCard.question)
+        (card.categoryKey === drawnCard.categoryKey &&
+          card.question === drawnCard.question)
     );
 
-    let newDeck = [...currentDeck];
+    const newDeck = [...currentDeck];
     if (deckIndex !== -1) {
       newDeck.splice(deckIndex, 1);
     }
 
     // Mark current card as used if there is one
-    let newUsedCardsSet = new Set(usedCardsSet);
+    const newUsedCardsSet = new Set(usedCardsSet);
     if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
       newUsedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
     }
@@ -98,7 +105,13 @@ export function useRealTalkCards() {
     setCardHistory(newHistory);
     setCurrentCardIndex(newIndex);
     setUsedCardsSet(newUsedCardsSet);
-  }, [currentDeck, currentCategory, cardHistory, currentCardIndex, usedCardsSet, getAvailableCards]);
+  }, [
+    currentDeck,
+    cardHistory,
+    currentCardIndex,
+    usedCardsSet,
+    getAvailableCards,
+  ]);
 
   // Navigate to next card
   const nextCard = useCallback(() => {
@@ -106,7 +119,7 @@ export function useRealTalkCards() {
       drawCard();
     } else {
       // Mark current card as used
-      let newUsedCardsSet = new Set(usedCardsSet);
+      const newUsedCardsSet = new Set(usedCardsSet);
       if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
         newUsedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
       }
@@ -119,7 +132,7 @@ export function useRealTalkCards() {
   const previousCard = useCallback(() => {
     if (currentCardIndex > 0) {
       // Mark current card as used
-      let newUsedCardsSet = new Set(usedCardsSet);
+      const newUsedCardsSet = new Set(usedCardsSet);
       if (currentCardIndex >= 0 && cardHistory[currentCardIndex]) {
         newUsedCardsSet.add(getCardId(cardHistory[currentCardIndex]));
       }
@@ -129,12 +142,9 @@ export function useRealTalkCards() {
   }, [currentCardIndex, cardHistory, usedCardsSet]);
 
   // Change category
-  const changeCategory = useCallback(
-    (category: RealTalkCategory) => {
-      setCurrentCategory(category);
-    },
-    []
-  );
+  const changeCategory = useCallback((category: RealTalkCategory) => {
+    setCurrentCategory(category);
+  }, []);
 
   // Shuffle deck
   const shuffleDeck = useCallback(() => {
@@ -155,11 +165,13 @@ export function useRealTalkCards() {
     const remaining = availableCards.length;
     const drawn = cardHistory.length;
     return { remaining, drawn };
-  }, [currentDeck, currentCategory, cardHistory, getAvailableCards]);
+  }, [currentDeck, cardHistory, getAvailableCards]);
 
   // Navigation state
   const canGoBack = currentCardIndex > 0;
-  const canGoNext = currentCardIndex < cardHistory.length - 1 || getAvailableCards(currentDeck).length > 0;
+  const canGoNext =
+    currentCardIndex < cardHistory.length - 1 ||
+    getAvailableCards(currentDeck).length > 0;
 
   // Initialize on mount
   useEffect(() => {
@@ -182,4 +194,3 @@ export function useRealTalkCards() {
     resetGame,
   };
 }
-

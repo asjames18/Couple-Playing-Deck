@@ -8,7 +8,8 @@ import type { SpiritualPathName } from '@/lib/game-data/spiritual-content';
 export default function Christian() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('christian');
-  const { currentPrompt, currentPath, paths, drawPrompt, changePath } = useChristianGame();
+  const { currentPrompt, currentPath, paths, drawPrompt, changePath } =
+    useChristianGame();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'christian' });
@@ -27,7 +28,16 @@ export default function Christian() {
       <h1>Spiritual Paths</h1>
       <p>Deepen your spiritual connection through reflection and prayer!</p>
 
-      <div className="spiritual-path" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="spiritual-path"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {paths.map((path) => (
           <button
             key={path}
@@ -38,7 +48,8 @@ export default function Christian() {
               padding: '0.75rem 1.5rem',
               borderRadius: 'var(--radius-md)',
               border: '2px solid var(--color-primary)',
-              background: currentPath === path ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentPath === path ? 'var(--color-primary)' : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
               fontSize: '1rem',
@@ -49,7 +60,12 @@ export default function Christian() {
         ))}
       </div>
 
-      <button onClick={drawPrompt} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawPrompt}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Get Prompt
       </button>
 
@@ -66,7 +82,14 @@ export default function Christian() {
             textAlign: 'center',
           }}
         >
-          <div style={{ fontSize: '1.3rem', fontWeight: '600', marginBottom: '1.5rem', lineHeight: '1.8' }}>
+          <div
+            style={{
+              fontSize: '1.3rem',
+              fontWeight: '600',
+              marginBottom: '1.5rem',
+              lineHeight: '1.8',
+            }}
+          >
             {currentPrompt.text}
           </div>
           <div
@@ -125,4 +148,3 @@ export default function Christian() {
     </div>
   );
 }
-

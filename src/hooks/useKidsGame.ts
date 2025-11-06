@@ -1,5 +1,8 @@
 import { useDeckGame } from './useDeckGame';
-import { kidsQuestions, type KidsCategory } from '@/lib/game-data/kids-questions';
+import {
+  kidsQuestions,
+  type KidsCategory,
+} from '@/lib/game-data/kids-questions';
 
 const generateDeck = (type: KidsCategory): string[] => {
   const base = kidsQuestions[type];
@@ -27,4 +30,3 @@ export function useKidsGame() {
     outOfCardsMessage: () => 'All out of cards—amazing job!',
   });
 }
-

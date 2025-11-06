@@ -14,8 +14,12 @@
 }
 
 @keyframes skeletonShimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 .skeleton-text {
@@ -83,8 +87,12 @@
 }
 
 @keyframes shimmerSlide {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Progressive Content Loading */
@@ -157,7 +165,9 @@
 }
 
 @keyframes dotsBounce {
-  0%, 80%, 100% {
+  0%,
+  80%,
+  100% {
     transform: scale(0.8);
     opacity: 0.5;
   }
@@ -177,7 +187,8 @@
 }
 
 @keyframes pulseScale {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 1;
   }
@@ -271,9 +282,8 @@
   .progress-loading::after {
     animation: none !important;
   }
-  
+
   .content-loader {
     transition: opacity 0.3s;
   }
 }
-

@@ -8,13 +8,20 @@ import type { StoryCategory } from '@/lib/game-data/stories';
 export default function StoryTime() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('story-time');
-  const { currentStory, currentCategory, timeLeft, drawStory, changeCategory } = useStoryTime();
+  const { currentStory, currentCategory, timeLeft, drawStory, changeCategory } =
+    useStoryTime();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'story-time' });
   }, [trackGamePlay]);
 
-  const categories: StoryCategory[] = ['all', 'funny', 'romantic', 'adventure', 'embarrassing'];
+  const categories: StoryCategory[] = [
+    'all',
+    'funny',
+    'romantic',
+    'adventure',
+    'embarrassing',
+  ];
 
   return (
     <div className="container">
@@ -22,7 +29,16 @@ export default function StoryTime() {
       <h1>Story Time</h1>
       <p>Create stories together and share your adventures!</p>
 
-      <div className="category-selector" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="category-selector"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
@@ -33,7 +49,10 @@ export default function StoryTime() {
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: currentCategory === cat ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentCategory === cat
+                  ? 'var(--color-primary)'
+                  : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
             }}
@@ -43,7 +62,12 @@ export default function StoryTime() {
         ))}
       </div>
 
-      <button onClick={drawStory} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawStory}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Get Story Prompt
       </button>
 
@@ -64,7 +88,10 @@ export default function StoryTime() {
         >
           <div style={{ marginBottom: '1rem' }}>{currentStory}</div>
           {timeLeft !== null && (
-            <div className="timer" style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '1rem' }}>
+            <div
+              className="timer"
+              style={{ fontSize: '0.9rem', opacity: 0.7, marginTop: '1rem' }}
+            >
               {timeLeft > 0 ? `Time remaining: ${timeLeft}s` : "Time's up!"}
             </div>
           )}
@@ -112,4 +139,3 @@ export default function StoryTime() {
     </div>
   );
 }
-

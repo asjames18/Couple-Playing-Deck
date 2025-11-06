@@ -49,7 +49,9 @@ pnpm preview
 - `pnpm dev` - Start development server
 - `pnpm build` - Build for production
 - `pnpm preview` - Preview production build
-- `pnpm test` - Run tests with Vitest
+- `pnpm test` - Run unit tests with Vitest
+- `pnpm test:e2e` - Run end-to-end tests with Playwright
+- `pnpm test:e2e:ui` - Run e2e tests with Playwright UI
 - `pnpm lint` - Run ESLint
 - `pnpm format` - Format code with Prettier
 
@@ -150,6 +152,8 @@ The project uses TypeScript with strict mode enabled. Type definitions are provi
 
 ## 🧪 Testing
 
+### Unit Tests
+
 Tests are written with Vitest and React Testing Library:
 
 ```bash
@@ -157,6 +161,35 @@ pnpm test
 ```
 
 Test files are located alongside components in `__tests__` directories.
+
+### End-to-End Tests
+
+E2E tests are written with Playwright:
+
+**First-time setup:**
+```bash
+pnpm exec playwright install
+```
+
+This downloads the required browser binaries (Chromium, Firefox, WebKit) for testing.
+
+**Running tests:**
+```bash
+pnpm test:e2e
+```
+
+E2E tests cover:
+- PWA installation flow
+- Offline functionality
+- Service worker updates
+- Cache behavior
+
+Run with UI mode:
+```bash
+pnpm test:e2e:ui
+```
+
+**Note:** E2E tests require the preview server to be running. The test command will automatically start it if not already running.
 
 ## 📱 PWA Features
 

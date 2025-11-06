@@ -47,4 +47,3 @@ export function HeartAnimation({ trigger }: { trigger: number }) {
     </>
   );
 }
-

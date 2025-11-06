@@ -1,5 +1,8 @@
 import { useState, useCallback, useRef } from 'react';
-import { couplesQuestions, type DeckName } from '@/lib/game-data/couples-questions';
+import {
+  couplesQuestions,
+  type DeckName,
+} from '@/lib/game-data/couples-questions';
 
 interface CardDisplay {
   deckName: string;
@@ -97,4 +100,3 @@ export function useCouplesGame() {
     resetDeck,
   };
 }
-

@@ -41,7 +41,9 @@ export function useStoryTime() {
         return null;
       }
 
-      const available = categoryStories.filter((s) => !usedStoriesRef.current.has(s));
+      const available = categoryStories.filter(
+        (s) => !usedStoriesRef.current.has(s)
+      );
 
       if (available.length === 0) {
         usedStoriesRef.current.clear();
@@ -84,4 +86,3 @@ export function useStoryTime() {
     changeCategory,
   };
 }
-

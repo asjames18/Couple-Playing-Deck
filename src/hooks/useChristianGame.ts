@@ -6,7 +6,9 @@ import {
 } from '@/lib/game-data/spiritual-content';
 
 export function useChristianGame() {
-  const [currentPrompt, setCurrentPrompt] = useState<SpiritualPrompt | null>(null);
+  const [currentPrompt, setCurrentPrompt] = useState<SpiritualPrompt | null>(
+    null
+  );
   const [currentPath, setCurrentPath] = useState<SpiritualPathName>('reflect');
   const usedPromptsRef = useRef<Set<string>>(new Set());
 
@@ -62,4 +64,3 @@ export function useChristianGame() {
     changePath,
   };
 }
-

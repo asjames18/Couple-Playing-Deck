@@ -5,8 +5,9 @@ import { useRecentGames, useAggregatedStats } from '@/hooks/useGameState';
 import { getGameMetadata } from '@/lib/game-metadata';
 
 export default function Home() {
-  const { theme, toggleTheme } = useTheme();
-  const { data: recentGames = [], isLoading: recentGamesLoading } = useRecentGames();
+  const { toggleTheme } = useTheme();
+  const { data: recentGames = [], isLoading: recentGamesLoading } =
+    useRecentGames();
   const stats = useAggregatedStats();
 
   useEffect(() => {
@@ -105,9 +106,7 @@ export default function Home() {
                     data-transition="slide"
                   >
                     <span className="emoji">{metadata.icon || game.icon}</span>
-                    <span className="title">
-                      {metadata.name || game.name}
-                    </span>
+                    <span className="title">{metadata.name || game.name}</span>
                   </Link>
                 );
               })}
@@ -142,4 +141,3 @@ export default function Home() {
     </div>
   );
 }
-

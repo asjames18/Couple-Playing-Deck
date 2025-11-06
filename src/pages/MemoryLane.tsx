@@ -19,7 +19,12 @@ export default function MemoryLane() {
       <h1>Memory Lane</h1>
       <p>Walk down memory lane and relive your favorite moments together!</p>
 
-      <button onClick={drawMemory} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawMemory}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Draw a Memory
       </button>
 
@@ -46,7 +51,9 @@ export default function MemoryLane() {
           >
             {currentMemory.date}
           </div>
-          <div style={{ fontSize: '1.2rem', lineHeight: '1.8' }}>{currentMemory.text}</div>
+          <div style={{ fontSize: '1.2rem', lineHeight: '1.8' }}>
+            {currentMemory.text}
+          </div>
         </div>
       )}
 
@@ -91,4 +98,3 @@ export default function MemoryLane() {
     </div>
   );
 }
-

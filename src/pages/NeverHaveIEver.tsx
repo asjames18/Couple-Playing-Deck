@@ -8,13 +8,20 @@ import type { NeverHaveIEverCategory } from '@/lib/game-data/never-have-i-ever-s
 export default function NeverHaveIEver() {
   const trackGamePlay = useTrackGamePlay();
   const relatedGames = useRelatedGames('never-have-i-ever');
-  const { currentStatement, currentCategory, drawStatement, changeCategory } = useNeverHaveIEver();
+  const { currentStatement, currentCategory, drawStatement, changeCategory } =
+    useNeverHaveIEver();
 
   useEffect(() => {
     trackGamePlay.mutate({ gameId: 'never-have-i-ever' });
   }, [trackGamePlay]);
 
-  const categories: NeverHaveIEverCategory[] = ['all', 'fun', 'wild', 'relationships', 'travel'];
+  const categories: NeverHaveIEverCategory[] = [
+    'all',
+    'fun',
+    'wild',
+    'relationships',
+    'travel',
+  ];
 
   return (
     <div className="container">
@@ -22,7 +29,16 @@ export default function NeverHaveIEver() {
       <h1>Never Have I Ever</h1>
       <p>Reveal your secrets and see who's done what!</p>
 
-      <div className="category-selector" style={{ marginBottom: '1rem', display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div
+        className="category-selector"
+        style={{
+          marginBottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+        }}
+      >
         {categories.map((cat) => (
           <button
             key={cat}
@@ -33,7 +49,10 @@ export default function NeverHaveIEver() {
               padding: '0.5rem 1rem',
               borderRadius: 'var(--radius-md)',
               border: '1px solid rgba(255, 255, 255, 0.2)',
-              background: currentCategory === cat ? 'var(--color-primary)' : 'transparent',
+              background:
+                currentCategory === cat
+                  ? 'var(--color-primary)'
+                  : 'transparent',
               color: 'var(--color-text)',
               cursor: 'pointer',
             }}
@@ -43,7 +62,12 @@ export default function NeverHaveIEver() {
         ))}
       </div>
 
-      <button onClick={drawStatement} data-haptic className="btn-gaming-primary" style={{ marginBottom: '1rem' }}>
+      <button
+        onClick={drawStatement}
+        data-haptic
+        className="btn-gaming-primary"
+        style={{ marginBottom: '1rem' }}
+      >
         Draw Statement
       </button>
 
@@ -110,4 +134,3 @@ export default function NeverHaveIEver() {
     </div>
   );
 }
-

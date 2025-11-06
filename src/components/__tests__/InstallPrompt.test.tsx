@@ -1,13 +1,37 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import InstallPrompt from '../InstallPrompt';
 
+// Mock window.gtag
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 describe('InstallPrompt', () => {
+  const originalAddEventListener = window.addEventListener;
+  const originalRemoveEventListener = window.removeEventListener;
+
   beforeEach(() => {
-    // Reset window events
-    window.removeEventListener = vi.fn();
-    window.addEventListener = vi.fn();
+    // Restore real event listeners for tests
+    window.addEventListener = originalAddEventListener;
+    window.removeEventListener = originalRemoveEventListener;
+    window.gtag = vi.fn();
+  });
+
+  afterEach(() => {
+    // Clean up any event listeners
+    const events = ['beforeinstallprompt'];
+    events.forEach((eventType) => {
+      const listeners = (
+        window as unknown as { _listeners?: Map<string, Set<EventListener>> }
+      )._listeners;
+      if (listeners) {
+        listeners.delete(eventType);
+      }
+    });
   });
 
   it('does not render when prompt is not available', () => {
@@ -27,14 +51,26 @@ describe('InstallPrompt', () => {
 
     const { container } = render(<InstallPrompt />);
 
-    // Simulate beforeinstallprompt event
-    const event = new Event('beforeinstallprompt');
-    Object.assign(event, mockEvent);
-    window.dispatchEvent(event);
-
-    await waitFor(() => {
-      expect(container.firstChild).not.toBeNull();
+    // Wait for component to mount and set up event listener
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
+
+    // Simulate beforeinstallprompt event
+    const event = new Event('beforeinstallprompt') as BeforeInstallPromptEvent;
+    Object.assign(event, mockEvent);
+
+    await act(async () => {
+      window.dispatchEvent(event);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    await waitFor(
+      () => {
+        expect(container.firstChild).not.toBeNull();
+      },
+      { timeout: 3000 }
+    );
 
     expect(screen.getByText('Install App')).toBeInTheDocument();
   });
@@ -51,14 +87,26 @@ describe('InstallPrompt', () => {
 
     render(<InstallPrompt />);
 
-    // Simulate beforeinstallprompt event
-    const event = new Event('beforeinstallprompt');
-    Object.assign(event, mockEvent);
-    window.dispatchEvent(event);
-
-    await waitFor(() => {
-      expect(screen.getByText('Install')).toBeInTheDocument();
+    // Wait for component to mount
+    await act(async () => {
+      await new Promise((resolve) => setTimeout(resolve, 0));
     });
+
+    // Simulate beforeinstallprompt event
+    const event = new Event('beforeinstallprompt') as BeforeInstallPromptEvent;
+    Object.assign(event, mockEvent);
+
+    await act(async () => {
+      window.dispatchEvent(event);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+    });
+
+    await waitFor(
+      () => {
+        expect(screen.getByText('Install')).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     const installButton = screen.getByText('Install');
     await userEvent.click(installButton);
@@ -68,4 +116,3 @@ describe('InstallPrompt', () => {
     });
   });
 });
-

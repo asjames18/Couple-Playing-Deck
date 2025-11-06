@@ -1,5 +1,9 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { challenges, type ChallengeCategory, type ChallengeType } from '@/lib/game-data/challenges';
+import {
+  challenges,
+  type ChallengeCategory,
+  type ChallengeType,
+} from '@/lib/game-data/challenges';
 
 interface Challenge {
   type: ChallengeType;
@@ -7,8 +11,11 @@ interface Challenge {
 }
 
 export function useTruthOrDare() {
-  const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<ChallengeCategory>('all');
+  const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(
+    null
+  );
+  const [currentCategory, setCurrentCategory] =
+    useState<ChallengeCategory>('all');
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -64,20 +71,26 @@ export function useTruthOrDare() {
 
   const nextChallenge = useCallback(() => {
     if (currentChallenge) {
-      const challenge = getRandomChallenge(currentChallenge.type, currentCategory);
+      const challenge = getRandomChallenge(
+        currentChallenge.type,
+        currentCategory
+      );
       setCurrentChallenge({ type: currentChallenge.type, text: challenge });
       startTimer();
     }
   }, [currentChallenge, currentCategory, getRandomChallenge, startTimer]);
 
-  const changeCategory = useCallback((category: ChallengeCategory) => {
-    setCurrentCategory(category);
-    if (currentChallenge) {
-      const challenge = getRandomChallenge(currentChallenge.type, category);
-      setCurrentChallenge({ type: currentChallenge.type, text: challenge });
-      startTimer();
-    }
-  }, [currentChallenge, getRandomChallenge, startTimer]);
+  const changeCategory = useCallback(
+    (category: ChallengeCategory) => {
+      setCurrentCategory(category);
+      if (currentChallenge) {
+        const challenge = getRandomChallenge(currentChallenge.type, category);
+        setCurrentChallenge({ type: currentChallenge.type, text: challenge });
+        startTimer();
+      }
+    },
+    [currentChallenge, getRandomChallenge, startTimer]
+  );
 
   return {
     currentChallenge,
@@ -89,4 +102,3 @@ export function useTruthOrDare() {
     changeCategory,
   };
 }
-

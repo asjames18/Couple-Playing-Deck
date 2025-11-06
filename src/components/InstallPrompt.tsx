@@ -33,6 +33,13 @@ export default function InstallPrompt() {
     if (outcome === 'accepted') {
       setShowPrompt(false);
       setDeferredPrompt(null);
+      // Track install event
+      if (window.gtag) {
+        window.gtag('event', 'pwa_install', {
+          event_category: 'PWA',
+          event_label: 'Install Accepted',
+        });
+      }
     }
   };
 
@@ -53,11 +60,7 @@ export default function InstallPrompt() {
           <p>Add to home screen for a better experience</p>
         </div>
         <div className="install-prompt-actions">
-          <button
-            className="btn-gaming"
-            onClick={handleInstall}
-            data-haptic
-          >
+          <button className="btn-gaming" onClick={handleInstall} data-haptic>
             Install
           </button>
           <button
@@ -72,4 +75,3 @@ export default function InstallPrompt() {
     </div>
   );
 }
-

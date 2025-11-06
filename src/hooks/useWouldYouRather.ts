@@ -6,8 +6,10 @@ import {
 } from '@/lib/game-data/would-you-rather-questions';
 
 export function useWouldYouRather() {
-  const [currentQuestion, setCurrentQuestion] = useState<WouldYouRatherQuestion | null>(null);
-  const [currentCategory, setCurrentCategory] = useState<WouldYouRatherCategory>('all');
+  const [currentQuestion, setCurrentQuestion] =
+    useState<WouldYouRatherQuestion | null>(null);
+  const [currentCategory, setCurrentCategory] =
+    useState<WouldYouRatherCategory>('all');
   const usedQuestionsRef = useRef<Set<string>>(new Set());
 
   const getRandomQuestion = useCallback(
@@ -27,7 +29,9 @@ export function useWouldYouRather() {
         usedQuestionsRef.current.clear();
         const randomIndex = Math.floor(Math.random() * questions.length);
         const question = questions[randomIndex];
-        usedQuestionsRef.current.add(`${question.optionA}||${question.optionB}`);
+        usedQuestionsRef.current.add(
+          `${question.optionA}||${question.optionB}`
+        );
         return question;
       }
 
@@ -67,4 +71,3 @@ export function useWouldYouRather() {
     reset,
   };
 }
-

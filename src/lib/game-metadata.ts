@@ -5,15 +5,35 @@ export const GAME_METADATA: Record<string, GameMetadata> = {
   family: { name: 'Family', icon: '👨‍👩‍👧‍👦', category: 'relationship' },
   friends: { name: 'Friends', icon: '👥', category: 'relationship' },
   kids: { name: 'Kids', icon: '🎮', category: 'relationship' },
-  'truth-or-dare': { name: 'Truth or Dare', icon: '🎲', category: 'conversation' },
-  'would-you-rather': { name: 'Would You Rather', icon: '🤔', category: 'conversation' },
-  'never-have-i-ever': { name: 'Never Have I Ever', icon: '🙈', category: 'conversation' },
-  'two-truths': { name: 'Two Truths & a Lie', icon: '🎯', category: 'conversation' },
+  'truth-or-dare': {
+    name: 'Truth or Dare',
+    icon: '🎲',
+    category: 'conversation',
+  },
+  'would-you-rather': {
+    name: 'Would You Rather',
+    icon: '🤔',
+    category: 'conversation',
+  },
+  'never-have-i-ever': {
+    name: 'Never Have I Ever',
+    icon: '🙈',
+    category: 'conversation',
+  },
+  'two-truths': {
+    name: 'Two Truths & a Lie',
+    icon: '🎯',
+    category: 'conversation',
+  },
   'story-time': { name: 'Story Time', icon: '📚', category: 'creative' },
   'memory-lane': { name: 'Memory Lane', icon: '🏞️', category: 'creative' },
   gratitude: { name: 'Gratitude Journal', icon: '🙏', category: 'creative' },
   christian: { name: 'Christian Games', icon: '✝️', category: 'spiritual' },
-  'real-talk-cards': { name: 'Real Talk Cards', icon: '💬', category: 'spiritual' },
+  'real-talk-cards': {
+    name: 'Real Talk Cards',
+    icon: '💬',
+    category: 'spiritual',
+  },
   loveescape: { name: 'Love Escape', icon: '💕', category: 'relationship' },
 };
 
@@ -45,4 +65,3 @@ export function getRelatedGames(currentGameId: string): Array<{
     }))
     .slice(0, 3);
 }
-

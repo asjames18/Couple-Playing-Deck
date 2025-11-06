@@ -5,6 +5,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
 export default defineConfig({
+  root: process.cwd(),
+  publicDir: 'public',
   plugins: [
     tsconfigPaths(),
     react(),
@@ -26,8 +28,10 @@ export default defineConfig({
         description: 'Spark meaningful connections through play',
         start_url: '/',
         display: 'standalone',
+        orientation: 'portrait',
         theme_color: '#667eea',
         background_color: '#0f0f1a',
+        categories: ['games', 'entertainment'],
         icons: [
           {
             src: 'pwa-192x192.svg',
@@ -49,12 +53,24 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+        skipWaiting: true,
+        clientsClaim: true,
+        navigateFallback: '/offline.html',
+        navigateFallbackDenylist: [/^\/api/, /^\/_/],
         runtimeCaching: [
           {
             urlPattern: ({ request }) => request.destination === 'document',
             handler: 'NetworkFirst',
             options: {
               cacheName: 'html-cache',
+              networkTimeoutSeconds: 3,
+              plugins: [
+                {
+                  cacheWillUpdate: async ({ response }) => {
+                    return response && response.status === 200 ? response : null;
+                  },
+                },
+              ],
             },
           },
           {
@@ -68,9 +84,13 @@ export default defineConfig({
           {
             urlPattern: ({ request }) =>
               ['image', 'font'].includes(request.destination),
-            handler: 'StaleWhileRevalidate',
+            handler: 'CacheFirst',
             options: {
               cacheName: 'static-cache',
+              expiration: {
+                maxEntries: 80,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
             },
           },
         ],

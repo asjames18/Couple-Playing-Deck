@@ -20,11 +20,19 @@ if (shouldMigrate()) {
   });
 }
 
+// Service Worker update handling
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    // New service worker has taken control, reload to get fresh assets
+    window.location.reload();
+  });
+}
+
 // Create React Query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 5, // 5 minutes (for remote queries)
       gcTime: 1000 * 60 * 10, // 10 minutes (formerly cacheTime)
       retry: 1,
     },
@@ -38,4 +46,3 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </QueryClientProvider>
   </React.StrictMode>
 );
-
